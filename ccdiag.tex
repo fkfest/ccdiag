@@ -442,17 +442,17 @@
 
 
 % test:
-% \begin{pspicture}(\xcoord,\ycoord)(3,3)
-% \dTone{t1}
-% \dTtwo{t21}{t22}
-% \FPeval\xcoorbeg{clip(\xcoord+1)}
-% \dV{vn1}{vn2}
-% \dline{t1}{vn1}
+% \bdiag
+% \dmovex{2}
+% \dT{1}{t}
+% \dT{2}{t2}
+% \dW{wn1}{wn2}
+% \dline{t1}{wn1}
 % \dline{t1v1}{t1}
-% \dline{t21}{vn2}
+% \dline{t21}{wn2}
 % \dline{t21}{t2v1}
-% \dline{vn1}{vn1v2}
-% \dline{vn2}{vn2v2}
+% \dline{wn1}{wn1v2}
+% \dline{wn2}{wn2v2}
 % \dline{t22v1}{t22}
 % \dline{t22}{t22v2}
-% \end{pspicture}
+% \ediag
