@@ -1,0 +1,350 @@
+%
+% \usepackage{tikz}
+% \usepackage{xifthen}
+% \usepackage{fp}
+\usetikzlibrary{calc}
+%
+%       new commands (-> Diagram-package)
+%           D.Kats, September 2011
+%
+% \dTone{<node>} -> T_1
+% \dTtwo{<left node>}{<right node>} -> T_2
+% \dTthr{<left node>}{<middle node>}{<right node>} -> T_3
+%
+% \dTone[<order>]{<node>} -> T_1^{(<order>)}
+% \dTtwo[<order>]{<left node>}{<right node>} -> T_2^{(<order>)}
+% \dTthr[<order>]{<left node>}{<middle node>}{<right node>} -> T_3^{(<order>)}
+%
+% same with \dUone, \dUtwo, \dUthr (will print U_1, U_2 or U_3)
+% for excitation operators without label use \dTones, \dTtwos, \dTthrs
+% One can customize labels (see e.g. how \dUone is defined)
+%
+% \dF{<node>} -> F_N
+% \dW{<left node>}{<right node>} -> W_N
+%
+% \dline{<from node>}{<to node>} ->    "--->"
+% \dcurve{<from node>}{<to node>} ->   curved "--->"
+% \dcurver{<from node>}{<to node>} ->   curved "--->" (reverse bend)
+% \dcurcur{<node1>}{<node2>} ->     cycled curved "--->"
+%  left vacuum-node for <node1> is called <node1>v1
+%  right -------------"----------------   <node1>v2
+%
+% \dmovex{<value>} -> move W_N or F_N horizontally
+% \dmoveT{<value>} -> move T horizontally
+% \dmovac{<value>} -> move vacuum vertically 
+% \dmoveTd{<value>} -> move T^\dagger horizontally
+%
+% \dscale{<value>} -> scale size of diagrams with <value>
+%
+% \dname{<text>} -> write <text> over the diagram
+% \dtext{<text>} -> write <text> in the diagram
+
+
+\edef\xcoord{11} \edef\xcoor{11} \edef\xcoorbeg{11} \edef\xcoorend{11} \edef\result{11} \edef\ycoor{11} \edef\ycoord{11} \edef\sc{11} 
+\FPset\sc{1} %default scale-value
+\FPeval\xcoord{clip(-1*\sc)} \FPeval\ycoord{clip(-1*\sc)} 
+\FPset\xcoor{\xcoord} \FPeval\ycoor{clip(\ycoord+1*\sc)} 
+\FPset\xcoordg{\xcoord}
+\FPset\xcoorH{\xcoord}
+\FPeval\yvac{clip(\ycoor+0.5*\sc)} \FPeval\xvac{clip(0.25*\sc)}
+\newcounter{stoer} 
+
+\newcommand{\bdiag}[1][]{
+\begin{tikzpicture}
+\ifthenelse{\isempty{#1}}
+{}
+{%symmetric diagram
+\FPeval\yvac{clip(\ycoor+1*\sc)}
+\FPeval\xvac{clip(0.5*\sc)}
+}
+}
+\newcommand{\ediag}{\end{tikzpicture}}
+
+\newcommand{\dAmpOne}[3][]{\FPeval\xcoorbeg{clip(\xcoor+0.5*\sc)} 
+\FPeval\xcoorend{clip(\xcoorbeg+0.5*\sc)} 
+\draw(\xcoorbeg,\ycoord) -- (\xcoorend,\ycoord);
+\FPeval\result{clip(\xcoorend+0.35*\sc)} 
+\ifthenelse{\isempty{#1}}  
+{\FPeval\xcoor{\xcoorend}}
+{\node at (\result,\ycoord){#1};
+\FPeval\xcoor{clip(\xcoorend+0.25*\sc)}} 
+\FPeval\result{clip((\xcoorbeg+\xcoorend)/2)} 
+\node[inner sep=0pt,minimum size=0pt] (#3) at  (\result,\ycoord) {};
+\FPeval\xx{clip(\xcoorbeg-\xvac)} 
+\node[inner sep=0pt,minimum size=0pt] (#3v1) at (\xx,\yvac) {}; 
+\FPeval\xx{clip(\xcoorbeg+\xvac)} 
+\node[inner sep=0pt,minimum size=0pt] (#3v2) at (\xx,\yvac) {};
+\ifthenelse{\isempty{#2}}  {}  
+{ 
+\FPeval\result{clip((\xcoorend+\xcoorbeg)/2)} 
+\setcounter{stoer}{#2} 
+\node[inner sep=0pt,minimum size=0pt] at (\result,\ycoord){{\footnotesize\slshape\sffamily \Roman{stoer}}}; }
+}
+
+\newcommand{\dAmpTwo}[4][]{\FPeval\xcoorbeg{clip(\xcoor+0.5*\sc)} 
+\FPeval\xcoorend{clip(\xcoorbeg+1*\sc)} 
+\draw(\xcoorbeg,\ycoord) -- (\xcoorend,\ycoord);
+\FPeval\result{clip(\xcoorend+0.35*\sc)} 
+\ifthenelse{\isempty{#1}}  
+{\FPeval\xcoor{\xcoorend}}
+{\node at (\result,\ycoord){#1};
+\FPeval\xcoor{clip(\xcoorend+0.25*\sc)}}
+\node[inner sep=0pt,minimum size=0pt] (#3) at (\xcoorbeg,\ycoord) {};
+\node[inner sep=0pt,minimum size=0pt] (#4) at (\xcoorend,\ycoord) {};  
+\FPeval\xx{clip(\xcoorbeg-\xvac)} 
+\node[inner sep=0pt,minimum size=0pt] (#3v1) at (\xx,\yvac) {}; 
+\FPeval\xx{clip(\xcoorbeg+\xvac)} 
+\node[inner sep=0pt,minimum size=0pt] (#3v2) at (\xx,\yvac) {};
+\FPeval\xx{clip(\xcoorend-\xvac)} 
+\node[inner sep=0pt,minimum size=0pt] (#4v1) at (\xx,\yvac) {};
+\FPeval\xx{clip(\xcoorend+\xvac)} 
+\node[inner sep=0pt,minimum size=0pt] (#4v2) at (\xx,\yvac) {};
+\ifthenelse{\isempty{#2}}  {}  
+{ 
+\FPeval\result{clip((\xcoorend+\xcoorbeg)/2)} 
+\setcounter{stoer}{#2} 
+\node[inner sep=0pt,minimum size=0pt] at (\result,\ycoord){{\footnotesize\slshape\sffamily \Roman{stoer}}}; }
+}
+
+\newcommand{\dAmpThr}[5][]{\FPeval\xcoorbeg{clip(\xcoor+0.5*\sc)} 
+\FPeval\xcoorend{clip(\xcoorbeg+1*\sc)} 
+\draw(\xcoorbeg,\ycoord) -- (\xcoorend,\ycoord);
+\FPeval\result{clip(\xcoorend+0.35*\sc)} 
+\ifthenelse{\isempty{#1}}  
+{\FPeval\xcoor{\xcoorend}}
+{\node at (\result,\ycoord){#1};
+\FPeval\xcoor{clip(\xcoorend+0.25*\sc)}}
+\node[inner sep=0pt,minimum size=0pt] (#3) at (\xcoorbeg,\ycoord) {};
+\FPeval\result{clip((\xcoorbeg+\xcoorend)/2)} 
+\node[inner sep=0pt,minimum size=0pt] (#4) at  (\result,\ycoord) {};
+\node[inner sep=0pt,minimum size=0pt] (#5) at (\xcoorend,\ycoord) {};  
+\FPeval\xx{clip(\xcoorbeg-\xvac)} 
+\node[inner sep=0pt,minimum size=0pt] (#3v1) at (\xx,\yvac) {}; 
+\FPeval\xx{clip(\xcoorbeg+\xvac)} 
+\node[inner sep=0pt,minimum size=0pt] (#3v2) at (\xx,\yvac) {};
+\FPeval\xx{clip(\result-\xvac)} 
+\node[inner sep=0pt,minimum size=0pt] (#4v1) at (\xx,\yvac) {};
+\FPeval\xx{clip(\result+\xvac)} 
+\node[inner sep=0pt,minimum size=0pt] (#4v2) at (\xx,\yvac) {};
+\FPeval\xx{clip(\xcoorend-\xvac)} 
+\node[inner sep=0pt,minimum size=0pt] (#5v1) at (\xx,\yvac) {};
+\FPeval\xx{clip(\xcoorend+\xvac)} 
+\node[inner sep=0pt,minimum size=0pt] (#5v2) at (\xx,\yvac) {};
+\ifthenelse{\isempty{#2}}  {}  
+{ 
+\FPeval\result{clip((\xcoorend+\xcoorbeg)/2)} 
+\setcounter{stoer}{#2} 
+\node[inner sep=0pt,minimum size=0pt] at (\result,\ycoord){{\footnotesize\slshape\sffamily \Roman{stoer}}}; }
+}
+
+\newcommand{\dAmp}[4][]{%for all but singles
+\FPeval\xcoorbeg{clip(\xcoor+0.5*\sc)} 
+\FPeval\xcoorend{clip(\xcoorbeg+1*\sc)} 
+\draw(\xcoorbeg,\ycoord) -- (\xcoorend,\ycoord);
+\FPeval\result{clip(\xcoorend+0.35*\sc)} 
+\ifthenelse{\isempty{#1}}  
+{\FPeval\xcoor{\xcoorend}}
+{\node at (\result,\ycoord){#1};
+\FPeval\xcoor{clip(\xcoorend+0.25*\sc)}}
+
+\FPeval\xxx{clip((\xcoorend-\xcoorbeg)/( #3 - 1 ))}
+
+\FPset \result{\xcoorbeg}
+\foreach \x in {1,...,#3}
+{
+  \coordinate (vertex) at ($(\xcoorbeg,\ycoord)!\x*\xxx-\xxx!(\xcoorend,\ycoord)$);
+  \node[inner sep=0pt,minimum size=0pt] (#4\x) at  (vertex) {};
+  \coordinate (vtxvac) at ($(\xcoorbeg,\yvac)!\x*\xxx-\xxx!(\xcoorend,\yvac)$);
+  \node[inner sep=0pt,minimum size=0pt] (#4\x v1) at ($(vtxvac)-(\xvac,0)$) {};
+  \node[inner sep=0pt,minimum size=0pt] (#4\x v2) at ($(vtxvac)+(\xvac,0)$) {};
+}
+
+\ifthenelse{\isempty{#2}}  {}  
+{ 
+\FPeval\result{clip((\xcoorend+\xcoorbeg)/2)} 
+\setcounter{stoer}{#2} 
+\node[inner sep=0pt,minimum size=0pt] at (\result,\ycoord){{\footnotesize\slshape\sffamily \Roman{stoer}}}; }
+}
+
+
+\newcommand{\dAmpdOne}[3][]{\FPeval\xcoorbeg{clip(\xcoordg+0.5*\sc)} 
+\FPeval\xcoorend{clip(\xcoorbeg+0.5*\sc)} 
+\draw(\xcoorbeg,\yvac) -- (\xcoorend,\yvac);
+\FPeval\result{clip(\xcoorend+0.35*\sc)} 
+\ifthenelse{\isempty{#1}}  
+{\FPeval\xcoordg{\xcoorend}}
+{\node at (\result,\yvac){#1};
+\FPeval\xcoordg{clip(\xcoorend+0.25*\sc)}}
+\FPeval\result{clip((\xcoorbeg+\xcoorend)/2)} 
+\node[inner sep=0pt,minimum size=0pt] (#3) at  (\result,\yvac) {};
+\FPeval\xx{clip(\result-\xvac)} 
+\node[inner sep=0pt,minimum size=0pt] (#3v1) at (\xx,\ycoord) {};
+\FPeval\xx{clip(\result+\xvac)} 
+\node[inner sep=0pt,minimum size=0pt] (#3v2) at (\xx,\ycoord) {};
+\ifthenelse{\isempty{#2}}  {}  
+{ 
+\FPeval\result{clip((\xcoorend+\xcoorbeg)/2)} 
+\setcounter{stoer}{#2} 
+\node[inner sep=0pt,minimum size=0pt] at (\result,\yvac){{\footnotesize\slshape\sffamily \Roman{stoer}}}; }
+}
+
+\newcommand{\dAmpdTwo}[4][]{\FPeval\xcoorbeg{clip(\xcoordg+0.5*\sc)} 
+\FPeval\xcoorend{clip(\xcoorbeg+1*\sc)} 
+\draw(\xcoorbeg,\yvac) -- (\xcoorend,\yvac);
+\FPeval\result{clip(\xcoorend+0.35*\sc)} 
+\ifthenelse{\isempty{#1}}  
+{\FPeval\xcoordg{\xcoorend}}
+{\node at (\result,\yvac){#1};
+\FPeval\xcoordg{clip(\xcoorend+0.25*\sc)}}
+\node[inner sep=0pt,minimum size=0pt] (#3) at (\xcoorbeg,\yvac) {};
+\node[inner sep=0pt,minimum size=0pt] (#4) at (\xcoorend,\yvac) {};  
+\FPeval\xx{clip(\xcoorbeg-\xvac)} 
+\node[inner sep=0pt,minimum size=0pt] (#3v1) at (\xx,\ycoord) {}; 
+\FPeval\xx{clip(\xcoorbeg+\xvac)} 
+\node[inner sep=0pt,minimum size=0pt] (#3v2) at (\xx,\ycoord) {};
+\FPeval\xx{clip(\xcoorend-\xvac)} 
+\node[inner sep=0pt,minimum size=0pt] (#4v1) at (\xx,\ycoord) {};
+\FPeval\xx{clip(\xcoorend+\xvac)} 
+\node[inner sep=0pt,minimum size=0pt] (#4v2) at (\xx,\ycoord) {};
+\ifthenelse{\isempty{#2}}  {}  
+{ 
+\FPeval\result{clip((\xcoorend+\xcoorbeg)/2)} 
+\setcounter{stoer}{#2} 
+\node[inner sep=0pt,minimum size=0pt] at (\result,\yvac){{\footnotesize\slshape\sffamily \Roman{stoer}}}; }
+}
+
+\newcommand{\dAmpdThr}[5][]{\FPeval\xcoorbeg{clip(\xcoordg+0.5*\sc)} 
+\FPeval\xcoorend{clip(\xcoorbeg+1*\sc)} 
+\draw(\xcoorbeg,\yvac) -- (\xcoorend,\yvac);
+\FPeval\result{clip(\xcoorend+0.35*\sc)} 
+\ifthenelse{\isempty{#1}}  
+{\FPeval\xcoordg{\xcoorend}}
+{\node at (\result,\yvac){#1};
+\FPeval\xcoordg{clip(\xcoorend+0.25*\sc)}}
+\node[inner sep=0pt,minimum size=0pt] (#3) at (\xcoorbeg,\yvac) {};
+\FPeval\result{clip((\xcoorbeg+\xcoorend)/2)} 
+\node[inner sep=0pt,minimum size=0pt] (#4) at  (\result,\yvac) {};
+\node[inner sep=0pt,minimum size=0pt] (#5) at (\xcoorend,\yvac) {};  
+\FPeval\xx{clip(\xcoorbeg-\xvac)} 
+\node[inner sep=0pt,minimum size=0pt] (#3v1) at (\xx,\ycoord) {}; 
+\FPeval\xx{clip(\xcoorbeg+\xvac)} 
+\node[inner sep=0pt,minimum size=0pt] (#3v2) at (\xx,\ycoord) {};
+\FPeval\xx{clip(\result-\xvac)} 
+\node[inner sep=0pt,minimum size=0pt] (#4v1) at (\xx,\ycoord) {};
+\FPeval\xx{clip(\result+\xvac)} 
+\node[inner sep=0pt,minimum size=0pt] (#4v2) at (\xx,\ycoord) {};
+\FPeval\xx{clip(\xcoorend-\xvac)} 
+\node[inner sep=0pt,minimum size=0pt] (#5v1) at (\xx,\ycoord) {};
+\FPeval\xx{clip(\xcoorend+\xvac)} 
+\node[inner sep=0pt,minimum size=0pt] (#5v2) at (\xx,\ycoord) {};
+\ifthenelse{\isempty{#2}}  {}  
+{ 
+\FPeval\result{clip((\xcoorend+\xcoorbeg)/2)} 
+\setcounter{stoer}{#2} 
+\node[inner sep=0pt,minimum size=0pt] at (\result,\yvac){{\footnotesize\slshape\sffamily \Roman{stoer}}}; }
+}
+
+\newcommand{\dF}[1]{\FPeval\xcoorbeg{clip(\xcoorH+0.5*\sc)}
+\FPeval\xcoorend{clip(\xcoorbeg+1*\sc)} 
+\draw[dashed](\xcoorbeg,\ycoor) -- (\xcoorend,\ycoor);
+\node at (\xcoorend,\ycoor){$\bf \times$};
+\FPeval\result{clip(\xcoorend+0.35*\sc)} 
+\node at (\result,\ycoor){$_{F}$};
+\node[inner sep=0pt,minimum size=0pt] (#1) at (\xcoorbeg,\ycoor){}; 
+\FPeval\xx{clip(\xcoorbeg-\xvac/2)} 
+\node[inner sep=0pt,minimum size=0pt] (#1v1) at (\xx,\yvac) {}; 
+\FPeval\xx{clip(\xcoorbeg+\xvac/2)} 
+\node[inner sep=0pt,minimum size=0pt] (#1v2) at (\xx,\yvac) {};
+}
+
+\newcommand{\dW}[2]{ \FPeval\xcoorbeg{clip(\xcoorH+0.5*\sc)}
+\FPeval\xcoorend{clip(\xcoorbeg+1*\sc)} 
+\draw[dashed](\xcoorbeg,\ycoor) -- (\xcoorend,\ycoor); 
+\FPeval\result{clip(\xcoorend+0.35*\sc)} 
+\node at (\result,\ycoor) {$_{W}$};
+\node[inner sep=0pt,minimum size=0pt] (#1) at (\xcoorbeg,\ycoor) {};
+\node[inner sep=0pt,minimum size=0pt] (#2) at (\xcoorend,\ycoor) {};
+\FPeval\xx{clip(\xcoorbeg-\xvac/2)} 
+\node[inner sep=0pt,minimum size=0pt] (#1v1) at (\xx,\yvac) {};
+\FPeval\xx{clip(\xcoorbeg+\xvac/2)} 
+\node[inner sep=0pt,minimum size=0pt] (#1v2) at (\xx,\yvac) {}; 
+\FPeval\xx{clip(\xcoorend-\xvac/2)} 
+\node[inner sep=0pt,minimum size=0pt] (#2v1) at (\xx,\yvac) {};
+\FPeval\xx{clip(\xcoorend+\xvac/2)} 
+\node[inner sep=0pt,minimum size=0pt] (#2v2) at (\xx,\yvac) {};
+} 
+
+\newcommand{\dTone}[2][]{\dAmpOne[$_{T_1}$]{#1}{#2}}
+\newcommand{\dTones}[2][]{\dAmpOne{#1}{#2}}
+\newcommand{\dUone}[2][]{\dAmpOne[$_{U_1}$]{#1}{#2}}
+
+\newcommand{\dTtwo}[3][]{\dAmpTwo[$_{T_2}$]{#1}{#2}{#3}}
+\newcommand{\dTtwos}[3][]{\dAmpTwo{#1}{#2}{#3}}
+\newcommand{\dUtwo}[3][]{\dAmpTwo[$_{U_2}$]{#1}{#2}{#3}}
+
+\newcommand{\dTthr}[4][]{\dAmpThr[$_{T_3}$]{#1}{#2}{#3}{#4}}
+\newcommand{\dTthrs}[4][]{\dAmpThr{#1}{#2}{#3}{#4}}
+\newcommand{\dUthr}[4][]{\dAmpThr[$_{U_3}$]{#1}{#2}{#3}{#4}}
+
+\newcommand{\dTdone}[2][]{\dAmpdOne[$_{T^{\dagger}_1}$]{#1}{#2}}
+\newcommand{\dTdones}[2][]{\dAmpdOne{#1}{#2}}
+\newcommand{\dUdone}[2][]{\dAmpdOne[$_{U^{\dagger}_1}$]{#1}{#2}}
+
+\newcommand{\dTdtwo}[3][]{\dAmpdTwo[$_{T^{\dagger}_2}$]{#1}{#2}{#3}}
+\newcommand{\dTdtwos}[3][]{\dAmpdTwo{#1}{#2}{#3}}
+\newcommand{\dUdtwo}[3][]{\dAmpdTwo[$_{U^{\dagger}_2}$]{#1}{#2}{#3}}
+
+\newcommand{\dTdthr}[4][]{\dAmpdThr[$_{T^{\dagger}_3}$]{#1}{#2}{#3}{#4}}
+\newcommand{\dTdthrs}[4][]{\dAmpdThr{#1}{#2}{#3}{#4}}
+\newcommand{\dUdthr}[4][]{\dAmpdThr[$_{U^{\dagger}_3}$]{#1}{#2}{#3}{#4}}
+
+\newcommand{\dline}[3][]{
+\ifthenelse{\isempty{#1}}
+{\draw[->,>=stealth,thin](#2) -- (#3);}
+{\draw[->,>=stealth,thin](#2) -- node[inner sep=0pt,minimum size=0pt,right = 0.5pt] {\footnotesize\slshape\sffamily #1} (#3);}
+}
+\newcommand{\dcurve}[3][]{
+\ifthenelse{\isempty{#1}}
+{\draw[->,>=stealth,thin](#2) to [bend right=30] (#3);}
+{\draw[->,>=stealth,thin](#2) to [bend right=30] node[inner sep=0pt,minimum size=0pt,right = 0.5pt] {\footnotesize\slshape\sffamily #1} (#3);}
+}
+\newcommand{\dcurver}[3][]{
+\ifthenelse{\isempty{#1}}
+{\draw[->,>=stealth,thin](#2) to [bend left=30] (#3);}
+{\draw[->,>=stealth,thin](#2) to [bend left=30] node[inner sep=0pt,minimum size=0pt,right = 0.5pt] {\footnotesize\slshape\sffamily #1} (#3);}
+}
+\newcommand{\dcurcur}[2]{\dcurve{#1}{#2} \dcurve{#2}{#1}}
+\newcommand{\dmovex}[1]{\FPeval\xcoorH{clip(\xcoord+#1*0.25*\sc)}}
+\newcommand{\dmoveT}[1]{\FPeval\xcoor{clip(\xcoord+#1*0.25*\sc)}}
+\newcommand{\dmoveTd}[1]{\FPeval\xcoordg{clip(\xcoord+#1*0.25*\sc)}}
+\newcommand{\dmovac}[1]{\FPeval\yvac{clip(\yvac+#1*0.25*\sc)}}
+\newcommand{\dname}[1]{
+\FPeval\xx{clip(\xcoord+1*\sc)} \FPeval\result{clip(\yvac+0.25*\sc)} 
+\node at (\xx,\result) {#1};}
+\newcommand{\dtext}[2]{\FPeval\xx{clip(\xcoord+#1*\sc)} \FPeval\result{clip(\ycoor-0.5*\sc)} 
+\node at (\xx,\result) {#2};}
+
+\newcommand{\dscale}[1]{\FPset\sc{#1} 
+\FPeval\xcoord{clip(-1*\sc)} \FPeval\ycoord{clip(-1*\sc)} 
+\FPset\xcoor{\xcoord} \FPeval\ycoor{clip(\ycoord+1*\sc)} 
+\FPset\xcoordg{\xcoord}
+\FPset\xcoorH{\xcoord}
+\FPeval\yvac{clip(\yvac*\sc)} \FPeval\xvac{clip(\xvac*\sc)}}
+% end of Diagram-package
+
+
+% test:
+% \begin{pspicture}(\xcoord,\ycoord)(3,3)
+% \dTone{t1}
+% \dTtwo{t21}{t22}
+% \FPeval\xcoorbeg{clip(\xcoord+1)}
+% \dV{vn1}{vn2}
+% \dline{t1}{vn1}
+% \dline{t1v1}{t1}
+% \dline{t21}{vn2}
+% \dline{t21}{t2v1}
+% \dline{vn1}{vn1v2}
+% \dline{vn2}{vn2v2}
+% \dline{t22v1}{t22}
+% \dline{t22}{t22v2}
+% \end{pspicture}
