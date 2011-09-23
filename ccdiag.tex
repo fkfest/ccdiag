@@ -429,7 +429,7 @@
 \newcommand{\dname}[1]{
 \FPeval\xx{clip(\xcoord+1*\sc)} \FPeval\result{clip(\yvac+0.25*\sc)} 
 \node at (\xx,\result) {#1};}
-\newcommand{\dtext}[2]{\FPeval\xx{clip(\xcoord+#1*\sc)} \FPeval\result{clip(\ycoor-0.5*\sc)} 
+\newcommand{\dtext}[2]{\FPeval\xx{clip(\xcoord+#1*\sc)} \FPeval\result{clip((\ycoord+\yvac)/2)} 
 \node at (\xx,\result) {#2};}
 
 \newcommand{\dscale}[1]{\FPset\sc{#1} 
