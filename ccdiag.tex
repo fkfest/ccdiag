@@ -33,9 +33,8 @@
 % \dcurve[<index>]{<from node>}{<to node>} ->   curved "--->" 
 % \dcurver[<index>]{<from node>}{<to node>} ->   curved "--->" (reverse bend)
 % \dcurcur{<node1>}{<node2>} ->     cycled curved "--->"
-% \dcurt{<from node>}{<through node>}{<to node>} -> curved "--->" over three nodes! (don't use for linear - will fail 
-%                                                                             (bloody ubuntu10.04 and old TexLive09...)
-% \dcurtr{<from node>}{<through node>}{<to node>} ->   curved "--->" over three nodes (reverse bend)
+% \dcurt{<from node>}{<through node>}{<to node>} -> curved "--->" over three nodes! 
+% \dcurtr{<from node>}{<through node>}{<to node>} ->   curved "--->" over three nodes (reverse bend) (not needed anymore!)
 %
 %  left vacuum-node for <node1> is called <node1>v1
 %  right -------------"----------------   <node1>v2
@@ -431,15 +430,43 @@
 \newcommand{\dcurt}[3]{
   \draw[ph_line] let \p1 = (#1), \p2 = (#2)
     in \pgfextra{
-          \pgfmathsetmacro{\ang}{ 90-2*atan((\y2-\y1)/(\x2-\x1))}
+        \pgfmathsetmacro{\dx}{\x2==\x1}
+        \pgfmathsetmacro{\dy}{\y2>\y1}
+        \pgfmathsetmacro{\ang}{90-2*atan((\y2-\y1)/(\x2-\x1+\dx/10))}
+        \pgfmathsetmacro{\ango}{180*(1-\dy) - \ang}
+        \pgfmathsetmacro{\angi}{90-180*\dy }
        }
-    (#1) to [out=-\ang,in=-90] (#2);
+    (#1) to [out=\ango,in=\angi] (#2);
   \draw[ph_line] let \p1 = (#2), \p2 = (#3)
     in \pgfextra{
-        \pgfmathsetmacro{\ang}{90+2*atan((\y2-\y1)/(\x2-\x1))}
+        \pgfmathsetmacro{\dx}{\x2==\x1}
+        \pgfmathsetmacro{\dy}{\y2>\y1}
+        \pgfmathsetmacro{\ang}{90+2*atan((\y2-\y1)/(\x2-\x1+\dx/10))}
+        \pgfmathsetmacro{\angi}{180*(1-\dy) + \ang}
+        \pgfmathsetmacro{\ango}{180*\dy -90 }
        }
-    (#2) to [out=90,in=\ang] (#3);
+    (#2) to [out=\ango,in=\angi] (#3);
 }
+% switch to this one if TexLive2011 is available
+%\newcommand{\dcurt}[3]{
+  %\draw[ph_line] let \p1 = (#1), \p2 = (#2)
+    %in \pgfextra{
+        %\pgfmathsetmacro{\dx}{\x2==\x1 ? 1 : \x2-\x1 } 
+        %\pgfmathsetmacro{\ang}{\x2==\x1? -90 :90-2*atan((\y2-\y1)/(\dx))}
+        %\pgfmathsetmacro{\sang}{\y2>\y1? -1 : 1}
+        %\pgfmathsetmacro{\ango}{\y2>\y1? -\ang : 180 - \ang}
+        %\pgfmathsetmacro{\angi}{\y2>\y1? -90 : 90}
+       %}
+    %(#1) to [out=\ango,in=\angi] (#2);
+  %\draw[ph_line] let \p1 = (#2), \p2 = (#3)
+    %in \pgfextra{
+        %\pgfmathsetmacro{\dx}{\x2==\x1 ? 1 : \x2-\x1 }
+        %\pgfmathsetmacro{\ang}{\x2==\x1 ? -90 : 90+2*atan((\y2-\y1)/(\dx))}
+        %\pgfmathsetmacro{\angi}{\y2>\y1? \ang : 180 + \ang}
+        %\pgfmathsetmacro{\ango}{\y2>\y1? 90 : -90}
+       %}
+    %(#2) to [out=\ango,in=\angi] (#3);
+%}
 \newcommand{\dcurtr}[3]{
   \tikzset{ph_line/.style={ph_liner}}
   \dcurt{#3}{#2}{#1}
