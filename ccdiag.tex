@@ -21,11 +21,17 @@
 % \dTv[<order>]{<exc.level>}{<node>} -> \tau
 %
 % \dF{<node>} -> F
+% \dFs{<node>} : one-electron operator without label
+% \dX{<node>} : one-electron perturbation (X as label)
+% \dHone[<name>]{<node>} : one-electron operator with label <name> 
 % \dW{<left node>}{<right node>} -> W
+% \dWs{<left node>}{<right node>} : two-electron operator without label
+% \dXtwo{<left node>}{<right node>} : two-electron perturbation (X as label)
+% \dHtwo[<name>]{<left node>}{<right node>} : two-electron operator with label <name>
 %
-% \dline{<from node>}{<to node>} ->    "--->"
-% \dcurve{<from node>}{<to node>} ->   curved "--->"
-% \dcurver{<from node>}{<to node>} ->   curved "--->" (reverse bend)
+% \dline[<index>]{<from node>}{<to node>} ->    "--->" (if <index> given - write <index> to the right of the line)
+% \dcurve[<index>]{<from node>}{<to node>} ->   curved "--->" 
+% \dcurver[<index>]{<from node>}{<to node>} ->   curved "--->" (reverse bend)
 % \dcurcur{<node1>}{<node2>} ->     cycled curved "--->"
 %  left vacuum-node for <node1> is called <node1>v1
 %  right -------------"----------------   <node1>v2
@@ -312,34 +318,42 @@
 \node[inner sep=0pt,minimum size=0pt] at (\result,\yvac){{\footnotesize\slshape\sffamily \Roman{stoer}}}; }
 }
 
-\newcommand{\dF}[1]{\FPeval\xcoorbeg{clip(\xcoorH+0.5*\sc)}
-\FPeval\xcoorend{clip(\xcoorbeg+1*\sc)} 
+\newcommand{\dHone}[2][]{\FPeval\xcoorbeg{clip(\xcoorH+0.5*\sc)}
+\FPeval\xcoorend{clip(\xcoorbeg+0.8*\sc)} 
 \draw[hoper_line](\xcoorbeg,\ycoor) -- (\xcoorend,\ycoor);
 \node at (\xcoorend,\ycoor){$\bf \times$};
 \FPeval\result{clip(\xcoorend+0.35*\sc)} 
-\node at (\result,\ycoor){$_{F}$};
-\node[inner sep=0pt,minimum size=0pt] (#1) at (\xcoorbeg,\ycoor){}; 
+%name of operator
+\ifthenelse{\isempty{#1}}
+{\FPeval\xcoorH{\xcoorend}}
+{\node at (\result,\ycoor){#1};
+\FPeval\xcoorH{clip(\xcoorend+0.25*\sc)}}
+\node[inner sep=0pt,minimum size=0pt] (#2) at (\xcoorbeg,\ycoor){}; 
 \FPeval\xx{clip(\xcoorbeg-\xvac/2)} 
-\node[inner sep=0pt,minimum size=0pt] (#1v1) at (\xx,\yvac) {}; 
+\node[inner sep=0pt,minimum size=0pt] (#2v1) at (\xx,\yvac) {}; 
 \FPeval\xx{clip(\xcoorbeg+\xvac/2)} 
-\node[inner sep=0pt,minimum size=0pt] (#1v2) at (\xx,\yvac) {};
+\node[inner sep=0pt,minimum size=0pt] (#2v2) at (\xx,\yvac) {};
 }
 
-\newcommand{\dW}[2]{ \FPeval\xcoorbeg{clip(\xcoorH+0.5*\sc)}
+\newcommand{\dHtwo}[3][]{ \FPeval\xcoorbeg{clip(\xcoorH+0.5*\sc)}
 \FPeval\xcoorend{clip(\xcoorbeg+1*\sc)} 
 \draw[hoper_line](\xcoorbeg,\ycoor) -- (\xcoorend,\ycoor); 
 \FPeval\result{clip(\xcoorend+0.35*\sc)} 
-\node at (\result,\ycoor) {$_{W}$};
-\node[inner sep=0pt,minimum size=0pt] (#1) at (\xcoorbeg,\ycoor) {};
-\node[inner sep=0pt,minimum size=0pt] (#2) at (\xcoorend,\ycoor) {};
+%name of operator
+\ifthenelse{\isempty{#1}}
+{\FPeval\xcoorH{\xcoorend}}
+{\node at (\result,\ycoor){#1};
+\FPeval\xcoorH{clip(\xcoorend+0.25*\sc)}}
+\node[inner sep=0pt,minimum size=0pt] (#2) at (\xcoorbeg,\ycoor) {};
+\node[inner sep=0pt,minimum size=0pt] (#3) at (\xcoorend,\ycoor) {};
 \FPeval\xx{clip(\xcoorbeg-\xvac/2)} 
-\node[inner sep=0pt,minimum size=0pt] (#1v1) at (\xx,\yvac) {};
-\FPeval\xx{clip(\xcoorbeg+\xvac/2)} 
-\node[inner sep=0pt,minimum size=0pt] (#1v2) at (\xx,\yvac) {}; 
-\FPeval\xx{clip(\xcoorend-\xvac/2)} 
 \node[inner sep=0pt,minimum size=0pt] (#2v1) at (\xx,\yvac) {};
+\FPeval\xx{clip(\xcoorbeg+\xvac/2)} 
+\node[inner sep=0pt,minimum size=0pt] (#2v2) at (\xx,\yvac) {}; 
+\FPeval\xx{clip(\xcoorend-\xvac/2)} 
+\node[inner sep=0pt,minimum size=0pt] (#3v1) at (\xx,\yvac) {};
 \FPeval\xx{clip(\xcoorend+\xvac/2)} 
-\node[inner sep=0pt,minimum size=0pt] (#2v2) at (\xx,\yvac) {};
+\node[inner sep=0pt,minimum size=0pt] (#3v2) at (\xx,\yvac) {};
 } 
 
 \newcommand{\dTone}[2][]{\dAmpOne[$_{T_1}$]{#1}{#2}}
@@ -373,8 +387,7 @@
 \newcommand{\dTv}[3][]{
 \tikzset{exoper_line/.style={exvac_line_save}}
 \dAmp{#1}{#2}{#3}
-\tikzset{exoper_line/.style={exoper_line_save}}
-}
+\tikzset{exoper_line/.style={exoper_line_save}} }
 
 \newcommand{\dTd}[3][]{\dAmpD[$_{T^{\dagger}_#2}$]{#1}{#2}{#3}}
 \newcommand{\dTds}[3][]{\dAmpD{#1}{#2}{#3}}
@@ -382,8 +395,16 @@
 \newcommand{\dTdv}[3][]{
 \tikzset{exoper_line/.style={exvac_line_save}}
 \dAmpD{#1}{#2}{#3}
-\tikzset{exoper_line/.style={exoper_line_save}}
-}
+\tikzset{exoper_line/.style={exoper_line_save}} }
+
+%Hamilton parts
+\newcommand{\dF}[1]{\dHone[$_{F}$]{#1}}
+\newcommand{\dFs}[1]{\dHone{#1}}
+\newcommand{\dX}[1]{\dHone[$_{X}$]{#1}}
+
+\newcommand{\dW}[2]{\dHtwo[$_{W}$]{#1}{#2}}
+\newcommand{\dWs}[2]{\dHtwo{#1}{#2}}
+\newcommand{\dXtwo}[2]{\dHtwo[$_{X}$]{#1}{#2}}
 
 \newcommand{\dline}[3][]{
 \ifthenelse{\isempty{#1}}
