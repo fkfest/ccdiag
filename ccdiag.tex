@@ -7,7 +7,7 @@
 %       new commands (-> Diagram-package)
 %           D.Kats, September 2011
 %
-% \bdiag[s] start diagram. If s is given, the H diagram is in the middle (otherwise it is shifted to the vacuum)
+% \bdiag[s] start diagram. If s is given, the H diagram is in the middle (otherwise it is shifted halfway to the vacuum)
 %
 % \dT[<order>]{<exc.level>}{<node>} -> T_<exc.level>^{(<order>)}
 % node-names are generated as <node>1, <node>2, <node>3, ...
@@ -33,6 +33,10 @@
 % \dcurve[<index>]{<from node>}{<to node>} ->   curved "--->" 
 % \dcurver[<index>]{<from node>}{<to node>} ->   curved "--->" (reverse bend)
 % \dcurcur{<node1>}{<node2>} ->     cycled curved "--->"
+% \dcurt{<from node>}{<through node>}{<to node>} -> curved "--->" over three nodes! (don't use for linear - will fail 
+%                                                                             (bloody ubuntu10.04 and old TexLive09...)
+% \dcurtr{<from node>}{<through node>}{<to node>} ->   curved "--->" over three nodes (reverse bend)
+%
 %  left vacuum-node for <node1> is called <node1>v1
 %  right -------------"----------------   <node1>v2
 %
@@ -78,6 +82,7 @@
 \tikzset{exoper_line/.style={exoper_line_save}}
 \tikzset{hoper_line/.style={hoper_line_save}}
 \tikzset{ph_line/.style={ph_line_save}}
+\tikzset{ph_liner/.style={ph_line_save,<-}}
 
 \newcommand{\bdiag}[1][]{
   \begin{tikzpicture}
@@ -417,11 +422,30 @@
 {\draw[ph_line](#2) to [bend right=30] node[inner sep=0pt,minimum size=0pt,right = 0.5pt] {\footnotesize\slshape\sffamily #1} (#3);}
 }
 \newcommand{\dcurver}[3][]{
-\ifthenelse{\isempty{#1}}
-{\draw[ph_line](#2) to [bend left=30] (#3);}
-{\draw[ph_line](#2) to [bend left=30] node[inner sep=0pt,minimum size=0pt,right = 0.5pt] {\footnotesize\slshape\sffamily #1} (#3);}
+  \tikzset{ph_line/.style={ph_liner}}
+  \dcurve[#1]{#3}{#2}
+  \tikzset{ph_line/.style={ph_line_save}}
 }
 \newcommand{\dcurcur}[2]{\dcurve{#1}{#2} \dcurve{#2}{#1}}
+
+\newcommand{\dcurt}[3]{
+  \draw[ph_line] let \p1 = (#1), \p2 = (#2)
+    in \pgfextra{
+          \pgfmathsetmacro{\ang}{ 90-2*atan((\y2-\y1)/(\x2-\x1))}
+       }
+    (#1) to [out=-\ang,in=-90] (#2);
+  \draw[ph_line] let \p1 = (#2), \p2 = (#3)
+    in \pgfextra{
+        \pgfmathsetmacro{\ang}{90+2*atan((\y2-\y1)/(\x2-\x1))}
+       }
+    (#2) to [out=90,in=\ang] (#3);
+}
+\newcommand{\dcurtr}[3]{
+  \tikzset{ph_line/.style={ph_liner}}
+  \dcurt{#3}{#2}{#1}
+  \tikzset{ph_line/.style={ph_line_save}}  
+}
+
 \newcommand{\dmovex}[1]{\FPeval\xcoorH{clip(\xcoord+#1*0.25*\sc)}}
 \newcommand{\dmoveT}[1]{\FPeval\xcoor{clip(\xcoord+#1*0.25*\sc)}}
 \newcommand{\dmoveTd}[1]{\FPeval\xcoordg{clip(\xcoord+#1*0.25*\sc)}}
