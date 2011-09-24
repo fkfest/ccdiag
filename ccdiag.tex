@@ -4,10 +4,11 @@
 % \usepackage{fp}
 \usetikzlibrary{calc}
 %
-%       new commands (-> Diagram-package)
+%             CCDiag v.1.0 
 %           D.Kats, September 2011
 %
-% \bdiag[s] start diagram. If s is given, the H diagram is in the middle (otherwise it is shifted halfway to the vacuum)
+% \bdiag[<scale>] start diagram. If <scale> is given, the diagram will be scaled
+% \bdiags[<scale>]: the H diagram will be placed in the middle (otherwise it is shifted halfway to the vacuum)
 %
 % \dT[<order>]{<exc.level>}{<node>} -> T_<exc.level>^{(<order>)}
 % node-names are generated as <node>1, <node>2, <node>3, ...
@@ -72,7 +73,7 @@
 \FPset\xcoor{\xcoord} \FPeval\ycoor{clip(\ycoord+1*\sc)} 
 \FPset\xcoordg{\xcoord}
 \FPset\xcoorH{\xcoord}
-\FPeval\yvac{clip(\ycoor+0.5*\sc)} \FPeval\xvac{clip(0.25*\sc)}
+\FPeval\yvac{clip(\ycoor+0.5*\sc)} \FPeval\xvac{clip(0.25*\sc)} \FPeval\xdvac{clip(0.5*\sc)}
 \newcounter{stoer} 
 \tikzset{exoper_line_save/.style={very thick, solid}}
 \tikzset{exvac_line_save/.style={very thick, dotted}}
@@ -84,13 +85,17 @@
 \tikzset{ph_liner/.style={ph_line_save,<-}}
 
 \newcommand{\bdiag}[1][]{
-  \begin{tikzpicture}
-    \ifthenelse{\isempty{#1}}
-      {}
-      {%symmetric diagram
-        \FPeval\yvac{clip(\ycoor+1*\sc)}
-        \FPeval\xvac{clip(0.5*\sc)}
-      }
+ \ifthenelse{\isempty{#1}}
+  {\begin{tikzpicture}}
+  {\begin{tikzpicture}[scale=#1]}
+}
+\newcommand{\bdiags}[1][]{
+ \ifthenelse{\isempty{#1}}
+  {\begin{tikzpicture}}
+  {\begin{tikzpicture}[scale=#1]}
+  %symmetric diagram
+   \FPeval\yvac{clip(\ycoor+1*\sc)}
+   \FPeval\xvac{clip(0.5*\sc)}
 }
 \newcommand{\ediag}{\end{tikzpicture}}
 
@@ -323,7 +328,7 @@
 }
 
 \newcommand{\dHone}[2][]{\FPeval\xcoorbeg{clip(\xcoorH+0.5*\sc)}
-\FPeval\xcoorend{clip(\xcoorbeg+0.8*\sc)} 
+\FPeval\xcoorend{clip(\xcoorbeg+0.5*\sc)} 
 \draw[hoper_line](\xcoorbeg,\ycoor) -- (\xcoorend,\ycoor);
 \node at (\xcoorend,\ycoor){$\bf \times$};
 \FPeval\result{clip(\xcoorend+0.35*\sc)} 
@@ -337,6 +342,31 @@
 \node[inner sep=0pt,minimum size=0pt] (#2v1) at (\xx,\yvac) {}; 
 \FPeval\xx{clip(\xcoorbeg+\xvac/2)} 
 \node[inner sep=0pt,minimum size=0pt] (#2v2) at (\xx,\yvac) {};
+\FPeval\xx{clip(\xcoorbeg-\xdvac/2)}
+\node[inner sep=0pt,minimum size=0pt] (#2vd1) at (\xx,\ycoord) {};
+\FPeval\xx{clip(\xcoorbeg+\xdvac/2)}
+\node[inner sep=0pt,minimum size=0pt] (#2vd2) at (\xx,\ycoord) {};
+}
+
+\newcommand{\dHoner}[2][]{\FPeval\xcoorbeg{clip(\xcoorH+0.5*\sc)}
+\FPeval\xcoorend{clip(\xcoorbeg+0.5*\sc)} 
+\draw[hoper_line](\xcoorbeg,\ycoor) -- (\xcoorend,\ycoor);
+\node at (\xcoorbeg,\ycoor){$\bf \times$};
+\FPeval\result{clip(\xcoorend+0.35*\sc)} 
+%name of operator
+\ifthenelse{\isempty{#1}}
+{\FPeval\xcoorH{\xcoorend}}
+{\node at (\result,\ycoor){#1};
+\FPeval\xcoorH{clip(\xcoorend+0.25*\sc)}}
+\node[inner sep=0pt,minimum size=0pt] (#2) at (\xcoorend,\ycoor){}; 
+\FPeval\xx{clip(\xcoorend-\xvac/2)} 
+\node[inner sep=0pt,minimum size=0pt] (#2v1) at (\xx,\yvac) {}; 
+\FPeval\xx{clip(\xcoorend+\xvac/2)} 
+\node[inner sep=0pt,minimum size=0pt] (#2v2) at (\xx,\yvac) {};
+\FPeval\xx{clip(\xcoorend-\xdvac/2)}
+\node[inner sep=0pt,minimum size=0pt] (#2vd1) at (\xx,\ycoord) {};
+\FPeval\xx{clip(\xcoorend+\xdvac/2)}
+\node[inner sep=0pt,minimum size=0pt] (#2vd2) at (\xx,\ycoord) {};
 }
 
 \newcommand{\dHtwo}[3][]{ \FPeval\xcoorbeg{clip(\xcoorH+0.5*\sc)}
@@ -358,6 +388,14 @@
 \node[inner sep=0pt,minimum size=0pt] (#3v1) at (\xx,\yvac) {};
 \FPeval\xx{clip(\xcoorend+\xvac/2)} 
 \node[inner sep=0pt,minimum size=0pt] (#3v2) at (\xx,\yvac) {};
+\FPeval\xx{clip(\xcoorbeg-\xdvac/2)} 
+\node[inner sep=0pt,minimum size=0pt] (#2vd1) at (\xx,\ycoord) {};
+\FPeval\xx{clip(\xcoorbeg+\xdvac/2)} 
+\node[inner sep=0pt,minimum size=0pt] (#2vd2) at (\xx,\ycoord) {}; 
+\FPeval\xx{clip(\xcoorend-\xdvac/2)} 
+\node[inner sep=0pt,minimum size=0pt] (#3vd1) at (\xx,\ycoord) {};
+\FPeval\xx{clip(\xcoorend+\xdvac/2)} 
+\node[inner sep=0pt,minimum size=0pt] (#3vd2) at (\xx,\ycoord) {};
 } 
 
 \newcommand{\dTone}[2][]{\dAmpOne[$_{T_1}$]{#1}{#2}}
@@ -405,6 +443,10 @@
 \newcommand{\dF}[1]{\dHone[$_{F}$]{#1}}
 \newcommand{\dFs}[1]{\dHone{#1}}
 \newcommand{\dX}[1]{\dHone[$_{X}$]{#1}}
+
+\newcommand{\dFr}[1]{\dHoner[$_{F}$]{#1}}
+\newcommand{\dFsr}[1]{\dHoner{#1}}
+\newcommand{\dXr}[1]{\dHoner[$_{X}$]{#1}}
 
 \newcommand{\dW}[2]{\dHtwo[$_{W}$]{#1}{#2}}
 \newcommand{\dWs}[2]{\dHtwo{#1}{#2}}
@@ -473,9 +515,9 @@
   \tikzset{ph_line/.style={ph_line_save}}  
 }
 
-\newcommand{\dmovex}[1]{\FPeval\xcoorH{clip(\xcoord+#1*0.25*\sc)}}
-\newcommand{\dmoveT}[1]{\FPeval\xcoor{clip(\xcoord+#1*0.25*\sc)}}
-\newcommand{\dmoveTd}[1]{\FPeval\xcoordg{clip(\xcoord+#1*0.25*\sc)}}
+\newcommand{\dmovex}[1]{\FPeval\xcoorH{clip(\xcoorH+#1*0.25*\sc)}}
+\newcommand{\dmoveT}[1]{\FPeval\xcoor{clip(\xcoor+#1*0.25*\sc)}}
+\newcommand{\dmoveTd}[1]{\FPeval\xcoordg{clip(\xcoordg+#1*0.25*\sc)}}
 \newcommand{\dmovac}[1]{\FPeval\yvac{clip(\yvac+#1*0.25*\sc)}}
 \newcommand{\dname}[1]{
 \FPeval\xx{clip(\xcoord+1*\sc)} \FPeval\result{clip(\yvac+0.25*\sc)} 
