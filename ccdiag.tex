@@ -1,7 +1,6 @@
 %
 % \usepackage{tikz}
 % \usepackage{xifthen}
-% \usepackage{fp}
 \usetikzlibrary{calc}
 %
 %             CCDiag v.1.0 
@@ -52,28 +51,15 @@
 %
 % change exoper_line_save, exvac_line_save, hoper_line_save, ph_line_save
 %  in order to change excitation operator, explicit vacuum, H-operator, or p/h line styles.
-%
-% Old commands (useful for custom node-names):
-% \dTone{<node>} -> T_1
-% \dTtwo{<left node>}{<right node>} -> T_2
-% \dTthr{<left node>}{<middle node>}{<right node>} -> T_3
-%
-% \dTone[<order>]{<node>} -> T_1^{(<order>)}
-% \dTtwo[<order>]{<left node>}{<right node>} -> T_2^{(<order>)}
-% \dTthr[<order>]{<left node>}{<middle node>}{<right node>} -> T_3^{(<order>)}
-%
-% same with \dUone, \dUtwo, \dUthr (will print U_1, U_2 or U_3)
-% for excitation operators without label use \dTones, \dTtwos, \dTthrs
-% One can customize labels (see e.g. how \dUone is defined)
 
 
 \edef\xcoord{11} \edef\xcoor{11} \edef\xcoorbeg{11} \edef\xcoorend{11} \edef\result{11} \edef\ycoor{11} \edef\ycoord{11} \edef\sc{11} 
-\FPset\sc{1} %default scale-value
-\FPeval\xcoord{clip(-1*\sc)} \FPeval\ycoord{clip(-1*\sc)} 
-\FPset\xcoor{\xcoord} \FPeval\ycoor{clip(\ycoord+1*\sc)} 
-\FPset\xcoordg{\xcoord}
-\FPset\xcoorH{\xcoord}
-\FPeval\yvac{clip(\ycoor+0.5*\sc)} \FPeval\xvac{clip(0.25*\sc)} \FPeval\xdvac{clip(0.5*\sc)}
+\pgfmathsetmacro{\sc}{1} %default scale-value
+\pgfmathsetmacro{\xcoord}{(-1*\sc)} \pgfmathsetmacro{\ycoord}{(-1*\sc)} 
+\pgfmathsetmacro{\xcoor}{\xcoord} \pgfmathsetmacro{\ycoor}{(\ycoord+1*\sc)} 
+\pgfmathsetmacro{\xcoordg}{\xcoord}
+\pgfmathsetmacro{\xcoorH}{\xcoord}
+\pgfmathsetmacro{\yvac}{(\ycoor+0.5*\sc)} \pgfmathsetmacro{\xvac}{(0.25*\sc)} \pgfmathsetmacro{\xdvac}{(0.5*\sc)}
 \newcounter{stoer} 
 \tikzset{exoper_line_save/.style={very thick, solid}}
 \tikzset{exvac_line_save/.style={very thick, dotted}}
@@ -94,183 +80,27 @@
   {\begin{tikzpicture}}
   {\begin{tikzpicture}[scale=#1]}
   %symmetric diagram
-   \FPeval\yvac{clip(\ycoor+1*\sc)}
-   \FPeval\xvac{clip(0.5*\sc)}
+   \pgfmathsetmacro{\yvac}{(\ycoor+1*\sc)}
+   \pgfmathsetmacro{\xvac}{(0.5*\sc)}
 }
 \newcommand{\ediag}{\end{tikzpicture}}
 
-\newcommand{\dAmpOne}[3][]{\FPeval\xcoorbeg{clip(\xcoor+0.5*\sc)} 
-\FPeval\xcoorend{clip(\xcoorbeg+0.5*\sc)} 
-\draw[very thick](\xcoorbeg,\ycoord) -- (\xcoorend,\ycoord);
-\FPeval\result{clip(\xcoorend+0.35*\sc)} 
-\ifthenelse{\isempty{#1}}  
-{\FPeval\xcoor{\xcoorend}}
-{\node at (\result,\ycoord){#1};
-\FPeval\xcoor{clip(\xcoorend+0.25*\sc)}} 
-\FPeval\result{clip((\xcoorbeg+\xcoorend)/2)} 
-\node[inner sep=0pt,minimum size=0pt] (#3) at  (\result,\ycoord) {};
-\FPeval\xx{clip(\xcoorbeg-\xvac)} 
-\node[inner sep=0pt,minimum size=0pt] (#3v1) at (\xx,\yvac) {}; 
-\FPeval\xx{clip(\xcoorbeg+\xvac)} 
-\node[inner sep=0pt,minimum size=0pt] (#3v2) at (\xx,\yvac) {};
-\ifthenelse{\isempty{#2}}  {}  
-{ 
-\FPeval\result{clip((\xcoorend+\xcoorbeg)/2)} 
-\setcounter{stoer}{#2} 
-\node[inner sep=0pt,minimum size=0pt] at (\result,\ycoord){{\footnotesize\slshape\sffamily \Roman{stoer}}}; }
-}
-
-\newcommand{\dAmpTwo}[4][]{\FPeval\xcoorbeg{clip(\xcoor+0.5*\sc)} 
-\FPeval\xcoorend{clip(\xcoorbeg+1*\sc)} 
-\draw[very thick](\xcoorbeg,\ycoord) -- (\xcoorend,\ycoord);
-\FPeval\result{clip(\xcoorend+0.35*\sc)} 
-\ifthenelse{\isempty{#1}}  
-{\FPeval\xcoor{\xcoorend}}
-{\node at (\result,\ycoord){#1};
-\FPeval\xcoor{clip(\xcoorend+0.25*\sc)}}
-\node[inner sep=0pt,minimum size=0pt] (#3) at (\xcoorbeg,\ycoord) {};
-\node[inner sep=0pt,minimum size=0pt] (#4) at (\xcoorend,\ycoord) {};  
-\FPeval\xx{clip(\xcoorbeg-\xvac)} 
-\node[inner sep=0pt,minimum size=0pt] (#3v1) at (\xx,\yvac) {}; 
-\FPeval\xx{clip(\xcoorbeg+\xvac)} 
-\node[inner sep=0pt,minimum size=0pt] (#3v2) at (\xx,\yvac) {};
-\FPeval\xx{clip(\xcoorend-\xvac)} 
-\node[inner sep=0pt,minimum size=0pt] (#4v1) at (\xx,\yvac) {};
-\FPeval\xx{clip(\xcoorend+\xvac)} 
-\node[inner sep=0pt,minimum size=0pt] (#4v2) at (\xx,\yvac) {};
-\ifthenelse{\isempty{#2}}  {}  
-{ 
-\FPeval\result{clip((\xcoorend+\xcoorbeg)/2)} 
-\setcounter{stoer}{#2} 
-\node[inner sep=0pt,minimum size=0pt] at (\result,\ycoord){{\footnotesize\slshape\sffamily \Roman{stoer}}}; }
-}
-
-\newcommand{\dAmpThr}[5][]{\FPeval\xcoorbeg{clip(\xcoor+0.5*\sc)} 
-\FPeval\xcoorend{clip(\xcoorbeg+1*\sc)} 
-\draw[very thick](\xcoorbeg,\ycoord) -- (\xcoorend,\ycoord);
-\FPeval\result{clip(\xcoorend+0.35*\sc)} 
-\ifthenelse{\isempty{#1}}  
-{\FPeval\xcoor{\xcoorend}}
-{\node at (\result,\ycoord){#1};
-\FPeval\xcoor{clip(\xcoorend+0.25*\sc)}}
-\node[inner sep=0pt,minimum size=0pt] (#3) at (\xcoorbeg,\ycoord) {};
-\FPeval\result{clip((\xcoorbeg+\xcoorend)/2)} 
-\node[inner sep=0pt,minimum size=0pt] (#4) at  (\result,\ycoord) {};
-\node[inner sep=0pt,minimum size=0pt] (#5) at (\xcoorend,\ycoord) {};  
-\FPeval\xx{clip(\xcoorbeg-\xvac)} 
-\node[inner sep=0pt,minimum size=0pt] (#3v1) at (\xx,\yvac) {}; 
-\FPeval\xx{clip(\xcoorbeg+\xvac)} 
-\node[inner sep=0pt,minimum size=0pt] (#3v2) at (\xx,\yvac) {};
-\FPeval\xx{clip(\result-\xvac)} 
-\node[inner sep=0pt,minimum size=0pt] (#4v1) at (\xx,\yvac) {};
-\FPeval\xx{clip(\result+\xvac)} 
-\node[inner sep=0pt,minimum size=0pt] (#4v2) at (\xx,\yvac) {};
-\FPeval\xx{clip(\xcoorend-\xvac)} 
-\node[inner sep=0pt,minimum size=0pt] (#5v1) at (\xx,\yvac) {};
-\FPeval\xx{clip(\xcoorend+\xvac)} 
-\node[inner sep=0pt,minimum size=0pt] (#5v2) at (\xx,\yvac) {};
-\ifthenelse{\isempty{#2}}  {}  
-{ 
-\FPeval\result{clip((\xcoorend+\xcoorbeg)/2)} 
-\setcounter{stoer}{#2} 
-\node[inner sep=0pt,minimum size=0pt] at (\result,\ycoord){{\footnotesize\slshape\sffamily \Roman{stoer}}}; }
-}
-
-
-
-\newcommand{\dAmpdOne}[3][]{\FPeval\xcoorbeg{clip(\xcoordg+0.5*\sc)} 
-\FPeval\xcoorend{clip(\xcoorbeg+0.5*\sc)} 
-\draw[very thick](\xcoorbeg,\yvac) -- (\xcoorend,\yvac);
-\FPeval\result{clip(\xcoorend+0.35*\sc)} 
-\ifthenelse{\isempty{#1}}  
-{\FPeval\xcoordg{\xcoorend}}
-{\node at (\result,\yvac){#1};
-\FPeval\xcoordg{clip(\xcoorend+0.25*\sc)}}
-\FPeval\result{clip((\xcoorbeg+\xcoorend)/2)} 
-\node[inner sep=0pt,minimum size=0pt] (#3) at  (\result,\yvac) {};
-\FPeval\xx{clip(\result-\xvac)} 
-\node[inner sep=0pt,minimum size=0pt] (#3v1) at (\xx,\ycoord) {};
-\FPeval\xx{clip(\result+\xvac)} 
-\node[inner sep=0pt,minimum size=0pt] (#3v2) at (\xx,\ycoord) {};
-\ifthenelse{\isempty{#2}}  {}  
-{ 
-\FPeval\result{clip((\xcoorend+\xcoorbeg)/2)} 
-\setcounter{stoer}{#2} 
-\node[inner sep=0pt,minimum size=0pt] at (\result,\yvac){{\footnotesize\slshape\sffamily \Roman{stoer}}}; }
-}
-
-\newcommand{\dAmpdTwo}[4][]{\FPeval\xcoorbeg{clip(\xcoordg+0.5*\sc)} 
-\FPeval\xcoorend{clip(\xcoorbeg+1*\sc)} 
-\draw[very thick](\xcoorbeg,\yvac) -- (\xcoorend,\yvac);
-\FPeval\result{clip(\xcoorend+0.35*\sc)} 
-\ifthenelse{\isempty{#1}}  
-{\FPeval\xcoordg{\xcoorend}}
-{\node at (\result,\yvac){#1};
-\FPeval\xcoordg{clip(\xcoorend+0.25*\sc)}}
-\node[inner sep=0pt,minimum size=0pt] (#3) at (\xcoorbeg,\yvac) {};
-\node[inner sep=0pt,minimum size=0pt] (#4) at (\xcoorend,\yvac) {};  
-\FPeval\xx{clip(\xcoorbeg-\xvac)} 
-\node[inner sep=0pt,minimum size=0pt] (#3v1) at (\xx,\ycoord) {}; 
-\FPeval\xx{clip(\xcoorbeg+\xvac)} 
-\node[inner sep=0pt,minimum size=0pt] (#3v2) at (\xx,\ycoord) {};
-\FPeval\xx{clip(\xcoorend-\xvac)} 
-\node[inner sep=0pt,minimum size=0pt] (#4v1) at (\xx,\ycoord) {};
-\FPeval\xx{clip(\xcoorend+\xvac)} 
-\node[inner sep=0pt,minimum size=0pt] (#4v2) at (\xx,\ycoord) {};
-\ifthenelse{\isempty{#2}}  {}  
-{ 
-\FPeval\result{clip((\xcoorend+\xcoorbeg)/2)} 
-\setcounter{stoer}{#2} 
-\node[inner sep=0pt,minimum size=0pt] at (\result,\yvac){{\footnotesize\slshape\sffamily \Roman{stoer}}}; }
-}
-
-\newcommand{\dAmpdThr}[5][]{\FPeval\xcoorbeg{clip(\xcoordg+0.5*\sc)} 
-\FPeval\xcoorend{clip(\xcoorbeg+1*\sc)} 
-\draw[very thick](\xcoorbeg,\yvac) -- (\xcoorend,\yvac);
-\FPeval\result{clip(\xcoorend+0.35*\sc)} 
-\ifthenelse{\isempty{#1}}  
-{\FPeval\xcoordg{\xcoorend}}
-{\node at (\result,\yvac){#1};
-\FPeval\xcoordg{clip(\xcoorend+0.25*\sc)}}
-\node[inner sep=0pt,minimum size=0pt] (#3) at (\xcoorbeg,\yvac) {};
-\FPeval\result{clip((\xcoorbeg+\xcoorend)/2)} 
-\node[inner sep=0pt,minimum size=0pt] (#4) at  (\result,\yvac) {};
-\node[inner sep=0pt,minimum size=0pt] (#5) at (\xcoorend,\yvac) {};  
-\FPeval\xx{clip(\xcoorbeg-\xvac)} 
-\node[inner sep=0pt,minimum size=0pt] (#3v1) at (\xx,\ycoord) {}; 
-\FPeval\xx{clip(\xcoorbeg+\xvac)} 
-\node[inner sep=0pt,minimum size=0pt] (#3v2) at (\xx,\ycoord) {};
-\FPeval\xx{clip(\result-\xvac)} 
-\node[inner sep=0pt,minimum size=0pt] (#4v1) at (\xx,\ycoord) {};
-\FPeval\xx{clip(\result+\xvac)} 
-\node[inner sep=0pt,minimum size=0pt] (#4v2) at (\xx,\ycoord) {};
-\FPeval\xx{clip(\xcoorend-\xvac)} 
-\node[inner sep=0pt,minimum size=0pt] (#5v1) at (\xx,\ycoord) {};
-\FPeval\xx{clip(\xcoorend+\xvac)} 
-\node[inner sep=0pt,minimum size=0pt] (#5v2) at (\xx,\ycoord) {};
-\ifthenelse{\isempty{#2}}  {}  
-{ 
-\FPeval\result{clip((\xcoorend+\xcoorbeg)/2)} 
-\setcounter{stoer}{#2} 
-\node[inner sep=0pt,minimum size=0pt] at (\result,\yvac){{\footnotesize\slshape\sffamily \Roman{stoer}}}; }
-}
-
 \newcommand{\dAmp}[4][]{%for all
-\FPeval\xcoorbeg{clip(\xcoor+0.5*\sc)} 
-\FPeval\xcoorend{clip(\xcoorbeg+#3*\sc/2)} 
+\pgfmathsetmacro{\xcoorbeg}{(\xcoor+0.5*\sc)} 
+\pgfmathsetmacro{\xcoorend}{(\xcoorbeg+#3*\sc/2)} 
 \draw[exoper_line](\xcoorbeg,\ycoord) -- (\xcoorend,\ycoord);
-\FPeval\result{clip(\xcoorend+0.35*\sc)} 
+\pgfmathsetmacro{\result}{(\xcoorend+0.35*\sc)} 
 % write label if given
 \ifthenelse{\isempty{#1}}  
-{\FPeval\xcoor{\xcoorend}}
+{\pgfmathsetmacro{\xcoor}{\xcoorend}}
 {\node at (\result,\ycoord){#1};
-\FPeval\xcoor{clip(\xcoorend+0.25*\sc)}}
+\pgfmathsetmacro{\xcoor}{(\xcoorend+0.25*\sc)}}
 % calculate the vertex-distance (singles are a special case)
 \ifthenelse{ #3 = 1}
-{ \FPeval\xxx{clip((\xcoorend-\xcoorbeg)/2)} 
-  \FPset\result{\xcoorbeg}}
-{ \FPeval\xxx{clip((\xcoorend-\xcoorbeg)/( #3 - 1 ))} 
-  \FPeval\result{clip(\xcoorbeg-\xxx)}}
+{ \pgfmathsetmacro{\xxx}{((\xcoorend-\xcoorbeg)/2)} 
+  \pgfmathsetmacro{\result}{\xcoorbeg}}
+{ \pgfmathsetmacro{\xxx}{((\xcoorend-\xcoorbeg)/( #3 - 1 ))} 
+  \pgfmathsetmacro{\result}{(\xcoorbeg-\xxx)}}
 % set all nodes (and give them names)
 \foreach \x in {1,...,#3}
 {
@@ -286,27 +116,27 @@
 % set perturbation (if given)
 \ifthenelse{\isempty{#2}}  {}  
 { 
-\FPeval\result{clip((\xcoorend+\xcoorbeg)/2)} 
+\pgfmathsetmacro{\result}{((\xcoorend+\xcoorbeg)/2)} 
 \setcounter{stoer}{#2} 
 \node[inner sep=0pt,minimum size=0pt] at (\result,\ycoord){{\footnotesize\slshape\sffamily \Roman{stoer}}}; }
 }
 
 \newcommand{\dAmpD}[4][]{%for all
-\FPeval\xcoorbeg{clip(\xcoordg+0.5*\sc)} 
-\FPeval\xcoorend{clip(\xcoorbeg+#3*\sc/2)} 
+\pgfmathsetmacro{\xcoorbeg}{(\xcoordg+0.5*\sc)} 
+\pgfmathsetmacro{\xcoorend}{(\xcoorbeg+#3*\sc/2)} 
 \draw[exoper_line](\xcoorbeg,\yvac) -- (\xcoorend,\yvac);
-\FPeval\result{clip(\xcoorend+0.35*\sc)} 
+\pgfmathsetmacro{\result}{(\xcoorend+0.35*\sc)} 
 % write label if given
 \ifthenelse{\isempty{#1}}  
-{\FPeval\xcoordg{\xcoorend}}
+{\pgfmathsetmacro{\xcoordg}{\xcoorend}}
 {\node at (\result,\yvac){#1};
-\FPeval\xcoordg{clip(\xcoorend+0.25*\sc)}}
+\pgfmathsetmacro{\xcoordg}{(\xcoorend+0.25*\sc)}}
 % calculate the vertex-distance (singles are a special case)
 \ifthenelse{ #3 = 1}
-{ \FPeval\xxx{clip((\xcoorend-\xcoorbeg)/2)} 
-  \FPset\result{\xcoorbeg}}
-{ \FPeval\xxx{clip((\xcoorend-\xcoorbeg)/( #3 - 1 ))} 
-  \FPeval\result{clip(\xcoorbeg-\xxx)}}
+{ \pgfmathsetmacro{\xxx}{((\xcoorend-\xcoorbeg)/2)} 
+  \pgfmathsetmacro{\result}{\xcoorbeg}}
+{ \pgfmathsetmacro{\xxx}{((\xcoorend-\xcoorbeg)/( #3 - 1 ))} 
+  \pgfmathsetmacro{\result}{(\xcoorbeg-\xxx)}}
 % set all nodes (and give them names)
 \foreach \x in {1,...,#3}
 {
@@ -322,105 +152,81 @@
 % set perturbation (if given)
 \ifthenelse{\isempty{#2}}  {}  
 { 
-\FPeval\result{clip((\xcoorend+\xcoorbeg)/2)} 
+\pgfmathsetmacro{\result}{((\xcoorend+\xcoorbeg)/2)} 
 \setcounter{stoer}{#2} 
 \node[inner sep=0pt,minimum size=0pt] at (\result,\yvac){{\footnotesize\slshape\sffamily \Roman{stoer}}}; }
 }
 
-\newcommand{\dHone}[2][]{\FPeval\xcoorbeg{clip(\xcoorH+0.5*\sc)}
-\FPeval\xcoorend{clip(\xcoorbeg+0.5*\sc)} 
+\newcommand{\dHone}[2][]{\pgfmathsetmacro{\xcoorbeg}{(\xcoorH+0.5*\sc)}
+\pgfmathsetmacro{\xcoorend}{(\xcoorbeg+0.5*\sc)} 
 \draw[hoper_line](\xcoorbeg,\ycoor) -- (\xcoorend,\ycoor);
 \node at (\xcoorend,\ycoor){$\bf \times$};
-\FPeval\result{clip(\xcoorend+0.35*\sc)} 
+\pgfmathsetmacro{\result}{(\xcoorend+0.35*\sc)} 
 %name of operator
 \ifthenelse{\isempty{#1}}
-{\FPeval\xcoorH{\xcoorend}}
+{\pgfmathsetmacro{\xcoorH}{\xcoorend}}
 {\node at (\result,\ycoor){#1};
-\FPeval\xcoorH{clip(\xcoorend+0.25*\sc)}}
+\pgfmathsetmacro{\xcoorH}{(\xcoorend+0.25*\sc)}}
 \node[inner sep=0pt,minimum size=0pt] (#2) at (\xcoorbeg,\ycoor){}; 
-\FPeval\xx{clip(\xcoorbeg-\xvac/2)} 
+\pgfmathsetmacro{\xx}{(\xcoorbeg-\xvac/2)} 
 \node[inner sep=0pt,minimum size=0pt] (#2v1) at (\xx,\yvac) {}; 
-\FPeval\xx{clip(\xcoorbeg+\xvac/2)} 
+\pgfmathsetmacro{\xx}{(\xcoorbeg+\xvac/2)} 
 \node[inner sep=0pt,minimum size=0pt] (#2v2) at (\xx,\yvac) {};
-\FPeval\xx{clip(\xcoorbeg-\xdvac/2)}
+\pgfmathsetmacro{\xx}{(\xcoorbeg-\xdvac/2)}
 \node[inner sep=0pt,minimum size=0pt] (#2vd1) at (\xx,\ycoord) {};
-\FPeval\xx{clip(\xcoorbeg+\xdvac/2)}
+\pgfmathsetmacro{\xx}{(\xcoorbeg+\xdvac/2)}
 \node[inner sep=0pt,minimum size=0pt] (#2vd2) at (\xx,\ycoord) {};
 }
 
-\newcommand{\dHoner}[2][]{\FPeval\xcoorbeg{clip(\xcoorH+0.5*\sc)}
-\FPeval\xcoorend{clip(\xcoorbeg+0.5*\sc)} 
+\newcommand{\dHoner}[2][]{\pgfmathsetmacro{\xcoorbeg}{(\xcoorH+0.5*\sc)}
+\pgfmathsetmacro{\xcoorend}{(\xcoorbeg+0.5*\sc)} 
 \draw[hoper_line](\xcoorbeg,\ycoor) -- (\xcoorend,\ycoor);
 \node at (\xcoorbeg,\ycoor){$\bf \times$};
-\FPeval\result{clip(\xcoorend+0.35*\sc)} 
+\pgfmathsetmacro{\result}{(\xcoorend+0.35*\sc)} 
 %name of operator
 \ifthenelse{\isempty{#1}}
-{\FPeval\xcoorH{\xcoorend}}
+{\pgfmathsetmacro{\xcoorH}{\xcoorend}}
 {\node at (\result,\ycoor){#1};
-\FPeval\xcoorH{clip(\xcoorend+0.25*\sc)}}
+\pgfmathsetmacro{\xcoorH}{(\xcoorend+0.25*\sc)}}
 \node[inner sep=0pt,minimum size=0pt] (#2) at (\xcoorend,\ycoor){}; 
-\FPeval\xx{clip(\xcoorend-\xvac/2)} 
+\pgfmathsetmacro{\xx}{(\xcoorend-\xvac/2)} 
 \node[inner sep=0pt,minimum size=0pt] (#2v1) at (\xx,\yvac) {}; 
-\FPeval\xx{clip(\xcoorend+\xvac/2)} 
+\pgfmathsetmacro{\xx}{(\xcoorend+\xvac/2)} 
 \node[inner sep=0pt,minimum size=0pt] (#2v2) at (\xx,\yvac) {};
-\FPeval\xx{clip(\xcoorend-\xdvac/2)}
+\pgfmathsetmacro{\xx}{(\xcoorend-\xdvac/2)}
 \node[inner sep=0pt,minimum size=0pt] (#2vd1) at (\xx,\ycoord) {};
-\FPeval\xx{clip(\xcoorend+\xdvac/2)}
+\pgfmathsetmacro{\xx}{(\xcoorend+\xdvac/2)}
 \node[inner sep=0pt,minimum size=0pt] (#2vd2) at (\xx,\ycoord) {};
 }
 
-\newcommand{\dHtwo}[3][]{ \FPeval\xcoorbeg{clip(\xcoorH+0.5*\sc)}
-\FPeval\xcoorend{clip(\xcoorbeg+1*\sc)} 
+\newcommand{\dHtwo}[3][]{ \pgfmathsetmacro{\xcoorbeg}{(\xcoorH+0.5*\sc)}
+\pgfmathsetmacro{\xcoorend}{(\xcoorbeg+1*\sc)} 
 \draw[hoper_line](\xcoorbeg,\ycoor) -- (\xcoorend,\ycoor); 
-\FPeval\result{clip(\xcoorend+0.35*\sc)} 
+\pgfmathsetmacro{\result}{(\xcoorend+0.35*\sc)} 
 %name of operator
 \ifthenelse{\isempty{#1}}
-{\FPeval\xcoorH{\xcoorend}}
+{\pgfmathsetmacro{\xcoorH}{\xcoorend}}
 {\node at (\result,\ycoor){#1};
-\FPeval\xcoorH{clip(\xcoorend+0.25*\sc)}}
+\pgfmathsetmacro{\xcoorH}{(\xcoorend+0.25*\sc)}}
 \node[inner sep=0pt,minimum size=0pt] (#2) at (\xcoorbeg,\ycoor) {};
 \node[inner sep=0pt,minimum size=0pt] (#3) at (\xcoorend,\ycoor) {};
-\FPeval\xx{clip(\xcoorbeg-\xvac/2)} 
+\pgfmathsetmacro{\xx}{(\xcoorbeg-\xvac/2)} 
 \node[inner sep=0pt,minimum size=0pt] (#2v1) at (\xx,\yvac) {};
-\FPeval\xx{clip(\xcoorbeg+\xvac/2)} 
+\pgfmathsetmacro{\xx}{(\xcoorbeg+\xvac/2)} 
 \node[inner sep=0pt,minimum size=0pt] (#2v2) at (\xx,\yvac) {}; 
-\FPeval\xx{clip(\xcoorend-\xvac/2)} 
+\pgfmathsetmacro{\xx}{(\xcoorend-\xvac/2)} 
 \node[inner sep=0pt,minimum size=0pt] (#3v1) at (\xx,\yvac) {};
-\FPeval\xx{clip(\xcoorend+\xvac/2)} 
+\pgfmathsetmacro{\xx}{(\xcoorend+\xvac/2)} 
 \node[inner sep=0pt,minimum size=0pt] (#3v2) at (\xx,\yvac) {};
-\FPeval\xx{clip(\xcoorbeg-\xdvac/2)} 
+\pgfmathsetmacro{\xx}{(\xcoorbeg-\xdvac/2)} 
 \node[inner sep=0pt,minimum size=0pt] (#2vd1) at (\xx,\ycoord) {};
-\FPeval\xx{clip(\xcoorbeg+\xdvac/2)} 
+\pgfmathsetmacro{\xx}{(\xcoorbeg+\xdvac/2)} 
 \node[inner sep=0pt,minimum size=0pt] (#2vd2) at (\xx,\ycoord) {}; 
-\FPeval\xx{clip(\xcoorend-\xdvac/2)} 
+\pgfmathsetmacro{\xx}{(\xcoorend-\xdvac/2)} 
 \node[inner sep=0pt,minimum size=0pt] (#3vd1) at (\xx,\ycoord) {};
-\FPeval\xx{clip(\xcoorend+\xdvac/2)} 
+\pgfmathsetmacro{\xx}{(\xcoorend+\xdvac/2)} 
 \node[inner sep=0pt,minimum size=0pt] (#3vd2) at (\xx,\ycoord) {};
 } 
-
-\newcommand{\dTone}[2][]{\dAmpOne[$_{T_1}$]{#1}{#2}}
-\newcommand{\dTones}[2][]{\dAmpOne{#1}{#2}}
-\newcommand{\dUone}[2][]{\dAmpOne[$_{U_1}$]{#1}{#2}}
-
-\newcommand{\dTtwo}[3][]{\dAmpTwo[$_{T_2}$]{#1}{#2}{#3}}
-\newcommand{\dTtwos}[3][]{\dAmpTwo{#1}{#2}{#3}}
-\newcommand{\dUtwo}[3][]{\dAmpTwo[$_{U_2}$]{#1}{#2}{#3}}
-
-\newcommand{\dTthr}[4][]{\dAmpThr[$_{T_3}$]{#1}{#2}{#3}{#4}}
-\newcommand{\dTthrs}[4][]{\dAmpThr{#1}{#2}{#3}{#4}}
-\newcommand{\dUthr}[4][]{\dAmpThr[$_{U_3}$]{#1}{#2}{#3}{#4}}
-
-\newcommand{\dTdone}[2][]{\dAmpdOne[$_{T^{\dagger}_1}$]{#1}{#2}}
-\newcommand{\dTdones}[2][]{\dAmpdOne{#1}{#2}}
-\newcommand{\dUdone}[2][]{\dAmpdOne[$_{U^{\dagger}_1}$]{#1}{#2}}
-
-\newcommand{\dTdtwo}[3][]{\dAmpdTwo[$_{T^{\dagger}_2}$]{#1}{#2}{#3}}
-\newcommand{\dTdtwos}[3][]{\dAmpdTwo{#1}{#2}{#3}}
-\newcommand{\dUdtwo}[3][]{\dAmpdTwo[$_{U^{\dagger}_2}$]{#1}{#2}{#3}}
-
-\newcommand{\dTdthr}[4][]{\dAmpdThr[$_{T^{\dagger}_3}$]{#1}{#2}{#3}{#4}}
-\newcommand{\dTdthrs}[4][]{\dAmpdThr{#1}{#2}{#3}{#4}}
-\newcommand{\dUdthr}[4][]{\dAmpdThr[$_{U^{\dagger}_3}$]{#1}{#2}{#3}{#4}}
 
 %general excitations
 \newcommand{\dT}[3][]{\dAmp[$_{T_#2}$]{#1}{#2}{#3}}
@@ -515,23 +321,23 @@
   \tikzset{ph_line/.style={ph_line_save}}  
 }
 
-\newcommand{\dmovex}[1]{\FPeval\xcoorH{clip(\xcoorH+#1*0.25*\sc)}}
-\newcommand{\dmoveT}[1]{\FPeval\xcoor{clip(\xcoor+#1*0.25*\sc)}}
-\newcommand{\dmoveTd}[1]{\FPeval\xcoordg{clip(\xcoordg+#1*0.25*\sc)}}
-\newcommand{\dmovac}[1]{\FPeval\yvac{clip(\yvac+#1*0.25*\sc)}}
+\newcommand{\dmovex}[1]{\pgfmathsetmacro{\xcoorH}{(\xcoorH+#1*0.25*\sc)}}
+\newcommand{\dmoveT}[1]{\pgfmathsetmacro{\xcoor}{(\xcoor+#1*0.25*\sc)}}
+\newcommand{\dmoveTd}[1]{\pgfmathsetmacro{\xcoordg}{(\xcoordg+#1*0.25*\sc)}}
+\newcommand{\dmovac}[1]{\pgfmathsetmacro{\yvac}{(\yvac+#1*0.25*\sc)}}
 \newcommand{\dname}[1]{
-\FPeval\xx{clip(\xcoord+1*\sc)} \FPeval\result{clip(\yvac+0.25*\sc)} 
+\pgfmathsetmacro{\xx}{(\xcoord+1*\sc)} \pgfmathsetmacro{\result}{(\yvac+0.25*\sc)} 
 \node at (\xx,\result) {#1};}
-\newcommand{\dtext}[2]{\FPeval\xx{clip(\xcoord+#1*\sc)} \FPeval\result{clip((\ycoord+\yvac)/2)} 
+\newcommand{\dtext}[2]{\pgfmathsetmacro{\xx}{(\xcoord+#1*\sc)} \pgfmathsetmacro{\result}{((\ycoord+\yvac)/2)} 
 \node at (\xx,\result) {#2};}
 
-\newcommand{\dscale}[1]{\FPset\sc{#1} 
-\FPeval\xcoord{clip(-1*\sc)} \FPeval\ycoord{clip(-1*\sc)} 
-\FPset\xcoor{\xcoord} \FPeval\ycoor{clip(\ycoord+1*\sc)} 
-\FPset\xcoordg{\xcoord}
-\FPset\xcoorH{\xcoord}
-\FPeval\yvac{clip(\yvac*\sc)} \FPeval\xvac{clip(\xvac*\sc)}}
-% end of Diagram-package
+\newcommand{\dscale}[1]{\pgfmathsetmacro{\sc}{#1} 
+\pgfmathsetmacro{\xcoord}{(-1*\sc)} \pgfmathsetmacro{\ycoord}{(-1*\sc)} 
+\pgfmathsetmacro{\xcoor}{\xcoord} \pgfmathsetmacro{\ycoor}{(\ycoord+1*\sc)} 
+\pgfmathsetmacro{\xcoordg}{\xcoord}
+\pgfmathsetmacro{\xcoorH}{\xcoord}
+\pgfmathsetmacro{\yvac}{(\yvac*\sc)} \pgfmathsetmacro{\xvac}{(\xvac*\sc)}}
+% end of CCDiag
 
 
 % test:
