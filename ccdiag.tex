@@ -62,9 +62,10 @@
 \pgfmathsetmacro{\yvac}{(\ycoor+0.5*\sc)} \pgfmathsetmacro{\xvac}{(0.25*\sc)} \pgfmathsetmacro{\xdvac}{(0.5*\sc)}
 \newcounter{stoer} 
 \tikzset{exoper_line_save/.style={very thick, solid}}
-\tikzset{exvac_line_save/.style={very thick, dotted}}
+\tikzset{exvac_line_save/.style={thick, dotted}}
 \tikzset{hoper_line_save/.style={very thick, dashed}}
 \tikzset{ph_line_save/.style={->,>=stealth,thin}}
+\tikzset{exoper2_line_save/.style={ thick, solid, double}}
 \tikzset{exoper_line/.style={exoper_line_save}}
 \tikzset{hoper_line/.style={hoper_line_save}}
 \tikzset{ph_line/.style={ph_line_save}}
@@ -84,6 +85,7 @@
    \pgfmathsetmacro{\xvac}{(0.5*\sc)}
 }
 \newcommand{\ediag}{\end{tikzpicture}}
+\newcommand{\ediags}{\ediag}
 
 \newcommand{\dAmp}[4][]{%for all
 \pgfmathsetmacro{\xcoorbeg}{(\xcoor+0.5*\sc)} 
@@ -231,7 +233,12 @@
 %general excitations
 \newcommand{\dT}[3][]{\dAmp[$_{T_#2}$]{#1}{#2}{#3}}
 \newcommand{\dTs}[3][]{\dAmp{#1}{#2}{#3}}
-\newcommand{\dU}[3][]{\dAmp[$_{U_#2}$]{#1}{#2}{#3}}
+
+\newcommand{\dU}[3][]{
+\tikzset{exoper_line/.style={exoper2_line_save}}
+\dAmp[$_{U_#2}$]{#1}{#2}{#3}
+\tikzset{exoper_line/.style={exoper_line_save}} }
+
 \newcommand{\dTv}[3][]{
 \tikzset{exoper_line/.style={exvac_line_save}}
 \dAmp{#1}{#2}{#3}
@@ -239,7 +246,12 @@
 
 \newcommand{\dTd}[3][]{\dAmpD[$_{T^{\dagger}_#2}$]{#1}{#2}{#3}}
 \newcommand{\dTds}[3][]{\dAmpD{#1}{#2}{#3}}
-\newcommand{\dUd}[3][]{\dAmpD[$_{U^{\dagger}_#2}$]{#1}{#2}{#3}}
+
+\newcommand{\dUd}[3][]{
+\tikzset{exoper_line/.style={exoper2_line_save}}
+\dAmpD[$_{U^{\dagger}_#2}$]{#1}{#2}{#3}
+\tikzset{exoper_line/.style={exoper_line_save}} }
+
 \newcommand{\dTdv}[3][]{
 \tikzset{exoper_line/.style={exvac_line_save}}
 \dAmpD{#1}{#2}{#3}

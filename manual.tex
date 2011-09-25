@@ -10,6 +10,18 @@
 
 \usepackage{amsmath,amsfonts,amssymb}
 \usepackage{listings}
+\usepackage{hyperref}
+\hypersetup{
+    bookmarks=true,         % show bookmarks bar?
+    unicode=false,          % non-Latin characters in Acrobat’s bookmarks
+    pdftoolbar=true,        % show Acrobat’s toolbar?
+    pdfmenubar=true,        % show Acrobat’s menu?
+    colorlinks=true,        % false: boxed links; true: colored links
+    linkcolor=red,          % color of internal links
+    citecolor=green,        % color of links to bibliography
+    filecolor=magenta,      % color of file links
+    urlcolor=cyan           % color of external links
+}
 
 \include{definitions}
 \newcommand{\myind}{\hspace{10pt}}
@@ -18,6 +30,8 @@
 \author{Daniel Kats}
 \title{CCDiag v.1.0}
 \maketitle
+
+\tableofcontents
 
 \section{Using CCDiag}
 
@@ -32,9 +46,9 @@ The following packages are required: {\it tikz, xifthen}; i.e. to include CCDiag
 %  
 \end{lstlisting}
 
-A diagram starts with {\bf \textbackslash bdiag} and ends with {\bf \textbackslash ediag}. Example:
+A diagram starts with {\bf \textbackslash bdiag} and ends with {\bf \textbackslash ediag}.
 
-\begin{table}[ht]
+\begin{table}[htbp]
  \begin{minipage}[b]{0.5\linewidth}\centering
   \begin{lstlisting}
 %<\mu_1|\op F \op T_1 |0>
@@ -61,8 +75,8 @@ A diagram starts with {\bf \textbackslash bdiag} and ends with {\bf \textbacksla
  \end{minipage}
 \end{table}
 
-For a symmetric diagram (with Hamilton-operator parts in the middle) use {\bf \textbackslash bdiags}
-\begin{table}[ht]
+For a symmetric diagram (with Hamilton-operator parts in the middle) use {\bf \textbackslash bdiags}.
+\begin{table}[htbp]
  \begin{minipage}[b]{0.5\linewidth}\centering
   \begin{lstlisting}
 %<\mu_1|\op F \op T_1 |0>
@@ -90,8 +104,8 @@ For a symmetric diagram (with Hamilton-operator parts in the middle) use {\bf \t
 \end{table}
 
 You can scale the diagram by setting a number in the square brackets after {\bf \textbackslash bdiag}
-or {\bf \textbackslash bdiags}:
-\begin{table}[ht]
+or {\bf \textbackslash bdiags}.
+\begin{table}[htbp]
  \begin{minipage}[b]{0.5\linewidth}\centering
   \begin{lstlisting}
 %<\mu_1|\op F \op T_1 |0>
@@ -144,9 +158,8 @@ If the labels are not needed, use
 
 \myind{\bf \textbackslash dTds}$[${\it pert.order}$]$\{{\it exc.level}\}\{{\it node}\}
 
-Example:
 
-\begin{table}[ht]
+\begin{table}[htbp]
  \begin{minipage}[b]{0.5\linewidth}\centering
   \begin{lstlisting}
 %<0|\op T_2^{(1)\dg} \op F \op T_1 |0>
@@ -187,8 +200,7 @@ And for $\tau^{\dagger}_{\mu_i}$ use
 
 \myind{\bf \textbackslash dTdv}$[${\it pert.order}$]$\{{\it exc.level}\}\{{\it node}\}
 
-Example:
-\begin{table}[ht]
+\begin{table}[htbp]
  \begin{minipage}[b]{0.5\linewidth}\centering
   \begin{lstlisting}
 %<\mu_2| \op F \op T_1 |0>
@@ -227,9 +239,7 @@ And for an deexcitation operator use
 
 \myind{\bf \textbackslash dAmpD}$[${\it name}$]$\{{\it pert.order}\}\{{\it exc.level}\}\{{\it node}\}
 
-Example:
-
-\begin{table}[ht]
+\begin{table}[htbp]
  \begin{minipage}[b]{0.5\linewidth}\centering
   \begin{lstlisting}
 %<\Lambda_2| \op F \op T_1 |0>
@@ -397,15 +407,15 @@ There are four shift-commands available:
 
 \section{Styles}\label{sec:Styles}
 
-Change exoper\_line\_save, exvac\_line\_save, hoper\_line\_save, ph\_line\_save
+Change {\bf exoper\_line\_save}, {\bf exvac\_line\_save}, {\bf hoper\_line\_save}, {\bf ph\_line\_save}
 in order to change excitation operator, bare excitation operator, H-operator, or h/p line styles.
 
-You can create your own operator style for a custom operator (see how {\bf \textbackslash dTv} is
+You can create your own operator style for a custom operator (see how {\bf \textbackslash dU} or {\bf \textbackslash dTv} are 
 defined).
 
 \section{Examples}
 
-\begin{table}[ht]
+\begin{table}[htbp]
  \begin{minipage}[b]{0.5\linewidth}\centering
   \begin{lstlisting}
 \bdiag
@@ -444,7 +454,7 @@ defined).
  \end{minipage}
 \end{table}
 
-\begin{table}[ht]
+\begin{table}[htbp]
  \begin{minipage}[b]{0.5\linewidth}\centering
   \begin{lstlisting}
 \bdiags
@@ -471,7 +481,7 @@ defined).
  \end{minipage}
 \end{table}
 
-\begin{table}[ht]
+\begin{table}[htbp]
  \begin{minipage}[b]{0.5\linewidth}\centering
   \begin{lstlisting}
 \bdiags
