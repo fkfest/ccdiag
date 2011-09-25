@@ -39,7 +39,7 @@
 %  left vacuum-node for <node1> is called <node1>v1
 %  right -------------"----------------   <node1>v2
 %
-% \dmovex{<value>} -> move W or F horizontally
+% \dmovex{<value>} or \dmoveH{<value>} -> move W or F horizontally 
 % \dmoveT{<value>} -> move T horizontally
 % \dmovac{<value>} -> move vacuum (and daggers) vertically 
 % \dmoveTd{<value>} -> move T^\dagger horizontally
@@ -321,10 +321,11 @@
   \tikzset{ph_line/.style={ph_line_save}}  
 }
 
-\newcommand{\dmovex}[1]{\pgfmathsetmacro{\xcoorH}{(\xcoorH+#1*0.25*\sc)}}
+\newcommand{\dmoveH}[1]{\pgfmathsetmacro{\xcoorH}{(\xcoorH+#1*0.25*\sc)}}
 \newcommand{\dmoveT}[1]{\pgfmathsetmacro{\xcoor}{(\xcoor+#1*0.25*\sc)}}
 \newcommand{\dmoveTd}[1]{\pgfmathsetmacro{\xcoordg}{(\xcoordg+#1*0.25*\sc)}}
 \newcommand{\dmovac}[1]{\pgfmathsetmacro{\yvac}{(\yvac+#1*0.25*\sc)}}
+\newcommand{\dmovex}[1]{\dmoveH{#1}} %alias
 \newcommand{\dname}[1]{
 \pgfmathsetmacro{\xx}{(\xcoord+1*\sc)} \pgfmathsetmacro{\result}{(\yvac+0.25*\sc)} 
 \node at (\xx,\result) {#1};}

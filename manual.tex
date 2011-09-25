@@ -39,7 +39,7 @@ A diagram starts with {\bf \textbackslash bdiag} and ends with {\bf \textbacksla
   \begin{lstlisting}
 %<\mu_1|\op F \op T_1 |0>
 \bdiag
-  \dmovex{2}
+  \dmoveH{2}
   \dT{1}{t}
   \dF{f}
   \dline{tv1}{t}
@@ -51,7 +51,7 @@ A diagram starts with {\bf \textbackslash bdiag} and ends with {\bf \textbacksla
  \begin{minipage}[b]{0.5\linewidth}\centering
     %<\mu_1|\op F \op T_1 |0>
     \bdiag
-    \dmovex{2}
+    \dmoveH{2}
     \dT{1}{t}
     \dF{f}
     \dline{tv1}{t}
@@ -67,7 +67,7 @@ For a symmetric diagram (with Hamilton-operator parts in the middle) use {\bf \t
   \begin{lstlisting}
 %<\mu_1|\op F \op T_1 |0>
 \bdiags
-  \dmovex{2}
+  \dmoveH{2}
   \dT{1}{t}
   \dF{f}
   \dline{tv1}{t}
@@ -79,7 +79,7 @@ For a symmetric diagram (with Hamilton-operator parts in the middle) use {\bf \t
  \begin{minipage}[b]{0.5\linewidth}\centering
     %<\mu_1|\op F \op T_1 |0>
     \bdiags
-    \dmovex{2}
+    \dmoveH{2}
     \dT{1}{t}
     \dF{f}
     \dline{tv1}{t}
@@ -96,7 +96,7 @@ or {\bf \textbackslash bdiags}:
   \begin{lstlisting}
 %<\mu_1|\op F \op T_1 |0>
 \bdiags[1.5]
-  \dmovex{2}
+  \dmoveH{2}
   \dT{1}{t}
   \dF{f}
   \dline{tv1}{t}
@@ -108,7 +108,7 @@ or {\bf \textbackslash bdiags}:
  \begin{minipage}[b]{0.5\linewidth}\centering
     %<\mu_1|\op F \op T_1 |0>
     \bdiags[1.5]
-    \dmovex{2}
+    \dmoveH{2}
     \dT{1}{t}
     \dF{f}
     \dline{tv1}{t}
@@ -151,7 +151,7 @@ Example:
   \begin{lstlisting}
 %<0|\op T_2^{(1)\dg} \op F \op T_1 |0>
 \bdiags
-\dmovex{5}
+\dmoveH{5}
 \dmoveTd{1}
 \dTds[1]{2}{td}
 \dT{1}{t}
@@ -164,7 +164,7 @@ Example:
  \begin{minipage}[b]{0.5\linewidth}\centering
 %<0|\op T_2^{(1)\dg} \op F \op T_1 |0>
 \bdiags
-\dmovex{5}
+\dmoveH{5}
 \dmoveTd{1}
 \dTds[1]{2}{td}
 \dT{1}{t}
@@ -193,7 +193,7 @@ Example:
   \begin{lstlisting}
 %<\mu_2| \op F \op T_1 |0>
 \bdiags
-\dmovex{5}
+\dmoveH{5}
 \dmoveTd{1}
 \dTdv{2}{td}
 \dT{1}{t}
@@ -206,7 +206,7 @@ Example:
  \begin{minipage}[b]{0.5\linewidth}\centering
 %<\mu_2| \op F \op T_1 |0>
 \bdiags
-\dmovex{5}
+\dmoveH{5}
 \dmoveTd{1}
 \dTdv{2}{td}
 \dT{1}{t}
@@ -234,7 +234,7 @@ Example:
   \begin{lstlisting}
 %<\Lambda_2| \op F \op T_1 |0>
 \bdiags
-\dmovex{5}
+\dmoveH{5}
 \dmoveTd{1}
 \dAmpD[$_{\Lambda_2}$]{}{2}{td}
 \dT{1}{t}
@@ -247,7 +247,7 @@ Example:
  \begin{minipage}[b]{0.5\linewidth}\centering
 %<\Lambda_2| \op F \op T_1 |0>
 \bdiags
-\dmovex{5}
+\dmoveH{5}
 \dmoveTd{1}
 \dAmpD[$_{\Lambda_2}$]{}{2}{td}
 \dT{1}{t}
@@ -379,7 +379,7 @@ There are four shift-commands available:
 
  \item  shift Hamiltonian-operators to the right:
 
-\myind{\bf \textbackslash dmovex}\{{\it shift}\}
+\myind{\bf \textbackslash dmoveH}\{{\it shift}\}
 
   \item  shift deexcitation operators up:
 
@@ -409,7 +409,7 @@ defined).
  \begin{minipage}[b]{0.5\linewidth}\centering
   \begin{lstlisting}
 \bdiag
-\dmovex{2}
+\dmoveH{2}
 \dT{1}{t}
 \dmoveT{2}
 \dT{2}{tt}
@@ -427,7 +427,7 @@ defined).
  \end{minipage}
  \begin{minipage}[b]{0.5\linewidth}\centering
 \bdiag
-\dmovex{2}
+\dmoveH{2}
 \dT{1}{t}
 \dmoveT{2}
 \dT{2}{tt}
