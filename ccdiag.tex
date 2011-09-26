@@ -1,6 +1,5 @@
 %
 % \usepackage{tikz}
-% \usepackage{xifthen}
 \usetikzlibrary{calc}
 %
 %             CCDiag v.1.0 
@@ -61,6 +60,8 @@
 \pgfmathsetmacro{\xcoorH}{\xcoord}
 \pgfmathsetmacro{\yvac}{(\ycoor+0.5*\sc)} \pgfmathsetmacro{\xvac}{(0.25*\sc)} \pgfmathsetmacro{\xdvac}{(0.5*\sc)}
 \newcounter{stoer} 
+\def\firstargum{}
+\def\emptyargum{}
 \tikzset{exoper_line_save/.style={very thick, solid}}
 \tikzset{exvac_line_save/.style={thick, dotted}}
 \tikzset{hoper_line_save/.style={very thick, dashed}}
@@ -72,14 +73,14 @@
 \tikzset{ph_liner/.style={ph_line_save,<-}}
 
 \newcommand{\bdiag}[1][]{
- \ifthenelse{\isempty{#1}}
-  {\begin{tikzpicture}}
-  {\begin{tikzpicture}[scale=#1]}
+ \ifx&#1&%
+  \begin{tikzpicture}
+ \else
+  \begin{tikzpicture}[scale=#1]
+ \fi
 }
 \newcommand{\bdiags}[1][]{
- \ifthenelse{\isempty{#1}}
-  {\begin{tikzpicture}}
-  {\begin{tikzpicture}[scale=#1]}
+ \bdiag
   %symmetric diagram
    \pgfmathsetmacro{\yvac}{(\ycoor+1*\sc)}
    \pgfmathsetmacro{\xvac}{(0.5*\sc)}
@@ -93,16 +94,20 @@
 \draw[exoper_line](\xcoorbeg,\ycoord) -- (\xcoorend,\ycoord);
 \pgfmathsetmacro{\result}{(\xcoorend+0.35*\sc)} 
 % write label if given
-\ifthenelse{\isempty{#1}}  
-{\pgfmathsetmacro{\xcoor}{\xcoorend}}
-{\node at (\result,\ycoord){#1};
-\pgfmathsetmacro{\xcoor}{(\xcoorend+0.25*\sc)}}
+\ifx&#1&%
+  \pgfmathsetmacro{\xcoor}{\xcoorend}
+\else
+  \node at (\result,\ycoord){#1};
+  \pgfmathsetmacro{\xcoor}{(\xcoorend+0.25*\sc)}
+\fi
 % calculate the vertex-distance (singles are a special case)
-\ifthenelse{ #3 = 1}
-{ \pgfmathsetmacro{\xxx}{((\xcoorend-\xcoorbeg)/2)} 
-  \pgfmathsetmacro{\result}{\xcoorbeg}}
-{ \pgfmathsetmacro{\xxx}{((\xcoorend-\xcoorbeg)/( #3 - 1 ))} 
-  \pgfmathsetmacro{\result}{(\xcoorbeg-\xxx)}}
+\ifnum#3=1
+ \pgfmathsetmacro{\xxx}{((\xcoorend-\xcoorbeg)/2)} 
+ \pgfmathsetmacro{\result}{\xcoorbeg}
+\else
+ \pgfmathsetmacro{\xxx}{((\xcoorend-\xcoorbeg)/( #3 - 1 ))} 
+ \pgfmathsetmacro{\result}{(\xcoorbeg-\xxx)}
+\fi
 % set all nodes (and give them names)
 \foreach \x in {1,...,#3}
 {
@@ -116,11 +121,13 @@
 \node[inner sep=0pt,minimum size=0pt] (#4v1) at (#41v1) {};
 \node[inner sep=0pt,minimum size=0pt] (#4v2) at (#41v2) {};
 % set perturbation (if given)
-\ifthenelse{\isempty{#2}}  {}  
-{ 
+\ifx&#2&%
+%
+\else  
 \pgfmathsetmacro{\result}{((\xcoorend+\xcoorbeg)/2)} 
 \setcounter{stoer}{#2} 
-\node[inner sep=0pt,minimum size=0pt] at (\result,\ycoord){{\footnotesize\slshape\sffamily \Roman{stoer}}}; }
+\node[inner sep=0pt,minimum size=0pt] at (\result,\ycoord){{\footnotesize\slshape\sffamily \Roman{stoer}}}; 
+\fi
 }
 
 \newcommand{\dAmpD}[4][]{%for all
@@ -129,16 +136,20 @@
 \draw[exoper_line](\xcoorbeg,\yvac) -- (\xcoorend,\yvac);
 \pgfmathsetmacro{\result}{(\xcoorend+0.35*\sc)} 
 % write label if given
-\ifthenelse{\isempty{#1}}  
-{\pgfmathsetmacro{\xcoordg}{\xcoorend}}
-{\node at (\result,\yvac){#1};
-\pgfmathsetmacro{\xcoordg}{(\xcoorend+0.25*\sc)}}
+\ifx&#1&%
+\pgfmathsetmacro{\xcoordg}{\xcoorend}
+\else
+\node at (\result,\yvac){#1};
+\pgfmathsetmacro{\xcoordg}{(\xcoorend+0.25*\sc)}
+\fi
 % calculate the vertex-distance (singles are a special case)
-\ifthenelse{ #3 = 1}
-{ \pgfmathsetmacro{\xxx}{((\xcoorend-\xcoorbeg)/2)} 
-  \pgfmathsetmacro{\result}{\xcoorbeg}}
-{ \pgfmathsetmacro{\xxx}{((\xcoorend-\xcoorbeg)/( #3 - 1 ))} 
-  \pgfmathsetmacro{\result}{(\xcoorbeg-\xxx)}}
+\ifnum#3=1
+ \pgfmathsetmacro{\xxx}{((\xcoorend-\xcoorbeg)/2)} 
+ \pgfmathsetmacro{\result}{\xcoorbeg}
+\else
+ \pgfmathsetmacro{\xxx}{((\xcoorend-\xcoorbeg)/( #3 - 1 ))} 
+ \pgfmathsetmacro{\result}{(\xcoorbeg-\xxx)}
+\fi
 % set all nodes (and give them names)
 \foreach \x in {1,...,#3}
 {
@@ -152,11 +163,13 @@
 \node[inner sep=0pt,minimum size=0pt] (#4v1) at (#41v1) {};
 \node[inner sep=0pt,minimum size=0pt] (#4v2) at (#41v2) {};
 % set perturbation (if given)
-\ifthenelse{\isempty{#2}}  {}  
-{ 
+\ifx&#2&%
+%
+\else
 \pgfmathsetmacro{\result}{((\xcoorend+\xcoorbeg)/2)} 
 \setcounter{stoer}{#2} 
-\node[inner sep=0pt,minimum size=0pt] at (\result,\yvac){{\footnotesize\slshape\sffamily \Roman{stoer}}}; }
+\node[inner sep=0pt,minimum size=0pt] at (\result,\yvac){{\footnotesize\slshape\sffamily \Roman{stoer}}}; 
+\fi
 }
 
 \newcommand{\dHone}[2][]{\pgfmathsetmacro{\xcoorbeg}{(\xcoorH+0.5*\sc)}
@@ -165,10 +178,12 @@
 \node at (\xcoorend,\ycoor){$\bf \times$};
 \pgfmathsetmacro{\result}{(\xcoorend+0.35*\sc)} 
 %name of operator
-\ifthenelse{\isempty{#1}}
-{\pgfmathsetmacro{\xcoorH}{\xcoorend}}
-{\node at (\result,\ycoor){#1};
-\pgfmathsetmacro{\xcoorH}{(\xcoorend+0.25*\sc)}}
+\ifx&#1&%
+\pgfmathsetmacro{\xcoorH}{\xcoorend}
+\else
+\node at (\result,\ycoor){#1};
+\pgfmathsetmacro{\xcoorH}{(\xcoorend+0.25*\sc)}
+\fi
 \node[inner sep=0pt,minimum size=0pt] (#2) at (\xcoorbeg,\ycoor){}; 
 \pgfmathsetmacro{\xx}{(\xcoorbeg-\xvac/2)} 
 \node[inner sep=0pt,minimum size=0pt] (#2v1) at (\xx,\yvac) {}; 
@@ -186,10 +201,12 @@
 \node at (\xcoorbeg,\ycoor){$\bf \times$};
 \pgfmathsetmacro{\result}{(\xcoorend+0.35*\sc)} 
 %name of operator
-\ifthenelse{\isempty{#1}}
-{\pgfmathsetmacro{\xcoorH}{\xcoorend}}
-{\node at (\result,\ycoor){#1};
-\pgfmathsetmacro{\xcoorH}{(\xcoorend+0.25*\sc)}}
+\ifx&#1&%
+\pgfmathsetmacro{\xcoorH}{\xcoorend}
+\else
+\node at (\result,\ycoor){#1};
+\pgfmathsetmacro{\xcoorH}{(\xcoorend+0.25*\sc)}
+\fi
 \node[inner sep=0pt,minimum size=0pt] (#2) at (\xcoorend,\ycoor){}; 
 \pgfmathsetmacro{\xx}{(\xcoorend-\xvac/2)} 
 \node[inner sep=0pt,minimum size=0pt] (#2v1) at (\xx,\yvac) {}; 
@@ -206,10 +223,12 @@
 \draw[hoper_line](\xcoorbeg,\ycoor) -- (\xcoorend,\ycoor); 
 \pgfmathsetmacro{\result}{(\xcoorend+0.35*\sc)} 
 %name of operator
-\ifthenelse{\isempty{#1}}
-{\pgfmathsetmacro{\xcoorH}{\xcoorend}}
-{\node at (\result,\ycoor){#1};
-\pgfmathsetmacro{\xcoorH}{(\xcoorend+0.25*\sc)}}
+\ifx&#1&%
+\pgfmathsetmacro{\xcoorH}{\xcoorend}
+\else
+\node at (\result,\ycoor){#1};
+\pgfmathsetmacro{\xcoorH}{(\xcoorend+0.25*\sc)}
+\fi
 \node[inner sep=0pt,minimum size=0pt] (#2) at (\xcoorbeg,\ycoor) {};
 \node[inner sep=0pt,minimum size=0pt] (#3) at (\xcoorend,\ycoor) {};
 \pgfmathsetmacro{\xx}{(\xcoorbeg-\xvac/2)} 
@@ -271,14 +290,18 @@
 \newcommand{\dXtwo}[2]{\dHtwo[$_{X}$]{#1}{#2}}
 
 \newcommand{\dline}[3][]{
-\ifthenelse{\isempty{#1}}
-{\draw[ph_line](#2) -- (#3);}
-{\draw[ph_line](#2) -- node[inner sep=0pt,minimum size=0pt,right = 0.5pt] {\footnotesize\slshape\sffamily #1} (#3);}
+\ifx&#1&%
+\draw[ph_line](#2) -- (#3);
+\else
+\draw[ph_line](#2) -- node[inner sep=0pt,minimum size=0pt,right = 0.5pt] {\footnotesize\slshape\sffamily #1} (#3);
+\fi
 }
 \newcommand{\dcurve}[3][]{
-\ifthenelse{\isempty{#1}}
-{\draw[ph_line](#2) to [bend right=30] (#3);}
-{\draw[ph_line](#2) to [bend right=30] node[inner sep=0pt,minimum size=0pt,right = 0.5pt] {\footnotesize\slshape\sffamily #1} (#3);}
+\ifx&#1&%
+\draw[ph_line](#2) to [bend right=30] (#3);
+\else
+\draw[ph_line](#2) to [bend right=30] node[inner sep=0pt,minimum size=0pt,right = 0.5pt] {\footnotesize\slshape\sffamily #1} (#3);
+\fi
 }
 \newcommand{\dcurver}[3][]{
   \tikzset{ph_line/.style={ph_liner}}

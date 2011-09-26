@@ -4,7 +4,6 @@
 
 %ccdiag
 \usepackage{tikz}
-\usepackage{xifthen}
 \include{ccdiag}
 %
 
@@ -36,12 +35,11 @@
 \section{Using CCDiag}
 
 CCDiag is a TeX file, which allows you to simply draw Coupled Cluster diagrams using TikZ/PGF.
-The following packages are required: {\it tikz, xifthen}; i.e. to include CCDiag in your TeX file use
+Only the {\it TikZ} package is required; i.e. to include CCDiag in your TeX file use
 \lstset{language=[LaTeX]Tex, frame=shadowbox, rulesepcolor=\color{gray}}
 \begin{lstlisting}
 %ccdiag
 \usepackage{tikz}
-\usepackage{xifthen}
 \include{ccdiag}
 %  
 \end{lstlisting}
