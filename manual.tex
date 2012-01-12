@@ -101,6 +101,34 @@ For a symmetric diagram (with Hamilton-operator parts in the middle) use {\bf \t
  \end{minipage}
 \end{table}
 
+For a non-symmetric diagram with Hamilton-operator parts shifted down use {\bf \textbackslash bdiagd}.
+\begin{table}[htbp]
+ \begin{minipage}[b]{0.5\linewidth}\centering
+  \begin{lstlisting}
+%<0|\op T_1^\dg \op F |\mu_1>
+\bdiagd
+  \dmoveH{2}
+  \dTd{1}{td}
+  \dF{f}
+  \dline{tdv1}{td}
+  \dline{td}{f}
+  \dline{f}{fvd2}
+\ediag
+  \end{lstlisting}
+ \end{minipage}
+ \begin{minipage}[b]{0.5\linewidth}\centering
+    %<0|\op T_1^\dg \op F |\mu_1>
+    \bdiagd
+    \dmoveH{2}
+    \dTd{1}{td}
+    \dF{f}
+    \dline{tdv1}{td}
+    \dline{td}{f}
+    \dline{f}{fvd2}
+    \ediag
+ \end{minipage}
+\end{table}
+
 You can scale the diagram by setting a number in the square brackets after {\bf \textbackslash bdiag}
 or {\bf \textbackslash bdiags}.
 \begin{table}[htbp]
@@ -517,4 +545,44 @@ defined).
 \ediag
  \end{minipage}
 \end{table}
+
+\begin{table}[htbp]
+ \begin{minipage}[b]{0.5\linewidth}\centering
+  \begin{lstlisting}
+\bdiagd
+\dmoveH{2}
+\dTd{1}{t}
+\dmoveTd{2}
+\dTd{2}{tt}
+\dWs{wn1}{wn2}
+\dline[\raisebox{-0.5cm}{$i$}]{t1v1}{t1}
+\dline{t1}{wn1}
+\dline{wn1}{wn1vd2}
+\dline[$j$]{tt1v2}{tt1}
+\dline{tt1}{wn2}
+\dline{wn2}{wn2vd1}
+\dline[$k$]{tt2v1}{tt2}
+\dline{tt2}{tt2v2}
+\ediag
+\end{lstlisting}
+\end{minipage}
+ \begin{minipage}[b]{0.5\linewidth}\centering
+\bdiagd
+\dmoveH{2}
+\dTd{1}{t}
+\dmoveTd{2}
+\dTd{2}{tt}
+\dWs{wn1}{wn2}
+\dline[\raisebox{-0.5cm}{$i$}]{t1v1}{t1}
+\dline{t1}{wn1}
+\dline{wn1}{wn1vd2}
+\dline[$j$]{tt1v2}{tt1}
+\dline{tt1}{wn2}
+\dline{wn2}{wn2vd1}
+\dline[$k$]{tt2v1}{tt2}
+\dline{tt2}{tt2v2}
+\ediag
+\end{minipage}
+\end{table}
+
 \end{document}

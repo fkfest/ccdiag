@@ -85,8 +85,18 @@
    \pgfmathsetmacro{\yvac}{(\ycoor+1*\sc)}
    \pgfmathsetmacro{\xvac}{(0.5*\sc)}
 }
+\newcommand{\bdiagd}[1][]{
+ %dagger diagram: ycoor moved to the bottom
+ \pgfmathsetmacro{\ycoor}{(\ycoord+0.5*\sc)}
+ \pgfmathsetmacro{\xcoordg}{\xcoord}
+ \pgfmathsetmacro{\xcoorH}{\xcoord}
+ \pgfmathsetmacro{\yvac}{(\ycoor+1*\sc)} \pgfmathsetmacro{\xvac}{(0.5*\sc)} \pgfmathsetmacro{\xdvac}{(0.25*\sc)}
+ \bdiag[#1]
+}
+
 \newcommand{\ediag}{\end{tikzpicture}}
 \newcommand{\ediags}{\ediag}
+\newcommand{\ediagd}{\ediag}
 
 \newcommand{\dAmp}[4][]{%for all
 \pgfmathsetmacro{\xcoorbeg}{(\xcoor+0.5*\sc)} 
@@ -156,8 +166,8 @@
   \coordinate (vertex) at ($(\result,\yvac)+(\x*\xxx,0)$);
   \node[inner sep=0pt,minimum size=0pt] (#4\x) at  (vertex) {};
   \coordinate (vtxvac) at ($(\result,\ycoord)+(\x*\xxx,0)$);
-  \node[inner sep=0pt,minimum size=0pt] (#4\x v1) at ($(vtxvac)-(\xvac,0)$) {};
-  \node[inner sep=0pt,minimum size=0pt] (#4\x v2) at ($(vtxvac)+(\xvac,0)$) {};
+  \node[inner sep=0pt,minimum size=0pt] (#4\x v1) at ($(vtxvac)-(\xdvac,0)$) {};
+  \node[inner sep=0pt,minimum size=0pt] (#4\x v2) at ($(vtxvac)+(\xdvac,0)$) {};
 }
 \node[inner sep=0pt,minimum size=0pt] (#4) at  (#41) {};
 \node[inner sep=0pt,minimum size=0pt] (#4v1) at (#41v1) {};
