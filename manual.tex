@@ -46,7 +46,7 @@ Only the {\it TikZ} package is required; i.e. to include CCDiag in your TeX file
 
 A diagram starts with {\bf \textbackslash bdiag} and ends with {\bf \textbackslash ediag}.
 
-\begin{table}[htbp]
+%\begin{table}[htbp]
  \begin{minipage}[b]{0.5\linewidth}\centering
   \begin{lstlisting}
 %<\mu_1|\op F \op T_1 |0>
@@ -71,10 +71,11 @@ A diagram starts with {\bf \textbackslash bdiag} and ends with {\bf \textbacksla
     \dline{f}{fv2}
     \ediag
  \end{minipage}
-\end{table}
+%\end{table}
 
 For a symmetric diagram (with Hamilton-operator parts in the middle) use {\bf \textbackslash bdiags}.
-\begin{table}[htbp]
+
+%\begin{table}[htbp]
  \begin{minipage}[b]{0.5\linewidth}\centering
   \begin{lstlisting}
 %<\mu_1|\op F \op T_1 |0>
@@ -99,10 +100,11 @@ For a symmetric diagram (with Hamilton-operator parts in the middle) use {\bf \t
     \dline{f}{fv2}
     \ediag
  \end{minipage}
-\end{table}
+%\end{table}
 
 For a non-symmetric diagram with Hamilton-operator parts shifted down use {\bf \textbackslash bdiagd}.
-\begin{table}[htbp]
+
+%\begin{table}[htbp]
  \begin{minipage}[b]{0.5\linewidth}\centering
   \begin{lstlisting}
 %<0|\op T_1^\dg \op F |\mu_1>
@@ -127,11 +129,12 @@ For a non-symmetric diagram with Hamilton-operator parts shifted down use {\bf \
     \dline{f}{fvd2}
     \ediag
  \end{minipage}
-\end{table}
+%\end{table}
 
 You can scale the diagram by setting a number in the square brackets after {\bf \textbackslash bdiag}
 or {\bf \textbackslash bdiags}.
-\begin{table}[htbp]
+
+%\begin{table}[htbp]
  \begin{minipage}[b]{0.5\linewidth}\centering
   \begin{lstlisting}
 %<\mu_1|\op F \op T_1 |0>
@@ -156,7 +159,7 @@ or {\bf \textbackslash bdiags}.
     \dline{f}{fv2}
     \ediag
  \end{minipage}
-\end{table}
+%\end{table}
 
 
 \section{Operators}
@@ -184,8 +187,7 @@ If the labels are not needed, use
 
 \myind{\bf \textbackslash dTds}$[${\it pert.order}$]$\{{\it exc.level}\}\{{\it node}\}
 
-
-\begin{table}[htbp]
+%\begin{table}[htbp]
  \begin{minipage}[b]{0.5\linewidth}\centering
   \begin{lstlisting}
 %<0|\op T_2^{(1)\dg} \op F \op T_1 |0>
@@ -212,7 +214,7 @@ If the labels are not needed, use
 \dcurcur{td2}{f}
 \ediag
  \end{minipage}
-\end{table}
+%\end{table}
 
 \subsubsection{Bare excitation/deexcitation operators}
 
@@ -226,7 +228,7 @@ And for $\tau^{\dagger}_{\mu_i}$ use
 
 \myind{\bf \textbackslash dTdv}$[${\it pert.order}$]$\{{\it exc.level}\}\{{\it node}\}
 
-\begin{table}[htbp]
+%\begin{table}[htbp]
  \begin{minipage}[b]{0.5\linewidth}\centering
   \begin{lstlisting}
 %<\mu_2| \op F \op T_1 |0>
@@ -253,7 +255,7 @@ And for $\tau^{\dagger}_{\mu_i}$ use
 \dcurcur{td2}{f}
 \ediag
  \end{minipage}
-\end{table}
+%\end{table}
 
 \subsubsection{General excitation/deexcitation operators}
 
@@ -265,7 +267,7 @@ And for an deexcitation operator use
 
 \myind{\bf \textbackslash dAmpD}$[${\it name}$]$\{{\it pert.order}\}\{{\it exc.level}\}\{{\it node}\}
 
-\begin{table}[htbp]
+%\begin{table}[htbp]
  \begin{minipage}[b]{0.5\linewidth}\centering
   \begin{lstlisting}
 %<\Lambda_2| \op F \op T_1 |0>
@@ -292,7 +294,7 @@ And for an deexcitation operator use
 \dcurcur{td2}{f}
 \ediag
  \end{minipage}
-\end{table}
+%\end{table}
 
 \subsubsection{Customize excitation/deexcitation operators}
 
@@ -441,7 +443,7 @@ defined).
 
 \section{Examples}
 
-\begin{table}[htbp]
+%\begin{table}[htbp]
  \begin{minipage}[b]{0.5\linewidth}\centering
   \begin{lstlisting}
 \bdiag
@@ -478,9 +480,9 @@ defined).
 \dline{tt2}{tt2v2}
 \ediag
  \end{minipage}
-\end{table}
+%\end{table}
 
-\begin{table}[htbp]
+%\begin{table}[htbp]
  \begin{minipage}[b]{0.5\linewidth}\centering
   \begin{lstlisting}
 \bdiags
@@ -505,9 +507,9 @@ defined).
 \dcurt{td}{w2}{t}
 \ediag
  \end{minipage}
-\end{table}
+%\end{table}
 
-\begin{table}[htbp]
+%\begin{table}[htbp]
  \begin{minipage}[b]{0.5\linewidth}\centering
   \begin{lstlisting}
 \bdiags
@@ -544,9 +546,9 @@ defined).
 \dline{u}{td2}
 \ediag
  \end{minipage}
-\end{table}
+%\end{table}
 
-\begin{table}[htbp]
+%\begin{table}[htbp]
  \begin{minipage}[b]{0.5\linewidth}\centering
   \begin{lstlisting}
 \bdiagd
@@ -583,6 +585,24 @@ defined).
 \dline{tt2}{tt2v2}
 \ediag
 \end{minipage}
-\end{table}
+%\end{table}
+
+\begin{minipage}[b]{0.5\linewidth}\centering
+ \begin{lstlisting}
+% transparent operators
+\bdiagd
+\dTtd{1}{t}
+\dTt{1}{tt}
+\dline{t1}{tt1}
+\ediag
+\end{lstlisting}
+\end{minipage}
+ \begin{minipage}[b]{0.5\linewidth}\centering
+\bdiagd
+\dTtd{1}{t}
+\dTt{1}{tt}
+\dline{t1}{tt1}
+\ediag
+\end{minipage}
 
 \end{document}

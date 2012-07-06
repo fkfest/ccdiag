@@ -67,6 +67,7 @@
 \tikzset{hoper_line_save/.style={very thick, dashed}}
 \tikzset{ph_line_save/.style={->,>=stealth,thin}}
 \tikzset{exoper2_line_save/.style={ thick, solid, double}}
+\tikzset{exoper3_line_save/.style={ thick, transparent}}
 \tikzset{exoper_line/.style={exoper_line_save}}
 \tikzset{hoper_line/.style={hoper_line_save}}
 \tikzset{ph_line/.style={ph_line_save}}
@@ -271,6 +272,11 @@
 \dAmp[$_{U_#2}$]{#1}{#2}{#3}
 \tikzset{exoper_line/.style={exoper_line_save}} }
 
+\newcommand{\dTt}[3][]{
+\tikzset{exoper_line/.style={exoper3_line_save}}
+\dAmp{#1}{#2}{#3}
+\tikzset{exoper_line/.style={exoper_line_save}} }
+
 \newcommand{\dTv}[3][]{
 \tikzset{exoper_line/.style={exvac_line_save}}
 \dAmp{#1}{#2}{#3}
@@ -282,6 +288,11 @@
 \newcommand{\dUd}[3][]{
 \tikzset{exoper_line/.style={exoper2_line_save}}
 \dAmpD[$_{U^{\dagger}_#2}$]{#1}{#2}{#3}
+\tikzset{exoper_line/.style={exoper_line_save}} }
+
+\newcommand{\dTtd}[3][]{
+\tikzset{exoper_line/.style={exoper3_line_save}}
+\dAmpD{#1}{#2}{#3}
 \tikzset{exoper_line/.style={exoper_line_save}} }
 
 \newcommand{\dTdv}[3][]{
