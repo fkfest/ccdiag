@@ -272,6 +272,11 @@
 \dAmp[$_{U_#2}$]{#1}{#2}{#3}
 \tikzset{exoper_line/.style={exoper_line_save}} }
 
+\newcommand{\dUs}[3][]{
+\tikzset{exoper_line/.style={exoper2_line_save}}
+\dAmp{#1}{#2}{#3}
+\tikzset{exoper_line/.style={exoper_line_save}} }
+
 \newcommand{\dTt}[3][]{
 \tikzset{exoper_line/.style={exoper3_line_save}}
 \dAmp{#1}{#2}{#3}
@@ -288,6 +293,11 @@
 \newcommand{\dUd}[3][]{
 \tikzset{exoper_line/.style={exoper2_line_save}}
 \dAmpD[$_{U^{\dagger}_#2}$]{#1}{#2}{#3}
+\tikzset{exoper_line/.style={exoper_line_save}} }
+
+\newcommand{\dUds}[3][]{
+\tikzset{exoper_line/.style={exoper2_line_save}}
+\dAmpD{#1}{#2}{#3}
 \tikzset{exoper_line/.style={exoper_line_save}} }
 
 \newcommand{\dTtd}[3][]{
