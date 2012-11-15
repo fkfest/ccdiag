@@ -1,6 +1,41 @@
 %
 % \usepackage{tikz}
 \usetikzlibrary{calc}
+\usetikzlibrary{decorations.pathreplacing,decorations.markings}
+
+%from tex.stackexchange.com
+\tikzset{
+  % style to apply some styles to each segment of a path
+  on each segment/.style={
+    decorate,
+    decoration={
+      show path construction,
+      moveto code={},
+      lineto code={
+        \path [#1]
+        (\tikzinputsegmentfirst) -- (\tikzinputsegmentlast);
+      },
+      curveto code={
+        \path [#1] (\tikzinputsegmentfirst)
+        .. controls
+        (\tikzinputsegmentsupporta) and (\tikzinputsegmentsupportb)
+        ..
+        (\tikzinputsegmentlast);
+      },
+      closepath code={
+        \path [#1]
+        (\tikzinputsegmentfirst) -- (\tikzinputsegmentlast);
+      },
+    },
+  },
+  % style to add an arrow in the middle of a path
+  mid arrow/.style={postaction={decorate,decoration={
+        markings,
+  %                     place for arrows
+        mark=at position .7 with {\arrow[#1]{stealth}}
+      }}},
+}
+
 %
 %             CCDiag v.1.0 
 %           D.Kats, September 2011
@@ -48,7 +83,7 @@
 % \dname{<text>} -> write <text> over the diagram
 % \dtext{<shift>}{<text>} -> write <text> in the diagram with horizontal shift
 %
-% change exoper_line_save, exvac_line_save, hoper_line_save, ph_line_save
+% change exoper-line-save, exvac-line-save, hoper-line-save, ph-line-save
 %  in order to change excitation operator, explicit vacuum, H-operator, or p/h line styles.
 
 
@@ -62,16 +97,21 @@
 \newcounter{stoer} 
 \def\firstargum{}
 \def\emptyargum{}
-\tikzset{exoper_line_save/.style={very thick, solid}}
-\tikzset{exvac_line_save/.style={thick, dotted}}
-\tikzset{hoper_line_save/.style={very thick, dashed}}
-\tikzset{ph_line_save/.style={->,>=stealth,thin}}
-\tikzset{exoper2_line_save/.style={ thick, solid, double}}
-\tikzset{exoper3_line_save/.style={ thick, transparent}}
-\tikzset{exoper_line/.style={exoper_line_save}}
-\tikzset{hoper_line/.style={hoper_line_save}}
-\tikzset{ph_line/.style={ph_line_save}}
-\tikzset{ph_liner/.style={ph_line_save,<-}}
+%p/h line styles
+%arrows at the end 
+%\tikzset{ph-line-save/.style={->,>=stealth,thin}}
+%arrows in the middle
+\tikzset{ph-line-save/.style={>=stealth,thin,postaction={on each segment={mid arrow}}}}
+%line styles
+\tikzset{exoper-line-save/.style={very thick, solid}}
+\tikzset{exvac-line-save/.style={thick, dotted}}
+\tikzset{hoper-line-save/.style={very thick, dashed}}
+\tikzset{exoper2-line-save/.style={ thick, solid, double}}
+\tikzset{exoper3-line-save/.style={ thick, transparent}}
+\tikzset{exoper-line/.style={exoper-line-save}}
+\tikzset{hoper-line/.style={hoper-line-save}}
+\tikzset{ph-line/.style={ph-line-save}}
+\tikzset{ph-liner/.style={ph-line-save,<-}}
 
 \newcommand{\bdiag}[1][]{
  \ifx&#1&%
@@ -102,7 +142,7 @@
 \newcommand{\dAmp}[4][]{%for all
 \pgfmathsetmacro{\xcoorbeg}{(\xcoor+0.5*\sc)} 
 \pgfmathsetmacro{\xcoorend}{(\xcoorbeg+#3*\sc/2)} 
-\draw[exoper_line](\xcoorbeg,\ycoord) -- (\xcoorend,\ycoord);
+\draw[exoper-line](\xcoorbeg,\ycoord) -- (\xcoorend,\ycoord);
 \pgfmathsetmacro{\result}{(\xcoorend+0.35*\sc)} 
 % write label if given
 \ifx&#1&%
@@ -144,7 +184,7 @@
 \newcommand{\dAmpD}[4][]{%for all
 \pgfmathsetmacro{\xcoorbeg}{(\xcoordg+0.5*\sc)} 
 \pgfmathsetmacro{\xcoorend}{(\xcoorbeg+#3*\sc/2)} 
-\draw[exoper_line](\xcoorbeg,\yvac) -- (\xcoorend,\yvac);
+\draw[exoper-line](\xcoorbeg,\yvac) -- (\xcoorend,\yvac);
 \pgfmathsetmacro{\result}{(\xcoorend+0.35*\sc)} 
 % write label if given
 \ifx&#1&%
@@ -185,7 +225,7 @@
 
 \newcommand{\dHone}[2][]{\pgfmathsetmacro{\xcoorbeg}{(\xcoorH+0.5*\sc)}
 \pgfmathsetmacro{\xcoorend}{(\xcoorbeg+0.5*\sc)} 
-\draw[hoper_line](\xcoorbeg,\ycoor) -- (\xcoorend,\ycoor);
+\draw[hoper-line](\xcoorbeg,\ycoor) -- (\xcoorend,\ycoor);
 \node at (\xcoorend,\ycoor){$\bf \times$};
 \pgfmathsetmacro{\result}{(\xcoorend+0.35*\sc)} 
 %name of operator
@@ -211,7 +251,7 @@
 
 \newcommand{\dHoner}[2][]{\pgfmathsetmacro{\xcoorbeg}{(\xcoorH+0.5*\sc)}
 \pgfmathsetmacro{\xcoorend}{(\xcoorbeg+0.5*\sc)} 
-\draw[hoper_line](\xcoorbeg,\ycoor) -- (\xcoorend,\ycoor);
+\draw[hoper-line](\xcoorbeg,\ycoor) -- (\xcoorend,\ycoor);
 \node at (\xcoorbeg,\ycoor){$\bf \times$};
 \pgfmathsetmacro{\result}{(\xcoorend+0.35*\sc)} 
 %name of operator
@@ -234,7 +274,7 @@
 
 \newcommand{\dHtwo}[3][]{ \pgfmathsetmacro{\xcoorbeg}{(\xcoorH+0.5*\sc)}
 \pgfmathsetmacro{\xcoorend}{(\xcoorbeg+1*\sc)} 
-\draw[hoper_line](\xcoorbeg,\ycoor) -- (\xcoorend,\ycoor); 
+\draw[hoper-line](\xcoorbeg,\ycoor) -- (\xcoorend,\ycoor); 
 \pgfmathsetmacro{\result}{(\xcoorend+0.35*\sc)} 
 %name of operator
 \ifx&#1&%
@@ -268,47 +308,47 @@
 \newcommand{\dTs}[3][]{\dAmp{#1}{#2}{#3}}
 
 \newcommand{\dU}[3][]{
-\tikzset{exoper_line/.style={exoper2_line_save}}
+\tikzset{exoper-line/.style={exoper2-line-save}}
 \dAmp[$_{U_#2}$]{#1}{#2}{#3}
-\tikzset{exoper_line/.style={exoper_line_save}} }
+\tikzset{exoper-line/.style={exoper-line-save}} }
 
 \newcommand{\dUs}[3][]{
-\tikzset{exoper_line/.style={exoper2_line_save}}
+\tikzset{exoper-line/.style={exoper2-line-save}}
 \dAmp{#1}{#2}{#3}
-\tikzset{exoper_line/.style={exoper_line_save}} }
+\tikzset{exoper-line/.style={exoper-line-save}} }
 
 \newcommand{\dTt}[3][]{
-\tikzset{exoper_line/.style={exoper3_line_save}}
+\tikzset{exoper-line/.style={exoper3-line-save}}
 \dAmp{#1}{#2}{#3}
-\tikzset{exoper_line/.style={exoper_line_save}} }
+\tikzset{exoper-line/.style={exoper-line-save}} }
 
 \newcommand{\dTv}[3][]{
-\tikzset{exoper_line/.style={exvac_line_save}}
+\tikzset{exoper-line/.style={exvac-line-save}}
 \dAmp{#1}{#2}{#3}
-\tikzset{exoper_line/.style={exoper_line_save}} }
+\tikzset{exoper-line/.style={exoper-line-save}} }
 
 \newcommand{\dTd}[3][]{\dAmpD[$_{T^{\dagger}_#2}$]{#1}{#2}{#3}}
 \newcommand{\dTds}[3][]{\dAmpD{#1}{#2}{#3}}
 
 \newcommand{\dUd}[3][]{
-\tikzset{exoper_line/.style={exoper2_line_save}}
+\tikzset{exoper-line/.style={exoper2-line-save}}
 \dAmpD[$_{U^{\dagger}_#2}$]{#1}{#2}{#3}
-\tikzset{exoper_line/.style={exoper_line_save}} }
+\tikzset{exoper-line/.style={exoper-line-save}} }
 
 \newcommand{\dUds}[3][]{
-\tikzset{exoper_line/.style={exoper2_line_save}}
+\tikzset{exoper-line/.style={exoper2-line-save}}
 \dAmpD{#1}{#2}{#3}
-\tikzset{exoper_line/.style={exoper_line_save}} }
+\tikzset{exoper-line/.style={exoper-line-save}} }
 
 \newcommand{\dTtd}[3][]{
-\tikzset{exoper_line/.style={exoper3_line_save}}
+\tikzset{exoper-line/.style={exoper3-line-save}}
 \dAmpD{#1}{#2}{#3}
-\tikzset{exoper_line/.style={exoper_line_save}} }
+\tikzset{exoper-line/.style={exoper-line-save}} }
 
 \newcommand{\dTdv}[3][]{
-\tikzset{exoper_line/.style={exvac_line_save}}
+\tikzset{exoper-line/.style={exvac-line-save}}
 \dAmpD{#1}{#2}{#3}
-\tikzset{exoper_line/.style={exoper_line_save}} }
+\tikzset{exoper-line/.style={exoper-line-save}} }
 
 %Hamilton parts
 \newcommand{\dF}[1]{\dHone[$_{F}$]{#1}}
@@ -325,48 +365,49 @@
 
 \newcommand{\dline}[3][]{
 \ifx&#1&%
-\draw[ph_line](#2) -- (#3);
+\draw[ph-line](#2) -- (#3);
 \else
-\draw[ph_line](#2) -- node[inner sep=0pt,minimum size=0pt,right = 0.5pt] {\footnotesize\slshape\sffamily #1} (#3);
+\draw[ph-line](#2) -- node[inner sep=0pt,minimum size=0pt,right = 0.5pt] {\footnotesize\slshape\sffamily #1} (#3);
 \fi
 }
 \newcommand{\dcurve}[3][]{
 \ifx&#1&%
-\draw[ph_line](#2) to [bend right=30] (#3);
+\draw[ph-line](#2) to [bend right=30] (#3);
 \else
-\draw[ph_line](#2) to [bend right=30] node[inner sep=0pt,minimum size=0pt,right = 0.5pt] {\footnotesize\slshape\sffamily #1} (#3);
+\draw[ph-line](#2) to [bend right=30] node[inner sep=0pt,minimum size=0pt,right = 0.5pt] {\footnotesize\slshape\sffamily #1} (#3);
 \fi
 }
 \newcommand{\dcurver}[3][]{
-  \tikzset{ph_line/.style={ph_liner}}
+  \tikzset{ph-line/.style={ph-liner}}
   \dcurve[#1]{#3}{#2}
-  \tikzset{ph_line/.style={ph_line_save}}
+  \tikzset{ph-line/.style={ph-line-save}}
 }
 \newcommand{\dcurcur}[2]{\dcurve{#1}{#2} \dcurve{#2}{#1}}
 
 \newcommand{\dcurt}[3]{
-  \draw[ph_line] let \p1 = (#1), \p2 = (#2)
+  \draw[ph-line] let \p1 = (#1), \p2 = (#2)
     in \pgfextra{
         \pgfmathsetmacro{\dx}{\x2==\x1}
         \pgfmathsetmacro{\dy}{\y2>\y1}
         \pgfmathsetmacro{\ang}{90-2*atan((\y2-\y1)/(\x2-\x1+\dx/10))}
-        \pgfmathsetmacro{\ango}{180*(1-\dy) - \ang}
+        \pgfmathsetmacro{\ango}{180*(1-\dy) - \ang +1}
         \pgfmathsetmacro{\angi}{90-180*\dy }
        }
     (#1) to [out=\ango,in=\angi] (#2);
-  \draw[ph_line] let \p1 = (#2), \p2 = (#3)
+  \draw[ph-line] let \p1 = (#2), \p2 = (#3)
     in \pgfextra{
         \pgfmathsetmacro{\dx}{\x2==\x1}
         \pgfmathsetmacro{\dy}{\y2>\y1}
-        \pgfmathsetmacro{\ang}{90+2*atan((\y2-\y1)/(\x2-\x1+\dx/10))}
-        \pgfmathsetmacro{\angi}{180*(1-\dy) + \ang}
+        \pgfmathsetmacro{\ang}{90-2*atan((\y2-\y1)/(\x2-\x1+\dx/10))}
+        \pgfmathsetmacro{\angi}{-180*\dy - \ang}
+        \pgfmathsetmacro{\angi}{-180*\dy - \ang + 1}
         \pgfmathsetmacro{\ango}{180*\dy -90 }
        }
     (#2) to [out=\ango,in=\angi] (#3);
 }
 % switch to this one if TexLive2011 is available
 %\newcommand{\dcurt}[3]{
-  %\draw[ph_line] let \p1 = (#1), \p2 = (#2)
+  %\draw[ph-line] let \p1 = (#1), \p2 = (#2)
     %in \pgfextra{
         %\pgfmathsetmacro{\dx}{\x2==\x1 ? 1 : \x2-\x1 } 
         %\pgfmathsetmacro{\ang}{\x2==\x1? -90 :90-2*atan((\y2-\y1)/(\dx))}
@@ -375,7 +416,7 @@
         %\pgfmathsetmacro{\angi}{\y2>\y1? -90 : 90}
        %}
     %(#1) to [out=\ango,in=\angi] (#2);
-  %\draw[ph_line] let \p1 = (#2), \p2 = (#3)
+  %\draw[ph-line] let \p1 = (#2), \p2 = (#3)
     %in \pgfextra{
         %\pgfmathsetmacro{\dx}{\x2==\x1 ? 1 : \x2-\x1 }
         %\pgfmathsetmacro{\ang}{\x2==\x1 ? -90 : 90+2*atan((\y2-\y1)/(\dx))}
@@ -385,9 +426,9 @@
     %(#2) to [out=\ango,in=\angi] (#3);
 %}
 \newcommand{\dcurtr}[3]{
-  \tikzset{ph_line/.style={ph_liner}}
+  \tikzset{ph-line/.style={ph-liner}}
   \dcurt{#3}{#2}{#1}
-  \tikzset{ph_line/.style={ph_line_save}}  
+  \tikzset{ph-line/.style={ph-line-save}}  
 }
 
 \newcommand{\dmoveH}[1]{\pgfmathsetmacro{\xcoorH}{(\xcoorH+#1*0.25*\sc)}}
