@@ -32,7 +32,13 @@
   mid arrow/.style={postaction={decorate,decoration={
         markings,
   %                     place for arrows
-        mark=at position .7 with {\arrow[#1]{stealth}}
+        mark=at position .7 with {\arrow[#1]{>}}
+      }}},
+  % style to add an arrow in the middle of a path
+  mid rarrow/.style={postaction={decorate,decoration={
+        markings,
+  %                     place for arrows
+        mark=at position .3 with {\arrow[#1]{<}}
       }}},
 }
 
@@ -100,8 +106,10 @@
 %p/h line styles
 %arrows at the end 
 %\tikzset{ph-line-save/.style={->,>=stealth,thin}}
+%\tikzset{ph-liner-save/.style={ph-line-save,<-}}
 %arrows in the middle
 \tikzset{ph-line-save/.style={>=stealth,thin,postaction={on each segment={mid arrow}}}}
+\tikzset{ph-liner-save/.style={>=stealth,thin,postaction={on each segment={mid rarrow}}}}
 %line styles
 \tikzset{exoper-line-save/.style={very thick, solid}}
 \tikzset{exvac-line-save/.style={thick, dotted}}
@@ -111,7 +119,6 @@
 \tikzset{exoper-line/.style={exoper-line-save}}
 \tikzset{hoper-line/.style={hoper-line-save}}
 \tikzset{ph-line/.style={ph-line-save}}
-\tikzset{ph-liner/.style={ph-line-save,<-}}
 
 \newcommand{\bdiag}[1][]{
  \ifx&#1&%
@@ -378,7 +385,7 @@
 \fi
 }
 \newcommand{\dcurver}[3][]{
-  \tikzset{ph-line/.style={ph-liner}}
+  \tikzset{ph-line/.style={ph-liner-save}}
   \dcurve[#1]{#3}{#2}
   \tikzset{ph-line/.style={ph-line-save}}
 }
@@ -426,7 +433,7 @@
     %(#2) to [out=\ango,in=\angi] (#3);
 %}
 \newcommand{\dcurtr}[3]{
-  \tikzset{ph-line/.style={ph-liner}}
+  \tikzset{ph-line/.style={ph-liner-save}}
   \dcurt{#3}{#2}{#1}
   \tikzset{ph-line/.style={ph-line-save}}  
 }
