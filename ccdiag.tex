@@ -384,6 +384,47 @@
     \dTdstwo[#1]{#2}{#3}{#4}
   \fi
   \tikzset{exoper-line/.style={exoper-line-save}} }
+\newcommand{\dUone}[3][]{
+  \tikzset{exoper-line/.style={exoper2-line-save}}
+  % set perturbation (if given)
+  \ifx&#1&%
+    \dTone{#2}{#3}
+  \else
+    \dTone[#1]{#2}{#3}
+  \fi
+  \tikzset{exoper-line/.style={exoper-line-save}} 
+}
+\newcommand{\dUtwo}[4][]{
+  \tikzset{exoper-line/.style={exoper2-line-save}}
+  % set perturbation (if given)
+  \ifx&#1&%
+    \dTtwo{#2}{#3}{#4}
+  \else
+    \dTtwo[#1]{#2}{#3}{#4}
+  \fi
+  \tikzset{exoper-line/.style={exoper-line-save}} 
+}
+\newcommand{\dUsone}[3][]{
+  \tikzset{exoper-line/.style={exoper2-line-save}}
+  % set perturbation (if given)
+  \ifx&#1&%
+    \dTsone{#2}{#3}
+  \else
+    \dTsone[#1]{#2}{#3}
+  \fi
+  \tikzset{exoper-line/.style={exoper-line-save}} 
+}
+\newcommand{\dUstwo}[4][]{
+  \tikzset{exoper-line/.style={exoper2-line-save}}
+  % set perturbation (if given)
+  \ifx&#1&%
+    \dTstwo{#2}{#3}{#4}
+  \else
+    \dTstwo[#1]{#2}{#3}{#4}
+  \fi
+  \tikzset{exoper-line/.style={exoper-line-save}} 
+}
+
 
 %Hamilton parts
 \newcommand{\dF}[1]{\dHone[$_{F}$]{#1}}
