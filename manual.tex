@@ -305,6 +305,12 @@ available already (together with non-labeled versions dUs and dUds):
 
 \myind{\bf \textbackslash dUd}$[${\it pert.order}$]$\{{\it exc.level}\}\{{\it node}\}
 
+There is also a transparent version of operators available:
+
+\myind{\bf \textbackslash dTt}\{{\it exc.level}\}\{{\it node}\}
+
+\myind{\bf \textbackslash dTtd}\{{\it exc.level}\}\{{\it node}\}
+
 You can also create your own styles for operator lines (see Section \ref{sec:Styles}).
 
 \subsection{Parts of Hamiltonian}
@@ -438,6 +444,33 @@ There are four shift-commands available:
 \myind{\bf \textbackslash dname}\{{\it text}\} -- write {\it text} (e.g. diagram name) over the diagram
 
 \myind{\bf \textbackslash dtext}\{{\it shift}\}\{{\it text}\} -- write {\it text} in the diagram (with a horizontal shift).
+
+\subsection{Named nodes}
+
+Use operators
+
+\myind{\bf \textbackslash dTone}$[${\it pert.order}$]$\{{\it node}\}\{{\it node name}\}
+
+\myind{\bf \textbackslash dTtwo}$[${\it pert.order}$]$\{{\it node}\}\{{\it node1 name}\}\{{\it node2 name}\}
+
+\myind{\bf \textbackslash dFn}\{{\it node}\}\{{\it node name}\}
+
+\myind{\bf \textbackslash dWn}\{{\it node1}\}\{{\it node2}\}\{{\it node1 name}\}\{{\it node2 name}\}
+
+to name individual nodes. Versions
+{\bf \textbackslash dTsone},
+{\bf \textbackslash dTstwo},
+{\bf \textbackslash dTdone},
+{\bf \textbackslash dTdtwo},
+{\bf \textbackslash dTdsone},
+{\bf \textbackslash dTdstwo},
+{\bf \textbackslash dTdvone},
+{\bf \textbackslash dTdvtwo},
+{\bf \textbackslash dFsn},
+{\bf \textbackslash dFrn},
+{\bf \textbackslash dFsrn},
+{\bf \textbackslash dWsn}
+are also available.
 
 \section{Styles}\label{sec:Styles}
 
@@ -608,6 +641,40 @@ defined).
 \dTtd{1}{t}
 \dTt{1}{tt}
 \dline{t1}{tt1}
+\ediag
+\end{minipage}
+
+\begin{minipage}[b]{0.5\linewidth}\centering
+ \begin{lstlisting}
+% named nodes
+\bdiags
+\dmoveH{1}
+\dmoveTd{6}
+\dTdvtwo{t}{$\kappa$}{$\lambda$}
+\dWsn{w1}{w2}{$\iota$}{$\kappa$}
+\dTsone{tt}{$\iota$}
+\dmoveT{2}
+\dTstwo{ttt}{$\kappa$}{$\lambda$}
+\dcurcur{tt}{w1}
+\dcurt{ttt1}{w2}{t1}
+\dcurver{t1}{ttt1}
+\dcurcur{ttt2}{t2}
+\ediag
+\end{lstlisting}
+\end{minipage}
+ \begin{minipage}[b]{0.5\linewidth}\centering
+\bdiags
+\dmoveH{1}
+\dmoveTd{6}
+\dTdvtwo{t}{$\kappa$}{$\lambda$}
+\dWsn{w1}{w2}{$\iota$}{$\kappa$}
+\dTsone{tt}{$\iota$}
+\dmoveT{2}
+\dTstwo{ttt}{$\kappa$}{$\lambda$}
+\dcurcur{tt}{w1}
+\dcurt{ttt1}{w2}{t1}
+\dcurver{t1}{ttt1}
+\dcurcur{ttt2}{t2}
 \ediag
 \end{minipage}
 
