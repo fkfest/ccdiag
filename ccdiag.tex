@@ -358,14 +358,14 @@
 \tikzset{exoper-line/.style={exoper-line-save}} }
 
 %excitations with named nodes
-\newcommand{\dTone}[3][]{\dAmp[$_{T_1}$]{#1}{1}{#2}; \draw (#2) node[below] {#3};}
-\newcommand{\dTtwo}[4][]{\dAmp[$_{T_2}$]{#1}{2}{#2}; \draw (#21) node[below] {#3};\draw (#22) node[below] {#4};}
-\newcommand{\dTsone}[3][]{\dAmp{#1}{1}{#2}; \draw (#2) node[below] {#3};}
-\newcommand{\dTstwo}[4][]{\dAmp{#1}{2}{#2}; \draw (#21) node[below] {#3};\draw (#22) node[below] {#4};}
-\newcommand{\dTdone}[3][]{\dAmpD[$_{T^{\dagger}_1}$]{#1}{1}{#2}; \draw (#2) node[above] {#3};}
-\newcommand{\dTdtwo}[4][]{\dAmpD[$_{T^{\dagger}_2}$]{#1}{2}{#2}; \draw (#21) node[above] {#3};\draw (#22) node[above] {#4};}
-\newcommand{\dTdsone}[3][]{\dAmpD{#1}{1}{#2}; \draw (#2) node[above] {#3};}
-\newcommand{\dTdstwo}[4][]{\dAmpD{#1}{2}{#2}; \draw (#21) node[above] {#3};\draw (#22) node[above] {#4};}
+\newcommand{\dTone}[3][]{\dAmp[$_{T_1}$]{#1}{1}{#2}; \draw (#2) node[below] {\footnotesize\slshape\sffamily #3};}
+\newcommand{\dTtwo}[4][]{\dAmp[$_{T_2}$]{#1}{2}{#2}; \draw (#21) node[below] {\footnotesize\slshape\sffamily #3};\draw (#22) node[below] {\footnotesize\slshape\sffamily #4};}
+\newcommand{\dTsone}[3][]{\dAmp{#1}{1}{#2}; \draw (#2) node[below] {\footnotesize\slshape\sffamily #3};}
+\newcommand{\dTstwo}[4][]{\dAmp{#1}{2}{#2}; \draw (#21) node[below] {\footnotesize\slshape\sffamily #3};\draw (#22) node[below] {\footnotesize\slshape\sffamily #4};}
+\newcommand{\dTdone}[3][]{\dAmpD[$_{T^{\dagger}_1}$]{#1}{1}{#2}; \draw (#2) node[above] {\footnotesize\slshape\sffamily #3};}
+\newcommand{\dTdtwo}[4][]{\dAmpD[$_{T^{\dagger}_2}$]{#1}{2}{#2}; \draw (#21) node[above] {\footnotesize\slshape\sffamily #3};\draw (#22) node[above] {\footnotesize\slshape\sffamily #4};}
+\newcommand{\dTdsone}[3][]{\dAmpD{#1}{1}{#2}; \draw (#2) node[above] {\footnotesize\slshape\sffamily #3};}
+\newcommand{\dTdstwo}[4][]{\dAmpD{#1}{2}{#2}; \draw (#21) node[above] {\footnotesize\slshape\sffamily #3};\draw (#22) node[above] {\footnotesize\slshape\sffamily #4};}
 \newcommand{\dTdvone}[3][]{
   \tikzset{exoper-line/.style={exvac-line-save}}
   % set perturbation (if given)
@@ -398,12 +398,12 @@
 \newcommand{\dWs}[2]{\dHtwo{#1}{#2}}
 \newcommand{\dXtwo}[2]{\dHtwo[$_{X}$]{#1}{#2}}
 %Hamilton parts with named nodes
-\newcommand{\dFn}[2]{\dHone[$_{F}$]{#1}; \draw (#1) node[below] {#2};}
-\newcommand{\dFsn}[2]{\dHone{#1}; \draw (#1) node[below] {#2};}
-\newcommand{\dFrn}[2]{\dHoner[$_{F}$]{#1}; \draw (#1) node[below] {#2};}
-\newcommand{\dFsrn}[2]{\dHoner{#1}; \draw (#1) node[below] {#2};}
-\newcommand{\dWn}[4]{\dHtwo[$_{W}$]{#1}{#2}; \draw (#1) node[above] {#3};\draw (#2) node[above] {#4};}
-\newcommand{\dWsn}[4]{\dHtwo{#1}{#2}; \draw (#1) node[above] {#3};\draw (#2) node[above] {#4};}
+\newcommand{\dFn}[2]{\dHone[$_{F}$]{#1}; \draw (#1) node[below] {\footnotesize\slshape\sffamily #2};}
+\newcommand{\dFsn}[2]{\dHone{#1}; \draw (#1) node[below] {\footnotesize\slshape\sffamily #2};}
+\newcommand{\dFrn}[2]{\dHoner[$_{F}$]{#1}; \draw (#1) node[below] {\footnotesize\slshape\sffamily #2};}
+\newcommand{\dFsrn}[2]{\dHoner{#1}; \draw (#1) node[below] {\footnotesize\slshape\sffamily #2};}
+\newcommand{\dWn}[4]{\dHtwo[$_{W}$]{#1}{#2}; \draw (#1) node[above] {\footnotesize\slshape\sffamily #3};\draw (#2) node[above] {\footnotesize\slshape\sffamily #4};}
+\newcommand{\dWsn}[4]{\dHtwo{#1}{#2}; \draw (#1) node[above] {\footnotesize\slshape\sffamily #3};\draw (#2) node[above] {\footnotesize\slshape\sffamily #4};}
 
 
 
