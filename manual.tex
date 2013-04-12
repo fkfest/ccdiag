@@ -5,6 +5,7 @@
 %ccdiag
 \usepackage{tikz}
 \include{ccdiag}
+\pgfrealjobname{manual}
 %
 
 \usepackage{amsmath,amsfonts,amssymb}
@@ -484,6 +485,29 @@ in order to change excitation operator, bare excitation operator, H-operator, or
 You can create your own operator style for a custom operator (see how {\bf \textbackslash dU} or {\bf \textbackslash dTv} are 
 defined).
 
+\section{Generating external graphics}
+
+put 
+
+\myind{\bf \textbackslash beginpgfgraphicnamed}\{{\it Name-of-diagram}\}
+
+and
+
+\myind{\bf \textbackslash endpgfgraphicnamed}
+
+before and after a block of diagrams that can be put outside, and 
+
+\myind{\bf \textbackslash pgfrealjobname}\{{\it Real-name of the tex document}\}
+
+in the preamble (e.g., after {\bf \textbackslash include\{ccdiag\}}).
+
+Now you can use provided script {\bf makediags} to generate all diagrams:
+
+\myind{\bf makediags} {\it Real-name of the tex document.tex}
+
+The resulting pdf files will be included by pdflatex 
+instead of diagram-generation by later compilations (which can considerably speed up the compilation!) .
+
 \section{Examples}
 
 %\begin{table}[htbp]
@@ -651,6 +675,7 @@ defined).
 \begin{minipage}[b]{0.5\linewidth}\centering
  \begin{lstlisting}
 % named nodes
+\beginpgfgraphicnamed{ExampleDiag}
 \bdiags
 \dmoveH{1}
 \dmoveTd{6}
@@ -664,9 +689,11 @@ defined).
 \dcurver{t1}{ttt1}
 \dcurcur{ttt2}{t2}
 \ediag
+\endpgfgraphicnamed
 \end{lstlisting}
 \end{minipage}
  \begin{minipage}[b]{0.5\linewidth}\centering
+\beginpgfgraphicnamed{ExampleDiag}
 \bdiags
 \dmoveH{1}
 \dmoveTd{6}
@@ -680,6 +707,7 @@ defined).
 \dcurver{t1}{ttt1}
 \dcurcur{ttt2}{t2}
 \ediag
+\endpgfgraphicnamed
 \end{minipage}
 
 \end{document}
