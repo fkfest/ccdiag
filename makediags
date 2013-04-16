@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 for job in $(grep -o '^[\ 0-9A-Za-z-]*\\beginpgfgraphicnamed{[0-9A-Za-z-]*}' < $1 | \
              sed -e 's/^[\ 0-9A-Za-z-]*\\beginpgfgraphicnamed{//' | sed -e 's/}//')
 do
