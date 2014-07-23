@@ -162,7 +162,14 @@ or {\bf \textbackslash bdiags}.
  \end{minipage}
 %\end{table}
 
+Or you can scale the diagram vertically and horizontally using
 
+\myind{\bf \textbackslash dvscale}\{{\it scaling factor}\}
+
+and
+
+\myind{\bf \textbackslash dhscale}\{{\it scaling factor}\}
+ 
 \section{Operators}
 
 \subsection{Excitation and deexcitation operators}
@@ -346,6 +353,9 @@ For fluctuation potential without label use
 
 \myind{\bf \textbackslash dWs}\{{\it node1}\}\{{\it node2}\}
 
+A dressed version of fluctuation potential (with double lines) can be drawn
+using {\bf \textbackslash dWbar} and {\bf \textbackslash dWbars} commands.
+
 \subsubsection{Perturbations}
 
 For one-electron perturbation use
@@ -373,13 +383,38 @@ and for two-electron part use
 
 You can also create your own styles for operator lines (see Section \ref{sec:Styles}).
 
+\subsubsection{Feynman vs Bartlett convention}
+
+By default the interaction lines are drawn as dashed lines. If you prefer the 
+usual Feynman's electromagnetic-interaction lines use
+
+\myind{\bf \textbackslash dfeynman}
+
+at the beginning of the diagram.
+
+\subsection{Scaling of operator lines}
+
+The size of operator lines can be influenced using
+
+\myind{\bf \textbackslash dscaleop}\{{\it scaling factor}\}
+
 \section{Hole/Particle lines}
 
 \subsection{Arrows}
 
 By default arrows are placed at 62\% of the line. One can change it in the source code 
 (``mark=at position'').
-Alternatively to set arrows at the end of lines uncomment the corresponding ``ph-line-save''.
+Alternatively to set arrows at the end of lines uncomment the corresponding ``ph-line-arrow-save''.
+
+One can use 
+
+\myind{\bf \textbackslash dnoarrow}
+
+and
+
+\myind{\bf \textbackslash darrow}
+
+in order to switch off and on the arrows.
 
 \subsection{Straight lines}
 
@@ -435,6 +470,10 @@ There are four shift-commands available:
   \item  shift deexcitation operators up:
 
 \myind{\bf \textbackslash dmovac}\{{\it shift}\}
+
+  \item  shift Hamiltonian-operators up:
+
+\myind{\bf \textbackslash dvmoveH}\{{\it shift}\}
 \end{itemize}
 
 {\it shift}$=1$ in the horizontal direction corresponds to a shift of a half length of single excitation operator
@@ -479,7 +518,7 @@ are also available.
 
 \section{Styles}\label{sec:Styles}
 
-Change {\bf exoper-line-save}, {\bf exvac-line-save}, {\bf hoper-line-save}, {\bf ph-line-save}
+Change {\bf exoper-line-save}, {\bf exvac-line-save}, {\bf hoper-line-save}, {\bf ph-line-arrow-save}(or {\bf ph-line-noarrow-save})
 in order to change excitation operator, bare excitation operator, H-operator, or h/p line styles.
 
 You can create your own operator style for a custom operator (see how {\bf \textbackslash dU} or {\bf \textbackslash dTv} are 
@@ -674,7 +713,8 @@ instead of diagram-generation by later compilations (which can considerably spee
 
 \begin{minipage}[b]{0.5\linewidth}\centering
  \begin{lstlisting}
-% named nodes
+% named nodes 
+% and an external graphic "ExampleDiag"
 \beginpgfgraphicnamed{ExampleDiag}
 \bdiags
 \dmoveH{1}
@@ -710,4 +750,105 @@ instead of diagram-generation by later compilations (which can considerably spee
 \endpgfgraphicnamed
 \end{minipage}
 
+\subsection{DCD}
+\begin{minipage}[b]{0.5\linewidth}\centering
+\begin{lstlisting}
+\bdiags[1.5]
+\dvscale{0.5}
+\dfeynman \dnoarrow
+\dvmoveH{-2}
+\dTdv{2}{td}
+\dWbars{w1}{w2}
+\dcurcur{w1}{td1}
+\dcurcur{w2}{td2}
+\ediag
+\bdiags[1.5]
+\dvscale{0.5}
+\dfeynman \dnoarrow
+\dTdv{2}{td}
+\dmoveH{4.6}
+\dFbars{f}
+\dTs{2}{tt}
+\dcurcur{tt1}{td1}
+\dcurve{td2}{tt2}
+\dcurt{tt2}{f}{td2}
+\ediag
+\bdiags[1.5]
+\dvscale{0.5}
+\dfeynman \dnoarrow
+\dTdv{2}{td}
+\dmoveH{1.2}
+\dscaleop{0.7}
+\dWs{w1}{w2}
+\dscaleop{1}
+\dTs{2}{tt}
+\dcurve{td1}{tt1}
+\dcurt{tt1}{w1}{td1}
+\dcurve{tt2}{td2}
+\dcurt{td2}{w2}{tt2}
+\ediag
+\bdiags[1.5]
+\dvscale{0.5}
+\dfeynman \dnoarrow
+\dmoveH{4.5}
+\dTdv{2}{td}
+\dTs{2}{tt}
+\dscaleop{0.37}
+\dWs{w1}{w2}
+\dscaleop{1}
+\dcurcur{tt1}{td1}
+\dcurt{tt2}{w1}{td2}
+\dcurt{td2}{w2}{tt2}
+\ediag
+\end{lstlisting}
+\end{minipage}
+\begin{minipage}[b]{0.5\linewidth}\centering
+\bdiags[1.5]
+\dvscale{0.5}
+\dfeynman \dnoarrow
+\dvmoveH{-2}
+\dTdv{2}{td}
+\dWbars{w1}{w2}
+\dcurcur{w1}{td1}
+\dcurcur{w2}{td2}
+\ediag
+\bdiags[1.5]
+\dvscale{0.5}
+\dfeynman \dnoarrow
+\dTdv{2}{td}
+\dmoveH{4.6}
+\dFbars{f}
+\dTs{2}{tt}
+\dcurcur{tt1}{td1}
+\dcurve{td2}{tt2}
+\dcurt{tt2}{f}{td2}
+\ediag
+\bdiags[1.5]
+\dvscale{0.5}
+\dfeynman \dnoarrow
+\dTdv{2}{td}
+\dmoveH{1.2}
+\dscaleop{0.7}
+\dWs{w1}{w2}
+\dscaleop{1}
+\dTs{2}{tt}
+\dcurve{td1}{tt1}
+\dcurt{tt1}{w1}{td1}
+\dcurve{tt2}{td2}
+\dcurt{td2}{w2}{tt2}
+\ediag
+\bdiags[1.5]
+\dvscale{0.5}
+\dfeynman \dnoarrow
+\dmoveH{4.5}
+\dTdv{2}{td}
+\dTs{2}{tt}
+\dscaleop{0.37}
+\dWs{w1}{w2}
+\dscaleop{1}
+\dcurcur{tt1}{td1}
+\dcurt{tt2}{w1}{td2}
+\dcurt{td2}{w2}{tt2}
+\ediag
+\end{minipage}
 \end{document}
