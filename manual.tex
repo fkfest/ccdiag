@@ -750,6 +750,48 @@ instead of diagram-generation by later compilations (which can considerably spee
 \endpgfgraphicnamed
 \end{minipage}
 
+
+\begin{minipage}[b]{0.5\linewidth}\centering
+ \begin{lstlisting}
+% bubble and oyster
+% and the p/h counterparts 
+\bdiags[2]
+\dWs{w1}{w2}
+\dbubble{w2}{1}
+\ediag
+\bdiags[2]
+\dWs{w1}{w2}
+\doyster{w1}{w2}
+\ediag
+\bdiags[2]
+\dWs{w1}{w2}
+\dbubbler{w2}{1}
+\ediag
+\bdiags[2]
+\dWs{w1}{w2}
+\doysterr{w1}{w2}
+\ediag
+\end{lstlisting}
+\end{minipage}
+ \begin{minipage}[b]{0.5\linewidth}\centering
+\bdiags[2]
+\dWs{w1}{w2}
+\dbubble{w2}{1}
+\ediag
+\bdiags[2]
+\dWs{w1}{w2}
+\doyster{w1}{w2}
+\ediag
+\bdiags[2]
+\dWs{w1}{w2}
+\dbubbler{w2}{1}
+\ediag
+\bdiags[2]
+\dWs{w1}{w2}
+\doysterr{w1}{w2}
+\ediag
+\end{minipage}
+
 \subsection{DCD}
 \begin{minipage}[b]{0.5\linewidth}\centering
 \begin{lstlisting}

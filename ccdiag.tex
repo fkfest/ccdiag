@@ -561,6 +561,24 @@
   \tikzset{ph-line/.style={ph-line-save}}  
 }
 
+\newcommand{\dbubble}[2]{
+  \draw[ph-line] (#1) arc (180:360:#2*0.25*\scalh) node (#1cir) {};
+  \draw[ph-line] (#1cir) arc (0:180:#2*0.25*\scalh) {};
+}
+\newcommand{\dbubbler}[2]{
+  \tikzset{ph-line/.style={ph-liner-save}}
+  \dbubble{#1}{#2}
+  \tikzset{ph-line/.style={ph-line-save}}  
+}
+\newcommand{\doyster}[2]{
+  \draw[ph-line](#1) to [bend right=60] (#2);
+}
+\newcommand{\doysterr}[2]{
+  \tikzset{ph-line/.style={ph-liner-save}}
+  \doyster{#1}{#2}
+  \tikzset{ph-line/.style={ph-line-save}}  
+}
+
 \newcommand{\dmoveH}[1]{\pgfmathsetmacro{\xcoorH}{(\xcoorH+#1*0.25*\scalh)}}
 \newcommand{\dmoveT}[1]{\pgfmathsetmacro{\xcoor}{(\xcoor+#1*0.25*\scalh)}}
 \newcommand{\dmoveTd}[1]{\pgfmathsetmacro{\xcoordg}{(\xcoordg+#1*0.25*\scalh)}}
