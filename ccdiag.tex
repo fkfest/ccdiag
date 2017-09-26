@@ -171,6 +171,15 @@
 \newcommand{\ediags}{\ediag}
 \newcommand{\ediagd}{\ediag}
 
+\newcommand{\dorigin}[1][]{
+ \ifx&#1&%
+  \pgfmathsetmacro{\xorig}{0}
+ \else
+  \pgfmathsetmacro{\xorig}{#1}
+ \fi
+ \node(Orig) at (\xorig,0){};
+}
+
 \newcommand{\dAmp}[4][]{%for all
 \pgfmathsetmacro{\xcoorbeg}{(\xcoor+0.5*\scalh)} 
 \pgfmathsetmacro{\xcoorend}{(\xcoorbeg+#3*\scalh/2)} 
