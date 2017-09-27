@@ -280,10 +280,13 @@
 \fi
 }
 
+\newcommand{\dCross}{$\mathbin{\tikz [x=1.4ex,y=1.4ex] \draw[thick] (0,0) -- (1,1) (0,1) -- (1,0);}$}
+
 \newcommand{\dHone}[2][]{\pgfmathsetmacro{\xcoorbeg}{(\xcoorH+0.5*\scalh)}
 \pgfmathsetmacro{\xcoorend}{(\xcoorbeg+0.5*\scalh)} 
 \draw[hoper-line](\xcoorbeg,\ycoor) -- (\xcoorend,\ycoor);
-\node at (\xcoorend,\ycoor){$\bf \times$};
+%\node at (\xcoorend,\ycoor){$\bf \times$};
+\node at (\xcoorend,\ycoor){\dCross};
 \pgfmathsetmacro{\result}{(\xcoorend+0.35*\scalh)} 
 %name of operator
 \ifx&#1&%
