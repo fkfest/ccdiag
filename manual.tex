@@ -416,6 +416,44 @@ and
 
 in order to switch off and on the arrows.
 
+Double-headed arrows can be switched on using 
+
+\myind{\bf \textbackslash ddoubleheadarrow}
+
+%\begin{table}[htbp]
+ \begin{minipage}[b]{0.5\linewidth}\centering
+  \begin{lstlisting}
+%<\mu_1|\op F \op T_1 |0>
+\bdiags
+  \dmoveH{2}
+  \dT{1}{t}
+  \dF{f}
+  \dnoarrow
+  \dline{tv1}{t}
+  \ddoubleheadarrow
+  \dline{t}{f}
+  \darrow
+  \dline{f}{fv2}
+\ediag 
+  \end{lstlisting}
+ \end{minipage}
+ \begin{minipage}[b]{0.5\linewidth}\centering
+    %<\mu_1|\op F \op T_1 |0>
+    \bdiags
+    \dmoveH{2}
+    \dT{1}{t}
+    \dF{f}
+    \dnoarrow
+    \dline{tv1}{t}
+    \ddoubleheadarrow
+    \dline{t}{f}
+    \darrow
+    \dline{f}{fv2}
+    \ediag
+ \end{minipage}
+%\end{table}
+
+
 \subsection{Straight lines}
 
 In order to connect two vertices with a straight h/p line use

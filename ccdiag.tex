@@ -40,6 +40,18 @@
   %                     place for arrows
         mark=at position .38 with {\arrow[#1]{<}}
       }}},
+  % style to add a double-headed arrow in the middle of a path
+  mid darrow/.style={postaction={decorate,decoration={
+        markings,
+  %                     place for arrows
+        mark=at position .62 with {\arrow[#1]{>>}}
+      }}},
+  % style to add a double-headed arrow in the middle of a path
+  mid rdarrow/.style={postaction={decorate,decoration={
+        markings,
+  %                     place for arrows
+        mark=at position .38 with {\arrow[#1]{<<}}
+      }}},
 }
 
 % from http://tex.stackexchange.com/questions/25678/nicer-wavy-line-with-tikz
@@ -127,9 +139,13 @@
 %arrows at the end 
 %\tikzset{ph-line-arrow-save/.style={->,>=stealth,thin}}
 %\tikzset{ph-liner-arrow-save/.style={ph-line-save,<-}}
+%\tikzset{ph-line-darrow-save/.style={->>,>=stealth,thin}}
+%\tikzset{ph-liner-darrow-save/.style={ph-line-save,<<-}}
 %arrows in the middle
 \tikzset{ph-line-arrow-save/.style={>=stealth,thin,postaction={on each segment={mid arrow}}}}
 \tikzset{ph-liner-arrow-save/.style={>=stealth,thin,postaction={on each segment={mid rarrow}}}}
+\tikzset{ph-line-darrow-save/.style={>=stealth,thin,postaction={on each segment={mid darrow}}}}
+\tikzset{ph-liner-darrow-save/.style={>=stealth,thin,postaction={on each segment={mid rdarrow}}}}
 \tikzset{ph-line-noarrow-save/.style={thin}}
 \tikzset{ph-line-save/.style={ph-line-arrow-save}}
 \tikzset{ph-liner-save/.style={ph-liner-arrow-save}}
@@ -636,6 +652,11 @@
 \newcommand{\darrow}{
 \tikzset{ph-line-save/.style={ph-line-arrow-save}}
 \tikzset{ph-liner-save/.style={ph-liner-arrow-save}}
+\tikzset{ph-line/.style={ph-line-save}}
+}
+\newcommand{\ddoubleheadarrow}{
+\tikzset{ph-line-save/.style={ph-line-darrow-save}}
+\tikzset{ph-liner-save/.style={ph-liner-darrow-save}}
 \tikzset{ph-line/.style={ph-line-save}}
 }
 
