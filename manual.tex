@@ -398,6 +398,83 @@ The size of operator lines can be influenced using
 
 \myind{\bf \textbackslash dscaleop}\{{\it scaling factor}\}
 
+\subsection{Effective Hamiltonian}
+
+An effective Hamiltonian can be added using
+
+\myind{\bf \textbackslash dHeff}[{\it name}]\{{\it pert.order}\}\{{\it number of electrons}\}\{{\it node}\}
+
+Nodes above the operator are called {\it node}1a, {\it node}2a, etc., 
+and below the operator -- {\it node}1b, {\it node}2b, etc.
+The up-external-line nodes are called {\it node}1v1, {\it node}1v2, {\it node}2v1, {\it node}2v2, etc.,
+and the down-external-line nodes -- {\it node}1vd1, {\it node}1vd2, {\it node}2vd1, {\it node}2vd2, etc.
+
+The command
+
+\myind{\bf \textbackslash dHeffs}[{\it pert.order}]\{{\it number of electrons}\}\{{\it node}\}
+
+can be used to make the notation shorter.
+
+The size of the Hamiltonian part can be changed using
+
+\myind{\bf \textbackslash dheffsize}\{{\it size}\}
+
+Default {\it size} is 6.
+ 
+~\\
+%\begin{table}[htbp]
+ \begin{minipage}[b]{0.5\linewidth}\centering
+  \begin{lstlisting}
+\bdiags
+\dHeff[$H_{\rm eff}$]{3}{2}{h}
+\dline{h1a}{h1v1}
+\dline{h1vd1}{h1b}
+\dline{h2a}{h2v1}
+\dline{h2v2}{h2a}
+\ediags
+  \end{lstlisting}
+ \end{minipage}
+ \begin{minipage}[b]{0.5\linewidth}\centering
+\bdiags
+\dheffsize{6}
+\dHeff[$H_{\rm eff}$]{3}{2}{h}
+\dline{h1a}{h1v1}
+\dline{h1vd1}{h1b}
+\dline{h2a}{h2v1}
+\dline{h2v2}{h2a}
+\ediags
+ \end{minipage}
+%\end{table}
+
+%\begin{table}[htbp]
+ \begin{minipage}[b]{0.5\linewidth}\centering
+  \begin{lstlisting}
+\bdiag
+\dHeffs{3}{h}
+\dmoveT{5}
+\dU{1}{u}
+\dline{h1a}{h1v1}
+\dline{h1vd1}{h1b}
+\dline{h2a}{h2v1}
+\dline{h2v2}{h2a}
+\dcurcur{u1}{h3b}
+\ediag
+  \end{lstlisting}
+ \end{minipage}
+ \begin{minipage}[b]{0.5\linewidth}\centering
+\bdiag
+\dHeffs{3}{h}
+\dmoveT{5}
+\dU{1}{u}
+\dline{h1a}{h1v1}
+\dline{h1vd1}{h1b}
+\dline{h2a}{h2v1}
+\dline{h2v2}{h2a}
+\dcurcur{u1}{h3b}
+\ediag
+ \end{minipage}
+%\end{table}
+
 \section{Hole/Particle lines}
 
 \subsection{Arrows}
@@ -596,7 +673,6 @@ The resulting pdf files will be included by pdflatex
 instead of diagram-generation by later compilations (which can considerably speed up the compilation!) .
 
 \section{Examples}
-
 %\begin{table}[htbp]
  \begin{minipage}[b]{0.5\linewidth}\centering
   \begin{lstlisting}

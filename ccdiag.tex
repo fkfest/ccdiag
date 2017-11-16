@@ -125,6 +125,7 @@
 
 
 \edef\xcoord{11} \edef\xcoor{11} \edef\xcoorbeg{11} \edef\xcoorend{11} \edef\result{11} \edef\ycoor{11} \edef\ycoord{11} %\edef\scal{11} 
+\edef\heffsize{6}
 \pgfmathsetmacro{\scalh}{1} %default scale-value
 \pgfmathsetmacro{\scalv}{1} %default scale-value
 \pgfmathsetmacro{\xcoord}{(-1*\scalh)} \pgfmathsetmacro{\ycoord}{(-1*\scalv)} 
@@ -155,10 +156,12 @@
 \tikzset{hoper-line-fey-save/.style={ decoration={complete sines,segment length=0.1cm,amplitude=0.1cm}, decorate}}
 \tikzset{hoper-line-save/.style={very thick, dashed}}
 \tikzset{hoperbar-line-save/.style={ hoper-line-save, double}}
+\tikzset{heffoper-line-save/.style={thick, solid, double distance = \heffsize, line cap=rect }}
 \tikzset{exoper2-line-save/.style={ thick, solid, double}}
 \tikzset{exoper3-line-save/.style={ thick, transparent}}
 \tikzset{exoper-line/.style={exoper-line-save}}
 \tikzset{hoper-line/.style={hoper-line-save}}
+\tikzset{heffoper-line/.style={heffoper-line-save}}
 \tikzset{ph-line/.style={ph-line-save}}
 
 \newcommand{\bdiag}[1][]{
@@ -280,6 +283,59 @@
 \fi
 }
 
+\newcommand{\dHeff}[4][]{%for all
+\pgfmathsetmacro{\xcoorbeg}{(\xcoorH+0.5*\scalh)} 
+\pgfmathsetmacro{\xcoorend}{(\xcoorbeg+#3*\scalh/2)} 
+\draw[heffoper-line](\xcoorbeg,\ycoor) -- (\xcoorend,\ycoor);
+\pgfmathsetmacro{\ycoora}{(\ycoor+0.018*\heffsize)} 
+\pgfmathsetmacro{\ycoorb}{(\ycoor-0.018*\heffsize)} 
+\pgfmathsetmacro{\result}{(\xcoorend+0.6*\scalh)} 
+% write label if given
+\ifx&#1&%
+  \pgfmathsetmacro{\xcoorH}{\xcoorend}
+\else
+  \node at (\result,\ycoor){#1};
+  \pgfmathsetmacro{\xcoorH}{(\xcoorend+0.25*\scalh)}
+\fi
+% calculate the vertex-distance (singles are a special case)
+\ifnum#3=1
+ \pgfmathsetmacro{\xxx}{((\xcoorend-\xcoorbeg)/2)} 
+ \pgfmathsetmacro{\result}{\xcoorbeg}
+\else
+ \pgfmathsetmacro{\xxx}{((\xcoorend-\xcoorbeg)/( #3 - 1 ))} 
+ \pgfmathsetmacro{\result}{(\xcoorbeg-\xxx)}
+\fi
+% set all nodes (and give them names)
+\foreach \x in {1,...,#3}
+{
+  \coordinate (vertex) at ($(\result,\ycoora)+(\x*\xxx,0)$);
+  \node[inner sep=0pt,minimum size=0pt] (#4\x a) at  (vertex) {};
+  \coordinate (vertex) at ($(\result,\ycoorb)+(\x*\xxx,0)$);
+  \node[inner sep=0pt,minimum size=0pt] (#4\x b) at  (vertex) {};
+  \coordinate (vtxvac) at ($(\result,\yvac)+(\x*\xxx,0)$);
+  \node[inner sep=0pt,minimum size=0pt] (#4\x v1) at ($(vtxvac)-(\xvac,0)$) {};
+  \node[inner sep=0pt,minimum size=0pt] (#4\x v2) at ($(vtxvac)+(\xvac,0)$) {};
+  \coordinate (vtxvac) at ($(\result,\ycoord)+(\x*\xxx,0)$);
+  \node[inner sep=0pt,minimum size=0pt] (#4\x vd1) at ($(vtxvac)-(\xvac,0)$) {};
+  \node[inner sep=0pt,minimum size=0pt] (#4\x vd2) at ($(vtxvac)+(\xvac,0)$) {};
+}
+\node[inner sep=0pt,minimum size=0pt] (#4a) at  (#41a) {};
+\node[inner sep=0pt,minimum size=0pt] (#4b) at  (#41b) {};
+\node[inner sep=0pt,minimum size=0pt] (#4v1) at (#41v1) {};
+\node[inner sep=0pt,minimum size=0pt] (#4v2) at (#41v2) {};
+\node[inner sep=0pt,minimum size=0pt] (#4vd1) at (#41vd1) {};
+\node[inner sep=0pt,minimum size=0pt] (#4vd2) at (#41vd2) {};
+% set perturbation (if given)
+\ifx&#2&%
+%
+\else  
+\pgfmathsetmacro{\result}{((\xcoorend+\xcoorbeg)/2)} 
+\setcounter{stoer}{#2} 
+\node[inner sep=0pt,minimum size=0pt] at (\result,\ycoor){{\footnotesize\slshape\sffamily \Roman{stoer}}}; 
+\fi
+}
+
+
 \newcommand{\dCross}{$\mathbin{\tikz [x=1.4ex,y=1.4ex] \draw[thick] (0,0) -- (1,1) (0,1) -- (1,0);}$}
 
 \newcommand{\dHone}[2][]{\pgfmathsetmacro{\xcoorbeg}{(\xcoorH+0.5*\scalh)}
@@ -332,7 +388,8 @@
 \node[inner sep=0pt,minimum size=0pt] (#2vd2) at (\xx,\ycoord) {};
 }
 
-\newcommand{\dHtwo}[3][]{ \pgfmathsetmacro{\xcoorbeg}{(\xcoorH+0.5*\scalh)}
+\newcommand{\dHtwo}[3][]{ 
+\pgfmathsetmacro{\xcoorbeg}{(\xcoorH+0.5*\scalh)}
 \pgfmathsetmacro{\xcoorend}{(\xcoorbeg+1*\scalh)} 
 \draw[hoper-line](\xcoorbeg,\ycoor) -- (\xcoorend,\ycoor); 
 \pgfmathsetmacro{\result}{(\xcoorend+0.35*\scalh)} 
@@ -480,6 +537,8 @@
 
 
 %Hamilton parts
+\newcommand{\dHeffs}[3][]{\dHeff{#1}{#2}{#3}}
+
 \newcommand{\dF}[1]{\dHone[$_{F}$]{#1}}
 \newcommand{\dFs}[1]{\dHone{#1}}
 \newcommand{\dFbar}[1]{
@@ -642,6 +701,8 @@
 }
 
 \newcommand{\dscaleop}[1]{\pgfmathsetmacro{\scalh}{#1}}
+
+\newcommand{\dheffsize}[1]{\pgfmathsetmacro{\heffsize}{#1}}
 
 \newcommand{\dfeynman}{
   \tikzset{hoper-line-save/.style={hoper-line-fey-save}}
