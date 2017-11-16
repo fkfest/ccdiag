@@ -124,10 +124,11 @@
 %  in order to change excitation operator, explicit vacuum, H-operator, or p/h line styles.
 
 
-\edef\xcoord{11} \edef\xcoor{11} \edef\xcoorbeg{11} \edef\xcoorend{11} \edef\result{11} \edef\ycoor{11} \edef\ycoord{11} %\edef\scal{11} 
+\edef\xcoord{11} \edef\xcoor{11} \edef\xcoorbeg{11} \edef\xcoorend{11} \edef\result{11} \edef\ycoor{11} \edef\ycoord{11}
 \edef\heffsize{6}
 \pgfmathsetmacro{\scalh}{1} %default scale-value
 \pgfmathsetmacro{\scalv}{1} %default scale-value
+\pgfmathsetmacro{\pixtocoord}{(1/25)} %default pixel to coordinate ratio
 \pgfmathsetmacro{\xcoord}{(-1*\scalh)} \pgfmathsetmacro{\ycoord}{(-1*\scalv)} 
 \pgfmathsetmacro{\xcoor}{\xcoord} \pgfmathsetmacro{\ycoor}{(\ycoord+1*\scalv)} 
 \pgfmathsetmacro{\xcoordg}{\xcoord}
@@ -169,6 +170,7 @@
   \begin{tikzpicture}
  \else
   \begin{tikzpicture}[scale=#1]
+  \pgfmathsetmacro{\pixtocoord}{\pixtocoord/#1}
  \fi
 }
 \newcommand{\bdiags}[1][]{
@@ -287,8 +289,8 @@
 \pgfmathsetmacro{\xcoorbeg}{(\xcoorH+0.5*\scalh)} 
 \pgfmathsetmacro{\xcoorend}{(\xcoorbeg+#3*\scalh/2)} 
 \draw[heffoper-line](\xcoorbeg,\ycoor) -- (\xcoorend,\ycoor);
-\pgfmathsetmacro{\ycoora}{(\ycoor+0.018*\heffsize)} 
-\pgfmathsetmacro{\ycoorb}{(\ycoor-0.018*\heffsize)} 
+\pgfmathsetmacro{\ycoora}{(\ycoor+\pixtocoord*\heffsize/2)} 
+\pgfmathsetmacro{\ycoorb}{(\ycoor-\pixtocoord*\heffsize/2)} 
 \pgfmathsetmacro{\result}{(\xcoorend+0.6*\scalh)} 
 % write label if given
 \ifx&#1&%
