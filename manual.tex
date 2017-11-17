@@ -49,7 +49,7 @@ Only the {\it TikZ} package is required; i.e. to include CCDiag in your TeX file
 A diagram starts with {\bf \textbackslash bdiag} and ends with {\bf \textbackslash ediag}.
 
 %\begin{table}[htbp]
- \begin{minipage}[b]{0.5\linewidth}\centering
+ \begin{minipage}[b]{0.55\linewidth}\centering
   \begin{lstlisting}
 %<\mu_1|\op F \op T_1 |0>
 \bdiag
@@ -62,7 +62,7 @@ A diagram starts with {\bf \textbackslash bdiag} and ends with {\bf \textbacksla
 \ediag 
   \end{lstlisting}
  \end{minipage}
- \begin{minipage}[b]{0.5\linewidth}\centering
+ \begin{minipage}[b]{0.45\linewidth}\centering
     %<\mu_1|\op F \op T_1 |0>
     \bdiag
     \dmoveH{2}
@@ -78,7 +78,7 @@ A diagram starts with {\bf \textbackslash bdiag} and ends with {\bf \textbacksla
 For a symmetric diagram (with Hamilton-operator parts in the middle) use {\bf \textbackslash bdiags}.
 
 %\begin{table}[htbp]
- \begin{minipage}[b]{0.5\linewidth}\centering
+ \begin{minipage}[b]{0.55\linewidth}\centering
   \begin{lstlisting}
 %<\mu_1|\op F \op T_1 |0>
 \bdiags
@@ -91,7 +91,7 @@ For a symmetric diagram (with Hamilton-operator parts in the middle) use {\bf \t
 \ediag 
   \end{lstlisting}
  \end{minipage}
- \begin{minipage}[b]{0.5\linewidth}\centering
+ \begin{minipage}[b]{0.45\linewidth}\centering
     %<\mu_1|\op F \op T_1 |0>
     \bdiags
     \dmoveH{2}
@@ -107,7 +107,7 @@ For a symmetric diagram (with Hamilton-operator parts in the middle) use {\bf \t
 For a non-symmetric diagram with Hamilton-operator parts shifted down use {\bf \textbackslash bdiagd}.
 
 %\begin{table}[htbp]
- \begin{minipage}[b]{0.5\linewidth}\centering
+ \begin{minipage}[b]{0.55\linewidth}\centering
   \begin{lstlisting}
 %<0|\op T_1^\dg \op F |\mu_1>
 \bdiagd
@@ -120,7 +120,7 @@ For a non-symmetric diagram with Hamilton-operator parts shifted down use {\bf \
 \ediag
   \end{lstlisting}
  \end{minipage}
- \begin{minipage}[b]{0.5\linewidth}\centering
+ \begin{minipage}[b]{0.45\linewidth}\centering
     %<0|\op T_1^\dg \op F |\mu_1>
     \bdiagd
     \dmoveH{2}
@@ -137,7 +137,7 @@ You can scale the diagram by setting a number in the square brackets after {\bf 
 or {\bf \textbackslash bdiags}.
 
 %\begin{table}[htbp]
- \begin{minipage}[b]{0.5\linewidth}\centering
+ \begin{minipage}[b]{0.55\linewidth}\centering
   \begin{lstlisting}
 %<\mu_1|\op F \op T_1 |0>
 \bdiags[1.5]
@@ -150,7 +150,7 @@ or {\bf \textbackslash bdiags}.
 \ediag 
   \end{lstlisting}
  \end{minipage}
- \begin{minipage}[b]{0.5\linewidth}\centering
+ \begin{minipage}[b]{0.45\linewidth}\centering
     %<\mu_1|\op F \op T_1 |0>
     \bdiags[1.5]
     \dmoveH{2}
@@ -197,7 +197,7 @@ If the labels are not needed, use
 \myind{\bf \textbackslash dTds}$[${\it pert.order}$]$\{{\it exc.level}\}\{{\it node}\}
 
 %\begin{table}[htbp]
- \begin{minipage}[b]{0.5\linewidth}\centering
+ \begin{minipage}[b]{0.55\linewidth}\centering
   \begin{lstlisting}
 %<0|\op T_2^{(1)\dg} \op F \op T_1 |0>
 \bdiags
@@ -211,7 +211,7 @@ If the labels are not needed, use
 \ediag
   \end{lstlisting}
  \end{minipage}
- \begin{minipage}[b]{0.5\linewidth}\centering
+ \begin{minipage}[b]{0.45\linewidth}\centering
 %<0|\op T_2^{(1)\dg} \op F \op T_1 |0>
 \bdiags
 \dmoveH{5}
@@ -238,7 +238,7 @@ And for $\tau^{\dagger}_{\mu_i}$ use
 \myind{\bf \textbackslash dTdv}$[${\it pert.order}$]$\{{\it exc.level}\}\{{\it node}\}
 
 %\begin{table}[htbp]
- \begin{minipage}[b]{0.5\linewidth}\centering
+ \begin{minipage}[b]{0.55\linewidth}\centering
   \begin{lstlisting}
 %<\mu_2| \op F \op T_1 |0>
 \bdiags
@@ -252,7 +252,7 @@ And for $\tau^{\dagger}_{\mu_i}$ use
 \ediag
   \end{lstlisting}
  \end{minipage}
- \begin{minipage}[b]{0.5\linewidth}\centering
+ \begin{minipage}[b]{0.45\linewidth}\centering
 %<\mu_2| \op F \op T_1 |0>
 \bdiags
 \dmoveH{5}
@@ -277,7 +277,7 @@ And for an deexcitation operator use
 \myind{\bf \textbackslash dAmpD}$[${\it name}$]$\{{\it pert.order}\}\{{\it exc.level}\}\{{\it node}\}
 
 %\begin{table}[htbp]
- \begin{minipage}[b]{0.5\linewidth}\centering
+ \begin{minipage}[b]{0.55\linewidth}\centering
   \begin{lstlisting}
 %<\Lambda_2| \op F \op T_1 |0>
 \bdiags
@@ -291,7 +291,7 @@ And for an deexcitation operator use
 \ediag
   \end{lstlisting}
  \end{minipage}
- \begin{minipage}[b]{0.5\linewidth}\centering
+ \begin{minipage}[b]{0.45\linewidth}\centering
 %<\Lambda_2| \op F \op T_1 |0>
 \bdiags
 \dmoveH{5}
@@ -424,7 +424,7 @@ Default {\it size} is 6.
  
 ~\\
 %\begin{table}[htbp]
- \begin{minipage}[b]{0.5\linewidth}\centering
+ \begin{minipage}[b]{0.55\linewidth}\centering
   \begin{lstlisting}
 \bdiags
 \dHeff[$H_{\rm eff}$]{3}{2}{h}
@@ -435,7 +435,7 @@ Default {\it size} is 6.
 \ediags
   \end{lstlisting}
  \end{minipage}
- \begin{minipage}[b]{0.5\linewidth}\centering
+ \begin{minipage}[b]{0.45\linewidth}\centering
 \bdiags
 \dHeff[$H_{\rm eff}$]{3}{2}{h}
 \dline{h1a}{h1v1}
@@ -447,7 +447,7 @@ Default {\it size} is 6.
 %\end{table}
 
 %\begin{table}[htbp]
- \begin{minipage}[b]{0.5\linewidth}\centering
+ \begin{minipage}[b]{0.55\linewidth}\centering
   \begin{lstlisting}
 \bdiag
 \dHeffs{3}{h}
@@ -461,7 +461,7 @@ Default {\it size} is 6.
 \ediag
   \end{lstlisting}
  \end{minipage}
- \begin{minipage}[b]{0.5\linewidth}\centering
+ \begin{minipage}[b]{0.45\linewidth}\centering
 \bdiag
 \dHeffs{3}{h}
 \dmoveT{5}
@@ -498,7 +498,7 @@ Double-headed arrows can be switched on using
 \myind{\bf \textbackslash ddoubleheadarrow}
 
 %\begin{table}[htbp]
- \begin{minipage}[b]{0.5\linewidth}\centering
+ \begin{minipage}[b]{0.55\linewidth}\centering
   \begin{lstlisting}
 %<\mu_1|\op F \op T_1 |0>
 \bdiags
@@ -514,7 +514,7 @@ Double-headed arrows can be switched on using
 \ediag 
   \end{lstlisting}
  \end{minipage}
- \begin{minipage}[b]{0.5\linewidth}\centering
+ \begin{minipage}[b]{0.45\linewidth}\centering
     %<\mu_1|\op F \op T_1 |0>
     \bdiags
     \dmoveH{2}
@@ -680,7 +680,7 @@ instead of diagram-generation by later compilations (which can considerably spee
 
 \section{Examples}
 %\begin{table}[htbp]
- \begin{minipage}[b]{0.5\linewidth}\centering
+ \begin{minipage}[b]{0.55\linewidth}\centering
   \begin{lstlisting}
 \bdiag
 \dmoveH{2}
@@ -699,7 +699,7 @@ instead of diagram-generation by later compilations (which can considerably spee
 \ediag
   \end{lstlisting}
  \end{minipage}
- \begin{minipage}[b]{0.5\linewidth}\centering
+ \begin{minipage}[b]{0.45\linewidth}\centering
 \bdiag
 \dmoveH{2}
 \dT{1}{t}
@@ -719,7 +719,7 @@ instead of diagram-generation by later compilations (which can considerably spee
 %\end{table}
 
 %\begin{table}[htbp]
- \begin{minipage}[b]{0.5\linewidth}\centering
+ \begin{minipage}[b]{0.55\linewidth}\centering
   \begin{lstlisting}
 \bdiags
 \dmoveT{1}
@@ -732,7 +732,7 @@ instead of diagram-generation by later compilations (which can considerably spee
 \ediag
   \end{lstlisting}
  \end{minipage}
- \begin{minipage}[b]{0.5\linewidth}\centering
+ \begin{minipage}[b]{0.45\linewidth}\centering
 \bdiags
 \dmoveT{1}
 \dmoveTd{1}
@@ -746,7 +746,7 @@ instead of diagram-generation by later compilations (which can considerably spee
 %\end{table}
 
 %\begin{table}[htbp]
- \begin{minipage}[b]{0.5\linewidth}\centering
+ \begin{minipage}[b]{0.55\linewidth}\centering
   \begin{lstlisting}
 \bdiags
 \dmoveT{3}
@@ -765,7 +765,7 @@ instead of diagram-generation by later compilations (which can considerably spee
 \ediag
   \end{lstlisting}
  \end{minipage}
- \begin{minipage}[b]{0.5\linewidth}\centering
+ \begin{minipage}[b]{0.45\linewidth}\centering
 \bdiags
 \dmoveT{3}
 \dmoveTd{3}
@@ -785,7 +785,7 @@ instead of diagram-generation by later compilations (which can considerably spee
 %\end{table}
 
 %\begin{table}[htbp]
- \begin{minipage}[b]{0.5\linewidth}\centering
+ \begin{minipage}[b]{0.55\linewidth}\centering
   \begin{lstlisting}
 \bdiagd
 \dmoveH{2}
@@ -804,7 +804,7 @@ instead of diagram-generation by later compilations (which can considerably spee
 \ediag
 \end{lstlisting}
 \end{minipage}
- \begin{minipage}[b]{0.5\linewidth}\centering
+ \begin{minipage}[b]{0.45\linewidth}\centering
 \bdiagd
 \dmoveH{2}
 \dTd{1}{t}
@@ -823,7 +823,7 @@ instead of diagram-generation by later compilations (which can considerably spee
 \end{minipage}
 %\end{table}
 
-\begin{minipage}[b]{0.5\linewidth}\centering
+\begin{minipage}[b]{0.55\linewidth}\centering
  \begin{lstlisting}
 % transparent operators
 \bdiagd
@@ -833,7 +833,8 @@ instead of diagram-generation by later compilations (which can considerably spee
 \ediag
 \end{lstlisting}
 \end{minipage}
- \begin{minipage}[b]{0.5\linewidth}\centering
+ \begin{minipage}[b]{0.45\linewidth}\centering
+% transparent operators
 \bdiagd
 \dTtd{1}{t}
 \dTt{1}{tt}
@@ -841,7 +842,7 @@ instead of diagram-generation by later compilations (which can considerably spee
 \ediag
 \end{minipage}
 
-\begin{minipage}[b]{0.5\linewidth}\centering
+\begin{minipage}[b]{0.55\linewidth}\centering
  \begin{lstlisting}
 % named nodes 
 % and an external graphic "ExampleDiag"
@@ -862,7 +863,9 @@ instead of diagram-generation by later compilations (which can considerably spee
 \endpgfgraphicnamed
 \end{lstlisting}
 \end{minipage}
- \begin{minipage}[b]{0.5\linewidth}\centering
+ \begin{minipage}[b]{0.45\linewidth}\centering
+% named nodes 
+% and an external graphic "ExampleDiag"
 \beginpgfgraphicnamed{ExampleDiag}
 \bdiags
 \dmoveH{1}
@@ -881,7 +884,7 @@ instead of diagram-generation by later compilations (which can considerably spee
 \end{minipage}
 
 
-\begin{minipage}[b]{0.5\linewidth}\centering
+\begin{minipage}[b]{0.55\linewidth}\centering
  \begin{lstlisting}
 % bubble and oyster
 % and the p/h counterparts 
@@ -903,7 +906,9 @@ instead of diagram-generation by later compilations (which can considerably spee
 \ediag
 \end{lstlisting}
 \end{minipage}
- \begin{minipage}[b]{0.5\linewidth}\centering
+ \begin{minipage}[b]{0.45\linewidth}\centering
+% bubble and oyster
+% and the p/h counterparts 
 \bdiags[2]
 \dWs{w1}{w2}
 \dbubble{w2}{1}
@@ -923,7 +928,7 @@ instead of diagram-generation by later compilations (which can considerably spee
 \end{minipage}
 
 \subsection{DCD}
-\begin{minipage}[b]{0.5\linewidth}\centering
+\begin{minipage}[b]{0.55\linewidth}\centering
 \begin{lstlisting}
 \bdiags[1.5]
 \dvscale{0.5}
@@ -974,7 +979,7 @@ instead of diagram-generation by later compilations (which can considerably spee
 \ediag
 \end{lstlisting}
 \end{minipage}
-\begin{minipage}[b]{0.5\linewidth}\centering
+\begin{minipage}[b]{0.45\linewidth}\centering
 \bdiags[1.5]
 \dvscale{0.5}
 \dfeynman \dnoarrow
