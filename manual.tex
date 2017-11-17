@@ -568,7 +568,7 @@ The most appropriate bend will be calculated automatically.
 \section{Shifting operators}
 
 Often in order to improve the diagram-look you have to shift the operator lines.
-There are four shift-commands available:
+There are six shift-commands available:
 \begin{itemize}
  \item shift excitation operators to the right:
 
@@ -582,7 +582,15 @@ There are four shift-commands available:
 
 \myind{\bf \textbackslash dmoveH}\{{\it shift}\}
 
+  \item  shift excitation operators up (can also be used to shift up nodes of Hamiltonian lines):
+
+\myind{\bf \textbackslash dvmoveT}\{{\it shift}\}
+
   \item  shift deexcitation operators up:
+
+\myind{\bf \textbackslash dvmoveTd}\{{\it shift}\}
+
+or 
 
 \myind{\bf \textbackslash dmovac}\{{\it shift}\}
 
@@ -590,9 +598,6 @@ There are four shift-commands available:
 
 \myind{\bf \textbackslash dvmoveH}\{{\it shift}\}
 
-  \item  shift excitation operators up (can also be used to shift up nodes of Hamiltonian lines):
-
-\myind{\bf \textbackslash dvmoveT}\{{\it shift}\}
 \end{itemize}
 
 {\it shift}$=1$ in the horizontal direction corresponds to a shift of a half length of single excitation operator
@@ -643,8 +648,9 @@ are also available.
 
 \section{Styles}\label{sec:Styles}
 
-Change {\bf exoper-line-save}, {\bf exvac-line-save}, {\bf hoper-line-save}, {\bf ph-line-arrow-save}(or {\bf ph-line-noarrow-save})
-in order to change excitation operator, bare excitation operator, H-operator, or h/p line styles.
+Change {\bf exoper-line-save}, {\bf exvac-line-save}, {\bf hoper-line-save}, {\bf heffoper-line-save}, 
+{\bf ph-line-arrow-save}(or {\bf ph-line-noarrow-save}) in order to change excitation operator, 
+bare excitation operator, H-operator, H$_{\rm eff}$-operator or h/p line styles, respectively.
 
 You can create your own operator style for a custom operator (see how {\bf \textbackslash dU} or {\bf \textbackslash dTv} are 
 defined).
