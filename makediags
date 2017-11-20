@@ -5,3 +5,35 @@ do
     pdflatex --jobname $job $1
     rm -f $job.log $job.out $job.aux
 done
+# for \diagsav[ (with name)
+for job in $(grep -o '\\diagsav\[[0-9A-Za-z-]*\]' < $1 )
+do
+    diagname=${job#*\diagsav[}
+    job=${diagname%]*}
+    pdflatex --jobname $job $1
+    rm -f $job.log $job.out $job.aux
+done
+# for \diagsav
+diagname=$(grep -o '\\dsavediags\[[0-9A-Za-z-]*\]' < $1)
+diagname=${diagname#*\dsavediags[}
+diagname=${diagname%]*}
+if [[ $diagname == "" ]]; then
+  diagname=Diag
+fi
+if [ $# -gt 1 ]; then
+  let id=$2-1
+else
+  let id=0
+fi
+for job in $(grep -o '\\diagsav{' < $1 )
+do
+    let id=$id+1
+    job=$diagname$id
+    pdflatex --jobname "$job" $1
+    rm -f $job.log $job.out $job.aux
+    if [ $# -gt 2 ]; then
+      if [ $id -eq $3 ]; then
+        exit
+      fi
+    fi
+done

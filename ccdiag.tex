@@ -728,6 +728,27 @@
 \tikzset{ph-line/.style={ph-line-save}}
 }
 
+\newcommand{\dsavediags}[2][]{
+ \ifx&#1&%
+   \newcommand{\DiagramName}{Diag}
+ \else
+   \newcommand{\DiagramName}{#1}
+ \fi 
+ \newcounter{DiagCounter}
+ \pgfrealjobname{#2}
+}
+
+\newcommand{\diagsav}[2][]{
+ \ifx&#1&%
+  \stepcounter{DiagCounter}
+  \beginpgfgraphicnamed{\DiagramName\theDiagCounter}{#2}
+  \endpgfgraphicnamed
+ \else
+  \beginpgfgraphicnamed{#1}{#2}
+  \endpgfgraphicnamed
+ \fi
+} 
+
 % end of CCDiag
 
 

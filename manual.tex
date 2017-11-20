@@ -5,7 +5,8 @@
 %ccdiag
 \usepackage{tikz}
 \include{ccdiag}
-\pgfrealjobname{manual}
+%\pgfrealjobname{manual}
+\dsavediags{manual}
 %
 
 \usepackage{amsmath,amsfonts,amssymb}
@@ -657,7 +658,33 @@ defined).
 
 \section{Generating external graphics}
 
-put 
+Put 
+
+\myind{\bf \textbackslash dsavediags}[{\it Name-for-diagrams}]\{{\it Real-name of the tex document}\}
+
+in the preamble (e.g., after {\bf \textbackslash include\{ccdiag\}}).
+The diagram-files will be called {\it Name-for-diagrams}1, {\it Name-for-diagrams}2, etc.
+
+In order to save the diagram, put
+
+\myind{\bf \textbackslash diagsav}[{\it Name for this diagram}] 
+
+before it (with curly brackets around the diagram). The diagram will get the {\it Name for this diagram}
+if it's given, or {\it Name-for-diagrams} with a number.
+
+Now you can use provided script {\bf makediags} to generate all diagrams:
+
+\myind{\bf makediags} {\it Real-name of the tex document.tex} [{\it number of diagram to start with}] [{\it number of diagram to stop with}]
+
+If the {\it number of diagram to start with} is given, only diagrams from this number on will be recompiled.
+If the {\it number of diagram to stop with} is given, only diagrams up to this number will be recompiled.
+
+The resulting pdf files will be included by pdflatex 
+instead of diagram-generation by later compilations (which can considerably speed up the compilation!) .
+
+\subsection{Old way}
+
+Alternatively, put 
 
 \myind{\bf \textbackslash beginpgfgraphicnamed}\{{\it Name-of-diagram}\}
 
@@ -671,12 +698,10 @@ before and after a block of diagrams that can be put outside, and
 
 in the preamble (e.g., after {\bf \textbackslash include\{ccdiag\}}).
 
-Now you can use provided script {\bf makediags} to generate all diagrams:
 
-\myind{\bf makediags} {\it Real-name of the tex document.tex}
+\myind{\bf \textbackslash pgfrealjobname}\{{\it Real-name of the tex document}\}
 
-The resulting pdf files will be included by pdflatex 
-instead of diagram-generation by later compilations (which can considerably speed up the compilation!) .
+Use {\bf makediags} to compile the diagrams.
 
 \section{Examples}
 %\begin{table}[htbp]
@@ -846,7 +871,7 @@ instead of diagram-generation by later compilations (which can considerably spee
  \begin{lstlisting}
 % named nodes 
 % and an external graphic "ExampleDiag"
-\beginpgfgraphicnamed{ExampleDiag}
+\diagsav[ExampleDiag]{
 \bdiags
 \dmoveH{1}
 \dmoveTd{6}
@@ -860,13 +885,13 @@ instead of diagram-generation by later compilations (which can considerably spee
 \dcurver{t1}{ttt1}
 \dcurcur{ttt2}{t2}
 \ediag
-\endpgfgraphicnamed
+}
 \end{lstlisting}
 \end{minipage}
  \begin{minipage}[b]{0.45\linewidth}\centering
 % named nodes 
 % and an external graphic "ExampleDiag"
-\beginpgfgraphicnamed{ExampleDiag}
+\diagsav[ExampleDiag]{
 \bdiags
 \dmoveH{1}
 \dmoveTd{6}
@@ -880,7 +905,7 @@ instead of diagram-generation by later compilations (which can considerably spee
 \dcurver{t1}{ttt1}
 \dcurcur{ttt2}{t2}
 \ediag
-\endpgfgraphicnamed
+}
 \end{minipage}
 
 
