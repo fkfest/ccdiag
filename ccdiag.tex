@@ -422,6 +422,45 @@
 \node[inner sep=0pt,minimum size=0pt] (#3vd2) at (\xx,\ycoord) {};
 } 
 
+\newcommand{\dHmany}[3][]{ 
+\pgfmathsetmacro{\xcoorbeg}{(\xcoorH+0.5*\scalh)}
+\pgfmathsetmacro{\xcoorend}{(\xcoorbeg+#2*\scalh/2)} 
+\draw[hoper-line](\xcoorbeg,\ycoor) -- (\xcoorend,\ycoor); 
+\pgfmathsetmacro{\result}{(\xcoorend+0.35*\scalh)} 
+%name of operator
+\ifx&#1&%
+\pgfmathsetmacro{\xcoorH}{\xcoorend}
+\else
+\node at (\result,\ycoor){#1};
+\pgfmathsetmacro{\xcoorH}{(\xcoorend+0.25*\scalh)}
+\fi
+% calculate the vertex-distance (singles are a special case)
+\ifnum#2=1
+ \pgfmathsetmacro{\xxx}{((\xcoorend-\xcoorbeg)/2)} 
+ \pgfmathsetmacro{\result}{\xcoorbeg}
+\else
+ \pgfmathsetmacro{\xxx}{((\xcoorend-\xcoorbeg)/( #2 - 1 ))} 
+ \pgfmathsetmacro{\result}{(\xcoorbeg-\xxx)}
+\fi
+% set all nodes (and give them names)
+\foreach \x in {1,...,#2}
+{
+  \coordinate (vertex) at ($(\result,\ycoor)+(\x*\xxx,0)$);
+  \node[inner sep=0pt,minimum size=0pt] (#3\x) at  (vertex) {};
+  \coordinate (vtxvac) at ($(\result,\yvac)+(\x*\xxx,0)$);
+  \node[inner sep=0pt,minimum size=0pt] (#3\x v1) at ($(vtxvac)-(\xvac,0)$) {};
+  \node[inner sep=0pt,minimum size=0pt] (#3\x v2) at ($(vtxvac)+(\xvac,0)$) {};
+  \coordinate (vtxvac) at ($(\result,\ycoord)+(\x*\xxx,0)$);
+  \node[inner sep=0pt,minimum size=0pt] (#3\x vd1) at ($(vtxvac)-(\xvac,0)$) {};
+  \node[inner sep=0pt,minimum size=0pt] (#3\x vd2) at ($(vtxvac)+(\xvac,0)$) {};
+}
+\node[inner sep=0pt,minimum size=0pt] (#3) at  (#31) {};
+\node[inner sep=0pt,minimum size=0pt] (#3v1) at (#31v1) {};
+\node[inner sep=0pt,minimum size=0pt] (#3v2) at (#31v2) {};
+\node[inner sep=0pt,minimum size=0pt] (#3vd1) at (#31vd1) {};
+\node[inner sep=0pt,minimum size=0pt] (#3vd2) at (#31vd2) {};
+} 
+
 %general excitations
 \newcommand{\dT}[3][]{\dAmp[$_{T_#2}$]{#1}{#2}{#3}}
 \newcommand{\dTs}[3][]{\dAmp{#1}{#2}{#3}}
@@ -557,6 +596,16 @@
 
 \newcommand{\dFr}[1]{\dHoner[$_{F}$]{#1}}
 \newcommand{\dFsr}[1]{\dHoner{#1}}
+\newcommand{\dFbarr}[1]{
+  \tikzset{hoper-line/.style={hoperbar-line-save}}
+  \dHoner[$_{F}$]{#1}
+  \tikzset{hoper-line/.style={hoper-line-save}}
+}
+\newcommand{\dFbarsr}[1]{
+  \tikzset{hoper-line/.style={hoperbar-line-save}}
+  \dHoner{#1}
+  \tikzset{hoper-line/.style={hoper-line-save}}
+}
 \newcommand{\dXr}[1]{\dHoner[$_{X}$]{#1}}
 
 \newcommand{\dW}[2]{\dHtwo[$_{W}$]{#1}{#2}}
@@ -569,6 +618,18 @@
 \newcommand{\dWbars}[2]{
   \tikzset{hoper-line/.style={hoperbar-line-save}}
   \dHtwo{#1}{#2}
+  \tikzset{hoper-line/.style={hoper-line-save}}
+}
+\newcommand{\dWthree}[1]{\dHmany[$_{W_3}$]{3}{#1}}
+\newcommand{\dWthrees}[1]{\dHmany{3}{#1}}
+\newcommand{\dWthreebar}[1]{
+  \tikzset{hoper-line/.style={hoperbar-line-save}}
+  \dHmany[$_{\bar W_3}$]{3}{#1}
+  \tikzset{hoper-line/.style={hoper-line-save}}
+}
+\newcommand{\dWthreebars}[1]{
+  \tikzset{hoper-line/.style={hoperbar-line-save}}
+  \dHmany{3}{#1}
   \tikzset{hoper-line/.style={hoper-line-save}}
 }
 \newcommand{\dXtwo}[2]{\dHtwo[$_{X}$]{#1}{#2}}

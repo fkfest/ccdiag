@@ -370,7 +370,6 @@ For two-electron perturbation use
 
 \myind{\bf \textbackslash dXtwo}\{{\it node1}\}\{{\it node2}\}
 
-
 \subsubsection{Custom one- and two-electron parts}
 
 For custom one-electron part use
@@ -384,6 +383,43 @@ and for two-electron part use
 \myind{\bf \textbackslash dHtwo}$[${\it name}$]$\{{\it node1}\}\{{\it node2}\}
 
 You can also create your own styles for operator lines (see Section \ref{sec:Styles}).
+
+\subsubsection{Many-body operators}
+
+It is possible to create more-than-two-body operators using 
+
+\myind{\bf \textbackslash dHmany}$[${\it name}$]$\{{\it number of electrons}\}\{{\it node}\}
+
+For three-body operators aliases {\bf \textbackslash dWthree}, {\bf \textbackslash dWthrees},
+{\bf \textbackslash dWthreebar}, and {\bf \textbackslash dWthreebars} have been created, which
+correspond to the {\bf \textbackslash dW} two-body operators. Note that for these operators
+only main node name has to be given, like for excitation operators.
+
+%\begin{table}[htbp]
+ \begin{minipage}[b]{0.55\linewidth}\centering
+  \begin{lstlisting}
+\bdiag
+\dWthree{w}
+\dline{w1v1}{w1}
+\dline{w1}{w1v2}
+\dline{w2v1}{w2}
+\dline{w2}{w2v2}
+\dline{w3v1}{w3}
+\dline{w3}{w3v2}
+\ediag
+  \end{lstlisting}
+ \end{minipage}
+ \begin{minipage}[b]{0.45\linewidth}\centering
+\bdiag
+\dWthree{w}
+\dline{w1v1}{w1}
+\dline{w1}{w1v2}
+\dline{w2v1}{w2}
+\dline{w2}{w2v2}
+\dline{w3v1}{w3}
+\dline{w3}{w3v2}
+\ediag
+ \end{minipage}
 
 \subsubsection{Feynman vs Bartlett convention}
 
@@ -565,6 +601,18 @@ One can connect three vertices with an intelligent line.
 \myind{\bf \textbackslash dcurt}\{{\it from-node}\}\{{\it through-node}\}\{{\it to-node}\}
 
 The most appropriate bend will be calculated automatically.
+
+\subsection{Bubbles and oysters}
+Internal connection of vertices can be achieved using  
+
+\myind{\bf \textbackslash dbubble}\{{\it node}\}
+
+and
+
+\myind{\bf \textbackslash doyster}\{{\it from-node}\}\{{\it to-node}\}
+
+or their counterparts with arrows going in the opposite direction {\bf \textbackslash dbubbler}
+and {\bf \textbackslash doysterr}.
 
 \section{Shifting operators}
 
